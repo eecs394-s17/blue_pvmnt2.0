@@ -11,7 +11,7 @@
 
   <!-- <button ion-button block color="dark" (click)="doAlert()">Incoming Events!</button> -->
 <ion-list>
-<ion-card>
+<ion-card (click)="doAlert()">
 <ion-item>
 <ion-card-content>
   <ion-item>
@@ -26,7 +26,7 @@
     <p class="group">GROUP</p>
     <p class="tag">TAGS</p>
     </ion-thumbnail>
-    </ion-item>
+  </ion-item>
     <ion-item text-wrap>
       <!-- <ion-thumbnail item-left> -->
 
@@ -51,24 +51,22 @@
           Interested
         </button>
       </ion-col>
-      <ion-col text-center>
-        <button ion-button clear small color="danger" icon-left>
+      <!-- <ion-col text-center>
+        <button ion-button clear small color="danger" icon-center>
           <ion-icon name='musical-notes'></ion-icon>
           Listen
         </button>
-      </ion-col>
+      </ion-col> -->
       <ion-col text-right>
-        <button ion-button clear small color="danger" icon-left>
-          <ion-icon name='share-alt'></ion-icon>
-          Share
+        <button ion-button clear small color="danger" icon-right>
+          <ion-icon name='add-circle'></ion-icon>
+           Add to Calendar
         </button>
       </ion-col>
     </ion-row>
 
 
 </ion-card>
-  <!-- <p>
-    <button ion-button color="primary" menuToggle>Toggle Menu</button>
-  </p> -->
+
 </ion-list>
 </ion-content>
