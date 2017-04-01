@@ -3,22 +3,24 @@
     <ion-card-content>
       <ion-item>
         <ion-thumbnail item-left class="calendar">
-          <img src="assets/img/team_mystic.png" />
+          <h1>{{getDay()}}</h1>
+          {{getMonth()}}
+          <h4>{{getTime()}}</h4>
         </ion-thumbnail>
         <!-- <ion-card-content> -->
         <ion-thumbnail item-right>
           <ion-card-title>
             {{ event.name }}
           </ion-card-title>
-          <p class="group">GROUP</p>
-          <p class="tag">TAGS</p>
+          <p class="group">{{event.calendar}}</p>
+          <p class="tag" *ngFor="let tag of event.tags">{{tag}}</p>
         </ion-thumbnail>
       </ion-item>
       <ion-item text-wrap>
         <!-- <ion-thumbnail item-left> -->
 
         <p class="content">
-          The most popular industrial group ever, and largely responsible for bringing the music to a mass audience.
+          {{event.desc}}
         </p>
         <!-- </ion-thumbnail> -->
 
