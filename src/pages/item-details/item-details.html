@@ -1,36 +1,52 @@
-<!-- <ion-header>
-  <ion-navbar>
-    <button menuToggle *ngIf="!selectedItem">
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Item Details</ion-title>
-  </ion-navbar>
-</ion-header>
 
-<ion-content>
-  <h3 text-center *ngIf="selectedItem">
-    {{selectedItem.title}}
-    <ion-icon [name]="selectedItem.icon"></ion-icon>
-  </h3>
-  <h4 text-center *ngIf="selectedItem">
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </h4>
-</ion-content> -->
 <ion-header>
   <ion-navbar>
-    <ion-title>Background Images</ion-title>
+    <ion-title>Detailed Page</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="card-background-page">
 
-  <ion-card>
+  <ion-card class="background-img-card">
     <img src="assets/img/party.jpg"/>
-    <div class="card-title">São Paulo</div>
-    <div class="card-subtitle">41 Listings</div>
+    <div class="card-title">Event Title</div>
+    <div class="card-subtitle">Group Name</div>
   </ion-card>
 
-  <!-- <ion-card>
+  <ion-card>
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="assets/img/calendaricon.png">
+        </ion-avatar>
+        <h2>Event Name</h2>
+        <p>Hosted By:</p>
+      </ion-item>
+
+      <ion-item class="avatartop">
+        <ion-avatar item-left class="iconavatar">
+          <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon>
+        </ion-avatar>
+        <h3 class="icontext"> Date of Event </h3>
+      </ion-item>
+      <ion-item>
+        <ion-avatar item-left class="iconavatar">
+          <ion-icon ios="ios-locate" md="md-locate"> </ion-icon>
+        </ion-avatar>
+          <h3 class="icontext"> Place of Event </h3>
+       </ion-item>
+  </ion-card>
+  
+<ion-card>
+  <ion-card-header>
+    Details
+  </ion-card-header>
+  <ion-card-content>
+    The Description of the event...
+  </ion-card-content>
+</ion-card>
+
+
+<!--   <ion-card>
     <img src="assets/img/team_mystic.png"/>
     <div class="card-title">Amsterdam</div>
     <div class="card-subtitle">64 Listings</div>

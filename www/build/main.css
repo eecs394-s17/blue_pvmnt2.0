@@ -24532,3 +24532,41 @@ page-hello-ionic .content {
 page-hello-ionic .calendar {
   margin-top: -200px;
 }
+
+page-item-details {
+  /*  .generalinfo{
+    height:20%;  
+  }*/
+}
+
+page-item-details .background-img-card {
+  position: relative;
+  text-align: right;
+}
+
+page-item-details .card-title {
+  position: absolute;
+  top: 70%;
+  right: 5%;
+  font-size: 2.0em;
+  width: 100%;
+  font-weight: bold;
+  color: #fff;
+}
+
+page-item-details .card-subtitle {
+  font-size: 1.0em;
+  position: absolute;
+  top: 85%;
+  right: 5%;
+  width: 100%;
+  color: #fff;
+}
+
+page-item-details .icontext {
+  padding-bottom: 7.5%;
+}
+
+page-item-details .iconavatar {
+  padding-left: 3.0%;
+}
