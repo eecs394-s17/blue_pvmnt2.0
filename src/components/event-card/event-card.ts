@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Event } from '../../models/event'
+
 
 @Component({
   selector: 'event-card',
@@ -6,5 +8,5 @@ import { Component } from '@angular/core';
 })
 
 export class EventCard {
-
+  @Input() event: Event;
 }
