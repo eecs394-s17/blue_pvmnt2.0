@@ -1,21 +1,19 @@
 import { Component } from '@angular/core';
-import { AlertController } from 'ionic-angular';
 
+import { EventService } from '../../services/event-service';
+import { Event } from '../../models/event';
 
 @Component({
   selector: 'page-hello-ionic',
-  templateUrl: 'hello-ionic.html'
+  templateUrl: 'hello-ionic.html',
+  providers: [EventService]
 })
+
 export class HelloIonicPage {
-  constructor(public alerCtrl: AlertController) {  
+  events: Array<Event>;
+
+  constructor(private eventService: EventService) {
+    this.events = this.eventService.fetch();
   }
 
-    doAlert() {
-    let alert = this.alerCtrl.create({
-      title: 'Event Reminder!',
-      message: 'Dance Marathon starts in 5 min!',
-      buttons: ['Ok']
-    });
-    alert.present()
-  }
 }
