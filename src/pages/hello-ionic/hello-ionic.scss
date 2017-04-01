@@ -7,11 +7,70 @@ page-hello-ionic {
     font-size: 10px;
   }
 
-  .content{
-    font-size: 20px;
+  .day{
+    color: black;
+    font-size: 30px;
+  }
+
+  .month{
+    color: red;
+    font-size: 18px;
+  }
+
+
+  .contentdes{
+    font-size: 14px;
+    overflow: hidden;
+
+  .headings{
+    margin:0px;
+    max-height: 10px !important;
+    min-height: 0px !important;
+  }
+    
+  }
+
+  .fade {
+  position: relative;
+  height: 3.6em; /* exactly three lines */
+}
+.fade:after {
+  content: "";
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 70%;
+  height: 1.2em;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
+}
+
+  .description{
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3   !important;
+    -webkit-box-orient: vertical !important;
   }
 
   .calendar{
-    margin-top: -200px;
+    margin-right: 0px !important;
+    width: 50px !important;
+    min-width: 50px;
+  }
+
+  .card{
+
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0;
+  }
+
+  .max-lines {
+    display: block; /* or inline-block */
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 3.6em;
+    line-height: 1.8em;
   }
 }
