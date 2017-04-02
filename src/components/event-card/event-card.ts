@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { NavController } from 'ionic-angular'
 import { Event } from '../../models/event'
 
 import * as moment from 'moment';
@@ -15,13 +16,13 @@ export class EventCard {
   month: string;
   time: string;
 
+
   // constructor(){
   //   var t = moment.unix(this.event.date);
   //   this.day = t.format("DD");
   //   this.month = t.format("MM");
   //   this.time = t.format("h:mm a");
   // }
-
 
   getDay() {
     return moment.unix(this.event.date).format("DD");
