@@ -24,6 +24,7 @@ export class HelloIonicPage {
     	this.events = events;
     	console.log(events)
 	});
+  }
 
   itemTapped(event, item) {
   	this.navCtrl.push(ItemDetailsPage, { 
