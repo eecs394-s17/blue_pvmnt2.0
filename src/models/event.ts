@@ -4,4 +4,5 @@ export class Event {
 	date: number;
 	calendar: string;
 	tags: string[];
+	place: string;
 }

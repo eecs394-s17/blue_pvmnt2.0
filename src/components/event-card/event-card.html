@@ -1,26 +1,26 @@
-<ion-card>
+<ion-card class="card">
   <ion-item>
-    <ion-card-content>
-      <ion-item>
+    <ion-card-content no-padding>
+      <ion-item class="headings">
         <ion-thumbnail item-left class="calendar">
-          <h1>{{getDay()}}</h1>
-          {{getMonth()}}
-          <h4>{{getTime()}}</h4>
+          <h1 class="day">{{getDay()}}</h1>
+          <h1 class = "month">{{getMonth()}}</h1>
+          <!--<h4 class="time">{{getTime()}}</h4>-->
         </ion-thumbnail>
         
         <!-- <ion-card-content> -->
-        <ion-thumbnail item-right>
-          <ion-card-title>
+        <ion-thumbnail>
+          <ion-card-title no-padding text-wrap no-margin>
             {{ event.name }}
           </ion-card-title>
           <p class="group">{{event.calendar}}</p>
-          <p class="tag" *ngFor="let tag of event.tags">{{tag}}</p>
+          <small class="tag" *ngFor="let tag of event.tags">{{tag}}</small>
         </ion-thumbnail>
       </ion-item>
-      <ion-item text-wrap>
+      <ion-item text-wrap class="description">
         <!-- <ion-thumbnail item-left> -->
 
-        <p class="content">
+        <p class="contentdes fade">
           {{event.desc}}
         </p>
         <!-- </ion-thumbnail> -->
@@ -41,18 +41,7 @@
         Interested
       </button>
     </ion-col>
-    <ion-col text-center>
-      <button ion-button clear small color="danger" icon-left>
-        <ion-icon name='musical-notes'></ion-icon>
-        Listen
-      </button>
-    </ion-col>
-    <ion-col text-right>
-      <button ion-button clear small color="danger" icon-left>
-        <ion-icon name='share-alt'></ion-icon>
-        Share
-      </button>
-    </ion-col>
+    
   </ion-row>
 
 

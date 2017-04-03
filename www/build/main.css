@@ -24525,32 +24525,124 @@ page-hello-ionic .tag {
   font-size: 10px;
 }
 
-page-hello-ionic .content {
-  font-size: 20px;
+page-hello-ionic .day {
+  color: black;
+  font-size: 30px;
+}
+
+page-hello-ionic .month {
+  color: red;
+  font-size: 18px;
+}
+
+page-hello-ionic .contentdes {
+  font-size: 14px;
+  overflow: hidden;
+}
+
+page-hello-ionic .contentdes .headings {
+  margin: 0px;
+  max-height: 10px !important;
+  min-height: 0px !important;
+}
+
+page-hello-ionic .fade {
+  position: relative;
+  height: 3.6em;
+  /* exactly three lines */
+}
+
+page-hello-ionic .fade:after {
+  content: "";
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 70%;
+  height: 1.2em;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), white 50%);
+}
+
+page-hello-ionic .description {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3   !important;
 }
 
 page-hello-ionic .calendar {
-  margin-top: -200px;
+  margin-right: 0px !important;
+  width: 50px !important;
+  min-width: 50px;
 }
 
-page-item-details ion-card {
+page-hello-ionic .card {
+  width: 100%;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding: 0;
+}
+
+page-hello-ionic .max-lines {
+  display: block;
+  /* or inline-block */
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 3.6em;
+  line-height: 1.8em;
+}
+
+page-item-details {
+  /*  .generalinfo{
+    height:20%;  
+  }*/
+}
+
+page-item-details .background-img-card {
   position: relative;
-  text-align: center;
+  text-align: right;
+}
+
+page-item-details .calendar {
+  margin-right: 0px !important;
+  width: 50px !important;
+  min-width: 50px;
 }
 
 page-item-details .card-title {
   position: absolute;
-  top: 36%;
-  font-size: 2.0em;
-  width: 100%;
+  top: 60%;
+  right: 5%;
+  font-size: 1.5em;
+  /*width: 100%;*/
   font-weight: bold;
-  color: #000;
+  color: #fff;
+}
+
+page-item-details .day {
+  padding-left: 10%;
+  padding-top: 10%;
+  color: black;
+  font-size: 24px;
+}
+
+page-item-details .month {
+  color: red;
+  font-size: 14px;
 }
 
 page-item-details .card-subtitle {
   font-size: 1.0em;
   position: absolute;
-  top: 52%;
+  top: 85%;
+  right: 5%;
   width: 100%;
-  color: #000;
+  color: #fff;
+}
+
+page-item-details .icontext {
+  padding-bottom: 7.5%;
+}
+
+page-item-details .iconavatar {
+  padding-left: 3.0%;
 }

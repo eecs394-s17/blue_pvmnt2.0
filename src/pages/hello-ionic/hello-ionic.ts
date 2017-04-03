@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-
 import { EventService } from '../../services/event-service';
 import { Event } from '../../models/event';
+import { NavController, NavParams } from 'ionic-angular';
+import {ItemDetailsPage } from '../item-details/item-details'
 
 @Component({
   selector: 'page-hello-ionic',
@@ -10,18 +11,23 @@ import { Event } from '../../models/event';
 })
 
 export class HelloIonicPage {
-  events: Event[];
+  events: Array<Event>;
+  icons: string[];
+  items: Array<{title: string, note: string, icon: string}>;
 
-  constructor(private eventService: EventService) {
-  	this.events = [];
-    this.load();
+  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService) {
+    this.load();  
   }
 
   load() {
   	this.eventService.fetch().then((events) => {
     	this.events = events;
     	console.log(events)
-    });
+	});
+
+  itemTapped(event, item) {
+  	this.navCtrl.push(ItemDetailsPage, { 
+  		item: item });
   }
 
 }

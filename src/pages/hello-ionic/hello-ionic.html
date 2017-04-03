@@ -7,13 +7,13 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content no-padding>
 
   <!-- <button ion-button block color="dark" (click)="doAlert()">Incoming Events!</button> -->
 <ion-list>
 
 
-<event-card *ngFor="let e of events" [event]="e"></event-card>
+<event-card *ngFor="let e of events" [event]="e" (click)="itemTapped($event, e)"></event-card>
   <!-- <p>
     <button ion-button color="primary" menuToggle>Toggle Menu</button>
   </p> -->
