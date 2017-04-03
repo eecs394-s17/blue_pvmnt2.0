@@ -4,3 +4,4 @@ node_modules
 www/build/
 platforms/
 plugins/
+APP_SECRETS.js

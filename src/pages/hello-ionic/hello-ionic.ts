@@ -10,10 +10,18 @@ import { Event } from '../../models/event';
 })
 
 export class HelloIonicPage {
-  events: Array<Event>;
+  events: Event[];
 
   constructor(private eventService: EventService) {
-    this.events = this.eventService.fetch();
+  	this.events = [];
+    this.load();
+  }
+
+  load() {
+  	this.eventService.fetch().then((events) => {
+    	this.events = events;
+    	console.log(events)
+    });
   }
 
 }
