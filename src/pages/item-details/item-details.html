@@ -8,7 +8,7 @@
 <ion-content class="card-background-page">
 
   <ion-card class="background-img-card">
-    <img src="assets/img/party.jpg"/>
+    <img src={{selectedItem.img}}/>
     <div class="card-title" text-wrap *ngIf="selectedItem"> {{selectedItem.name}} </div>
     <div class="card-subtitle"> {{selectedItem.calendar}}</div>
   </ion-card>
@@ -40,7 +40,7 @@
           <h3 class="icontext" *ngIf="selectedItem"> {{selectedItem.place}} </h3>
        </ion-item>
   </ion-card>
-  
+
 <ion-card>
   <ion-card-header>
     Details

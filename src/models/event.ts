@@ -3,6 +3,7 @@ export class Event {
 	desc: string;
 	date: number;
 	calendar: string;
+	img: string;
 	tags: string[];
 	place: string;
 }
