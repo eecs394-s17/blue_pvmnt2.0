@@ -24593,7 +24593,7 @@ page-hello-ionic .max-lines {
 
 page-item-details {
   /*  .generalinfo{
-    height:20%;  
+    height:20%;
   }*/
 }
 
@@ -24620,7 +24620,7 @@ page-item-details .card-title {
 
 page-item-details .day {
   padding-left: 10%;
-  padding-top: 10%;
+  padding-top: 15%;
   color: black;
   font-size: 24px;
 }
