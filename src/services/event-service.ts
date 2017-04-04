@@ -8,6 +8,8 @@ firebase.initializeApp(FIREBASE_CONFIG);
 import { MOCK_EVENTS } from '../mocks/mock-events';
 import { Event } from '../models/event';
 
+var MOCKING = false;
+
 @Injectable()
 export class EventService {
 	fetchMock() {
@@ -15,10 +17,16 @@ export class EventService {
 	}
 
 	fetch() {
-		return firebase.database().ref('/event/').once('value').then((snapshot) => {
-  			var eventJSONs = snapshot.val();
-  			return eventJSONs.map(this.jsonToEvent);
-		});
+		if (MOCKING) {
+			return new Promise((resolve, reject) => {
+				resolve(MOCK_EVENTS);
+			});
+		} else {
+			return firebase.database().ref('/event/').once('value').then((snapshot) => {
+  				var eventJSONs = snapshot.val();
+  				return eventJSONs.slice(1).map(this.jsonToEvent);
+			});
+		}
 	}
 
 	jsonToEvent(json) {
