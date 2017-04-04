@@ -1,38 +1,52 @@
 page-hello-ionic {
+
+  .label {
+    margin: 0px;
+  }
+
   .group{
-    font-size: 15px;
+    font-size: 13px;
+    margin-bottom: 3px;
+    color: black;
   }
 
   .tag{
     font-size: 10px;
+    color: #C0C0C0; 
+    
   }
 
   .day{
     color: black;
-    font-size: 30px;
+    font-size: 35px;
+    margin-bottom: 0px;
   }
 
   .month{
     color: red;
-    font-size: 18px;
+    font-size: 15px;
+    margin-left: 3px;
   }
 
 
   .contentdes{
-    font-size: 14px;
+    font-size: 13px;
     overflow: hidden;
+    color: black;
+  }
 
-  .headings{
-    margin:0px;
-    max-height: 10px !important;
+  .cardheading {
+    
+    height: 10% !important;
     min-height: 0px !important;
+    padding-top: 10px;
+    padding-bottom: 5px;
   }
     
-  }
 
   .fade {
   position: relative;
-  height: 3.6em; /* exactly three lines */
+  height: 4.8em; /* exactly three lines */
 }
 .fade:after {
   content: "";
@@ -46,9 +60,9 @@ page-hello-ionic {
 }
 
   .description{
-    display: -webkit-box !important;
-    -webkit-line-clamp: 3   !important;
-    -webkit-box-orient: vertical !important;
+    min-height: 0px;
+    height: 70px;
+    padding-left: 21px;
   }
 
   .calendar{
@@ -63,6 +77,7 @@ page-hello-ionic {
     margin-left: 0px;
     margin-right: 0px;
     padding: 0;
+    box-shadow: none;
   }
 
   .max-lines {

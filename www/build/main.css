@@ -24517,38 +24517,49 @@ ion-navbar.toolbar {
   }
 }
 
+page-hello-ionic .label {
+  margin: 0px;
+}
+
 page-hello-ionic .group {
-  font-size: 15px;
+  font-size: 13px;
+  margin-bottom: 3px;
+  color: black;
 }
 
 page-hello-ionic .tag {
   font-size: 10px;
+  color: #C0C0C0;
 }
 
 page-hello-ionic .day {
   color: black;
-  font-size: 30px;
+  font-size: 35px;
+  margin-bottom: 0px;
 }
 
 page-hello-ionic .month {
   color: red;
-  font-size: 18px;
+  font-size: 15px;
+  margin-left: 3px;
 }
 
 page-hello-ionic .contentdes {
-  font-size: 14px;
+  font-size: 13px;
   overflow: hidden;
+  color: black;
 }
 
-page-hello-ionic .contentdes .headings {
-  margin: 0px;
-  max-height: 10px !important;
+page-hello-ionic .cardheading {
+  height: 10% !important;
   min-height: 0px !important;
+  padding-top: 10px;
+  padding-bottom: 5px;
 }
 
 page-hello-ionic .fade {
   position: relative;
-  height: 3.6em;
+  height: 4.8em;
   /* exactly three lines */
 }
 
@@ -24564,8 +24575,9 @@ page-hello-ionic .fade:after {
 }
 
 page-hello-ionic .description {
-  display: -webkit-box !important;
-  -webkit-line-clamp: 3   !important;
+  min-height: 0px;
+  height: 70px;
+  padding-left: 21px;
 }
 
 page-hello-ionic .calendar {
@@ -24579,6 +24591,7 @@ page-hello-ionic .card {
   margin-left: 0px;
   margin-right: 0px;
   padding: 0;
+  box-shadow: none;
 }
 
 page-hello-ionic .max-lines {
