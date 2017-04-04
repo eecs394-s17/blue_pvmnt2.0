@@ -1,20 +1,21 @@
 <ion-card class="card">
-  <ion-item>
+  <ion-item no-padding>
     <ion-card-content no-padding>
-      <ion-item class="headings">
-        <ion-thumbnail item-left class="calendar">
+      <ion-item>
+        <ion-thumbnail no-margin item-left class="calendar">
           <h1 class="day">{{getDay()}}</h1>
-          <h1 class = "month">{{getMonth()}}</h1>
+          <h1 class = "month" text-uppercase>{{getMonth()}}</h1>
           <!--<h4 class="time">{{getTime()}}</h4>-->
         </ion-thumbnail>
         
         <!-- <ion-card-content> -->
-        <ion-thumbnail>
+        <ion-thumbnail no-margin class="cardheading">
           <ion-card-title no-padding text-wrap no-margin>
             {{ event.name }}
           </ion-card-title>
           <p class="group">{{event.calendar}}</p>
-          <small class="tag" *ngFor="let tag of event.tags">{{tag}}</small>
+          <small class="tag" *ngFor="let tag of event.tags">{{tag}} | </small>
+          <small class="tag"> Other </small>
         </ion-thumbnail>
       </ion-item>
       <ion-item text-wrap class="description">
@@ -35,7 +36,7 @@
 
   </ion-item>
   <ion-row no-padding>
-    <ion-col>
+    <ion-col no-padding>
       <button ion-button clear small color="danger" icon-left>
         <ion-icon name='star'></ion-icon>
         Interested
