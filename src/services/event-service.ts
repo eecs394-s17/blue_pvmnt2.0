@@ -36,6 +36,7 @@ export class EventService {
 		e.date = json.date;
 		e.calendar = json.calendar;
 		e.tags = json.tags;
+		e.place = json.place;
 		return e;
 	} 
 }
