@@ -6,4 +6,5 @@ export class Event {
 	img: string;
 	tags: string[];
 	place: string;
+	host: string;
 }

@@ -23,7 +23,18 @@ export class HelloIonicPage {
   	this.eventService.fetch().then((events) => {
     	this.events = events;
     	console.log(events)
-	});
+	  });
+    
+
+    // Fetches all calendars (to produce a list to subscribe to)
+    this.eventService.fetchCalendars().then((calendars) => {
+      console.log(calendars);
+    });
+
+    // Fetches all events that the user is currently subscribed to
+    this.eventService.fetchEvents().then((events) => {
+      console.log(events);
+    });    
   }
 
   itemTapped(event, item) {
