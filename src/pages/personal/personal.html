@@ -12,7 +12,7 @@
   <!-- <button ion-button block color="dark" (click)="doAlert()">Incoming Events!</button> -->
 <ion-list>
 
-
+<!--add logic such that only if certain property is met then display !-->
 <event-card *ngFor="let e of events" [event]="e" (click)="itemTapped($event, e)">
 </event-card>
   <!-- <p>
@@ -21,6 +21,3 @@
 </ion-list>
 
 </ion-content>
-
-
-

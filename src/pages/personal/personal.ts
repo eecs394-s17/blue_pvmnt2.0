@@ -5,12 +5,11 @@ import { NavController, NavParams } from 'ionic-angular';
 import { ItemDetailsPage } from '../item-details/item-details'
 
 @Component({
-  selector: 'page-hello-ionic',
-  templateUrl: 'hello-ionic.html',
+  selector: 'page-personal',
+  templateUrl: 'personal.html',
   providers: [EventService]
 })
-
-export class HelloIonicPage {
+export class PersonalPage {
   events: Array<Event>;
   icons: string[];
   items: Array<{title: string, note: string, icon: string}>;
@@ -30,6 +29,8 @@ export class HelloIonicPage {
     
   	this.navCtrl.push(ItemDetailsPage, { 
   		item: item });
-  }
+
+  
+	}
 
 }

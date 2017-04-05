@@ -1,0 +1,92 @@
+page-personal {
+  .label {
+    margin: 0px;
+  }
+
+  .group{
+    font-size: 13px;
+    margin-bottom: 3px;
+    color: black;
+  }
+
+  .tag{
+    font-size: 10px;
+    color: #C0C0C0; 
+    
+  }
+
+  .day{
+    color: black;
+    font-size: 35px;
+    margin-bottom: 0px;
+  }
+
+  .month{
+    color: red;
+    font-size: 15px;
+    margin-left: 3px;
+  }
+
+
+  .contentdes{
+    font-size: 13px;
+    overflow: hidden;
+    color: black;
+  }
+
+  .cardheading {
+    
+    height: 10% !important;
+    min-height: 0px !important;
+    padding-top: 10px;
+    padding-bottom: 5px;
+  }
+    
+
+  .fade {
+  position: relative;
+  height: 4.8em; /* exactly three lines */
+}
+.fade:after {
+  content: "";
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 70%;
+  height: 1.2em;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
+}
+
+  .description{
+    min-height: 0px;
+    height: 70px;
+    padding-left: 21px;
+  }
+
+  .calendar{
+    margin-right: 0px !important;
+    width: 50px !important;
+    min-width: 50px;
+  }
+
+  .card{
+
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .max-lines {
+    display: block; /* or inline-block */
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 3.6em;
+    line-height: 1.8em;
+  }
+
+
+}

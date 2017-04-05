@@ -33,4 +33,10 @@ export class EventCard {
   getTime(){
     return moment.unix(this.event.date).format("h:mm a");
   }
+
+  logEvent(event) {
+    event.stopPropagation();
+    console.log('hello');
+    
+  }
 }
