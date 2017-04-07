@@ -14,8 +14,7 @@
             {{ event.name }}
           </ion-card-title>
           <p class="group">{{event.host}}</p>
-          <small class="tag" *ngFor="let tag of event.tags">{{tag}} | </small>
-          <small class="tag"> Other </small>
+          <small class="tag">{{event.calendartype}} </small>
         </ion-thumbnail>
       </ion-item>
       <ion-item text-wrap class="description">

@@ -3,15 +3,15 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>My First List</ion-title>
+    <ion-title>Subscription List</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+    <button ion-item *ngFor="let item of items">
       <ion-icon name="{{item.icon}}" item-left></ion-icon>
-      {{item.title}}
+      {{item.calendartype}}
     </button>
   </ion-list>
 </ion-content>

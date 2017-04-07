@@ -47,7 +47,6 @@ export class EventService {
 	fetchCalendars() {
 		return firebase.database().ref('/calendar/').once('value').then((snapshot) => {
 			var calendars = snapshot.val();
-			console.log(calendars);
 			return Object.keys(calendars);
 		});
 	}
@@ -58,6 +57,7 @@ export class EventService {
 			let events = [];
 
 			this.subscriptions.forEach((sub) => {
+				// console.log(sub);
 				events = events.concat(data[sub].map(this.eventJSONtoEventObj));
 			});
 
@@ -65,6 +65,7 @@ export class EventService {
 				return ~~(lhs.date > rhs.date);
 			});
 
+			//console.log(events)
 			return events;
 		});
 	}

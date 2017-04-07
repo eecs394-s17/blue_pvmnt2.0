@@ -24,22 +24,26 @@ export class PersonalPage {
   }
 
   load() {
-    this.userService.getUserSubscriptions(1).then( (subs) => {
-      console.log(subs);
-      this.subscriptions = subs;
-    });
+
   	// this.eventService.fetchEvents().then((events) => {
-    // 	this.events = events;
-    // 	console.log(events)
+   //  	this.events = events;
 	  //  });
+
+    // var database = firebase.database();
+    // var adref = database.ref('user/' + 1 + '/subscriptions/');
+    // adref.child("1").remove()
+
+    this.userService.fetchEventsPersonal().then((events) => {
+      this.events = events;
+    });
   }
 
   itemTapped(event, item) {
-
+    let view = this.navCtrl.getActive().component.name;
   	this.navCtrl.push(ItemDetailsPage, {
-  		item: item });
-
-
+  		item: item, view: view });
 	}
+
+
 
 }

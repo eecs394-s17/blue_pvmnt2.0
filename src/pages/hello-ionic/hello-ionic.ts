@@ -21,10 +21,7 @@ export class HelloIonicPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService, private userService: UserService) {
     this.load();
-    console.log(this.userService.getUserSubscriptions(1));
-  }
-
-  ionViewWillEnter() {
+    //console.log(this.userService.getUserSubscriptions(1));
   }
 
   load() {
@@ -43,8 +40,9 @@ export class HelloIonicPage {
 
   itemTapped(event, item) {
 
+    let view = this.navCtrl.getActive().component.name;
   	this.navCtrl.push(ItemDetailsPage, {
-  		item: item });
+  		item: item, view: view });
   }
 
 }

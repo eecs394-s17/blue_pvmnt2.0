@@ -5,43 +5,53 @@ import { NavController, NavParams } from 'ionic-angular';
 import { ItemDetailsPage } from '../item-details/item-details';
 
 import { EventService } from '../../services/event-service';
-
+import { UserService } from '../../services/user-service';
+import { SubscriptionType } from '../../models/subscriptiontype';
 
 @Component({
   selector: 'page-list',
   templateUrl: 'list.html',
-  providers: [EventService]
+  providers: [EventService, UserService]
 })
+
 export class ListPage {
-  items: Array<{title: string, icon: string}>
-  subscribed = new Set(['arts'])
+  items: Array<SubscriptionType>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService) {
-    
-    // Fetches all calendars (to produce a list to subscribe to)
-    this.eventService.fetchCalendars().then((calendars) => {
-      console.log(calendars);
-      calendars.forEach((calendar) => {
-        if(this.subscribed.has(calendar)){
-          this.items.push({
-            title: calendar,
-            icon: 'checkbox'
-          });
-        }
-        else{
-          this.items.push({
-            title: calendar,
-            icon: 'checkbox-outline'
-          });
-        }
-      });
-    });
-
+  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService, private userService: UserService) {
+    this.load();
   }
 
-  itemTapped(event, item) {
-    this.navCtrl.push(ItemDetailsPage, {
-      item: item
-    });
+  load() {
+
+    this.userService.fetchCalendars().then((calendars) => {
+      this.items = calendars
+     })
+
   }
 }
+
+
+    // Fetches all calendars (to produce a list to subscribe to)
+    // this.eventService.fetchCalendars().then((calendars) => {
+    //   console.log(calendars);
+    //   calendars.forEach((calendar) => {
+    //     if(this.subscribed.has(calendar)){
+    //       this.items.push({
+    //         title: calendar,
+    //         icon: 'checkbox'
+    //       });
+    //     }
+    //     else{
+    //       this.items.push({
+    //         title: calendar,
+    //         icon: 'checkbox-outline'
+    //       });
+    //     }
+    //   });
+    // });
+
+  // itemTapped(event, item) {
+  //   this.navCtrl.push(ItemDetailsPage, {
+  //     item: item
+  //   });
+  // }
