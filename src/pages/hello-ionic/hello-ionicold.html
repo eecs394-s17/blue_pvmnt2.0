@@ -1,0 +1,47 @@
+<ion-header no-border>
+  <ion-navbar>
+    <!-- <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button> -->
+    <ion-title align="center">Pvmnt</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-padding no-margin style="background-color: #E8E8E8;" ng-controller="MyController">
+
+  <!-- <button ion-button block color="dark" (click)="doAlert()">Incoming Events!</button> -->
+
+<ion-refresher
+    pulling-text="Pull to refresh..."
+    on-refresh="doRefresh()">
+  </ion-refresher>
+<ion-list>
+
+
+<event-card *ngFor="let e of events" [event]="e" (click)="itemTapped($event, e)">
+</event-card>
+  <!-- <p>
+    <button ion-button color="primary" menuToggle>Toggle Menu</button>
+  </p> -->
+</ion-list>
+
+</ion-content>
+<script type="text/javascript">
+angular.module('testApp', ['ionic'])
+.controller('MyController', function($scope, $http) {
+  $scope.items = [1,2];
+  $scope.doRefresh = function() {
+    $http.get('/new-items')
+     .success(function(newItems) {
+       $scope.items = newItems;
+     })
+     .finally(function() {
+       // Stop the ion-refresher from spinning
+       $scope.$broadcast('scroll.refreshComplete');
+     });
+  };
+});
+</script>
+
+
+

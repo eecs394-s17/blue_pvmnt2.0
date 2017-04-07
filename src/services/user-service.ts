@@ -124,32 +124,47 @@ export class UserService {
 		return firebase.database().ref('/calendar/').once('value').then((snapshot) => {
 			var calendars = snapshot.val();
 			let list_sub = [];
-			Object.keys(calendars).forEach((cal) => {
-				list_sub = list_sub.concat(this.fetchCalendarHelper(cal));
-				
-		});
+			//var sub_list = this.fetchCalendarHelper();
+			//console.log(sub_list)
+
+			return this.getUserSubscriptions(1).then((itr) => {
+
+				Object.keys(calendars).forEach((cal) => {
+
+					console.log(itr);
+					list_sub = list_sub.concat(this.setCalSubs(cal, itr));
+					
+				});
+		console.log(list_sub);
 		return list_sub;
-   	})
+   	});
+		})
   }
 
-  fetchCalendarHelper(cal){
+  fetchCalendarHelper(){
   	var in_list = false;
   	var list_user_subs = new Array();
-
+		var sub = new SubscriptionType();
   	// Some Asynchronous stuff going on -> need to populate 
-  	this.getUserSubscriptions(1).then((itr) => {
+		this.getUserSubscriptions(1).then((itr) => {
   		list_user_subs = itr;
-    })
-
-    var sub = new SubscriptionType();
-  	sub.calendartype = cal;
-  	sub.icon = 'close-circle';
-  	console.log(list_user_subs)
-  	if (list_user_subs.indexOf(cal) > -1) {
-    	sub.icon = 'checkbox';
-	}
-
-    return sub;	
+			console.log(itr);
+			console.log(list_user_subs);
+			return itr
+    });
+    
   }
+
+	setCalSubs(cal, list_u_s){
+		var sub = new SubscriptionType();
+		sub.calendartype = cal;
+		sub.icon = 'close-circle';
+		console.log(list_u_s)
+		if (list_u_s.indexOf(cal) > -1) {
+			sub.icon = 'checkmark';
+		}
+
+		return sub;	
+	}
 
 }

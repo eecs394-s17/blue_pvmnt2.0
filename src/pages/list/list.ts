@@ -22,9 +22,11 @@ export class ListPage {
   }
 
   load() {
-
+    
     this.userService.fetchCalendars().then((calendars) => {
       this.items = calendars
+      console.log(calendars);
+      console.log(this.items);
      })
 
   }
