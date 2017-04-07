@@ -10,7 +10,7 @@ export class UserService {
   getUserSubscriptions(id){
     return firebase.database().ref('/user/' + id + '/subscriptions').once('value').then((snapshot) => {
       var subscriptions = snapshot.val();
-      console.log(subscriptions)
+      console.log(subscriptions);
       return subscriptions;
     });
   }
