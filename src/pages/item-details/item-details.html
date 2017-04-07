@@ -10,7 +10,7 @@
   <ion-card class="background-img-card">
     <img src={{selectedItem.img}}/>
     <div class="card-title" text-wrap *ngIf="selectedItem"> {{selectedItem.name}} </div>
-    <div class="card-subtitle"> {{selectedItem.calendar}}</div>
+    <div class="card-subtitle"> {{selectedItem.host}}</div>
   </ion-card>
 
   <ion-card>
@@ -24,7 +24,7 @@
           <!--<h4 class="time">{{getTime()}}</h4>-->
         </ion-thumbnail>
         <h2 *ngIf="selectedItem"> {{selectedItem.name}}</h2>
-        <p *ngIf="selectedItem"> {{selectedItem.calendar}}</p>
+        <p *ngIf="selectedItem"> {{selectedItem.host}}</p>
       </ion-item>
 
       <ion-item class="avatartop">

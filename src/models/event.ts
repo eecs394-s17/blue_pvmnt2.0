@@ -2,9 +2,9 @@ export class Event {
 	name: string;
 	desc: string;
 	date: number;
-	calendar: string;
+	calendartype: string;  
 	img: string;
 	tags: string[];
-	place: string;
-	host: string;
+	place: string;    //location
+	host: string;     // who is hosting the event
 }

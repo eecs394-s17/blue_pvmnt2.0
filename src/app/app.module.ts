@@ -5,7 +5,6 @@ import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { PersonalPage } from '../pages/personal/personal';
 import { ListPage } from '../pages/list/list';
-import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -19,8 +18,7 @@ import { EventCard } from '../components/event-card/event-card';
         ItemDetailsPage,
         ListPage,
         EventCard,
-        PersonalPage,
-        TabsPage
+        PersonalPage
     ],
     imports: [
         IonicModule.forRoot(MyApp)
@@ -32,8 +30,7 @@ import { EventCard } from '../components/event-card/event-card';
         ItemDetailsPage,
         PersonalPage,
         ListPage,
-        EventCard,
-        TabsPage
+        EventCard
     ],
     providers: [
         StatusBar,

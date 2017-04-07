@@ -4,27 +4,39 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { ItemDetailsPage } from '../item-details/item-details';
 
+import { EventService } from '../../services/event-service';
+
 
 @Component({
   selector: 'page-list',
-  templateUrl: 'list.html'
+  templateUrl: 'list.html',
+  providers: [EventService]
 })
 export class ListPage {
-  icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
+  items: Array<{title: string, icon: string}>
+  subscribed = new Set(['arts'])
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    'american-football', 'boat', 'bluetooth', 'build'];
-
-    this.items = [];
-    for(let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
+  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService) {
+    
+    // Fetches all calendars (to produce a list to subscribe to)
+    this.eventService.fetchCalendars().then((calendars) => {
+      console.log(calendars);
+      calendars.forEach((calendar) => {
+        if(this.subscribed.has(calendar)){
+          this.items.push({
+            title: calendar,
+            icon: 'checkbox'
+          });
+        }
+        else{
+          this.items.push({
+            title: calendar,
+            icon: 'checkbox-outline'
+          });
+        }
       });
-    }
+    });
+
   }
 
   itemTapped(event, item) {
