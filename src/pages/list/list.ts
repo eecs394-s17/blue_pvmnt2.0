@@ -39,48 +39,15 @@ export class ListPage {
   subscribe(item){
 
     if(item.icon=='checkmark'){
-      console.log("unsubscribe "+item.calendartype);
+      console.log("unsubscribe "+ item.calendartype);
       this.userService.removeUserSubscriptions(1,item.calendartype);
-      // item.icon="close-circle";
-      //this.load();
-      // location.reload();
     }
     else{
       console.log("subscribe "+item.calendartype);
       this.userService.updateUserSubscriptions(1,item.calendartype);
-      // item.icon="checkmark";
-      //this.load();
-      // location.reload();
     }
-
-    // console.log(this.isToggled);
   }
 
 
 }
 
-
-    // Fetches all calendars (to produce a list to subscribe to)
-    // this.eventService.fetchCalendars().then((calendars) => {
-    //   console.log(calendars);
-    //   calendars.forEach((calendar) => {
-    //     if(this.subscribed.has(calendar)){
-    //       this.items.push({
-    //         title: calendar,
-    //         icon: 'checkbox'
-    //       });
-    //     }
-    //     else{
-    //       this.items.push({
-    //         title: calendar,
-    //         icon: 'checkbox-outline'
-    //       });
-    //     }
-    //   });
-    // });
-
-  // itemTapped(event, item) {
-  //   this.navCtrl.push(ItemDetailsPage, {
-  //     item: item
-  //   });
-  // }

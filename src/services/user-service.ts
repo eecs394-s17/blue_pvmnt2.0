@@ -53,18 +53,19 @@ export class UserService {
     	if (sub.indexOf(item) >= 0){
     		in_list = true;
     	}
+      console.log('item to delete ' + item);
+      console.log(in_list)
     	if (in_list){
     		database.ref('user/' + id + '/subscriptions').once('value').then((snapshot) => {
 	  		snapshot.forEach(function(childSnapshot) {
 		    var childKey = childSnapshot.key;
 		    var childData = childSnapshot.val();
-
 		    if (childData == item){
 		    	keytodelete = childKey;
+
+          var adref = database.ref('user/' + id + '/subscriptions/');
+          adref.child(keytodelete).remove();
 		    }
-		    console.log(JSON.stringify(keytodelete))
-		    var adref = database.ref('user/' + id + '/subscriptions/');
-		    adref.child(String(keytodelete)).remove()
 	  });
 	});
 
@@ -124,8 +125,6 @@ export class UserService {
 		return firebase.database().ref('/calendar/').once('value').then((snapshot) => {
 			var calendars = snapshot.val();
 			let list_sub = [];
-			//var sub_list = this.fetchCalendarHelper();
-			//console.log(sub_list)
 
 			return this.getUserSubscriptions(1).then((itr) => {
 

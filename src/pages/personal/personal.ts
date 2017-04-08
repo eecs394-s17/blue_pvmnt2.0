@@ -25,14 +25,6 @@ export class PersonalPage {
 
   load() {
 
-  	// this.eventService.fetchEvents().then((events) => {
-   //  	this.events = events;
-	  //  });
-
-    // var database = firebase.database();
-    // var adref = database.ref('user/' + 1 + '/subscriptions/');
-    // adref.child("1").remove()
-
     this.userService.fetchEventsPersonal().then((events) => {
       this.events = events;
     });
