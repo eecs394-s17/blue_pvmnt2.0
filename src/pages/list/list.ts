@@ -15,20 +15,30 @@ import { SubscriptionType } from '../../models/subscriptiontype';
 })
 
 export class ListPage {
-  items: Array<SubscriptionType>;
+  items: Array<SubscriptionType>;//all the calendars
+  subscribed: Array<SubscriptionType>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService, private userService: UserService) {
     this.load();
   }
 
   load() {
-    
+
     this.userService.fetchCalendars().then((calendars) => {
       this.items = calendars
-      console.log(calendars);
-      console.log(this.items);
      })
 
+     this.userService.getUserSubscriptions(1).then((subscriptions)=>{
+       this.subscribed=subscriptions
+
+     })
+
+  }
+
+  subscribe(item){
+    console.log("Change subscribe! "+item.calendartype);
+    
+    // console.log(this.isToggled);
   }
 }
 

@@ -3,15 +3,25 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Subscription List</ion-title>
+    <ion-title>My Subscription</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <button ion-item *ngFor="let item of items">
+    <!-- <button ion-item *ngFor="let item of items">
       <ion-icon name="{{item.icon}}" item-left></ion-icon>
       {{item.calendartype}}
-    </button>
+    </button> -->
+
+    <ion-item *ngFor="let item of items">
+      <!-- <ion-icon name="{{item.icon}}" item-left></ion-icon> -->
+          <!-- <ion-label >{{item.calendartype}}</ion-label> -->
+          <ion-label >{{item.calendartype}}</ion-label>
+          <ion-toggle value="foo"  (ionChange)="subscribe(item)"></ion-toggle>
+    </ion-item>
+
   </ion-list>
+
+
 </ion-content>
