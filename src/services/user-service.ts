@@ -20,7 +20,7 @@ export class UserService {
       return Object.keys(subscriptions).map(function(key){
       	return subscriptions[key];
   	  })
- 
+
   	})
    }
 
@@ -39,9 +39,9 @@ export class UserService {
     	else{
     		//database.ref().push('user/' + id + '/subscriptions/' + item)
     	}
-    
 
-    });	
+
+    });
   }
 
   removeUserSubscriptions(id, item){
@@ -53,12 +53,12 @@ export class UserService {
     	if (sub.indexOf(item) >= 0){
     		in_list = true;
     	}
-    	if (in_list){ 
+    	if (in_list){
     		database.ref('user/' + id + '/subscriptions').once('value').then((snapshot) => {
 	  		snapshot.forEach(function(childSnapshot) {
 		    var childKey = childSnapshot.key;
 		    var childData = childSnapshot.val();
-		   
+
 		    if (childData == item){
 		    	keytodelete = childKey;
 		    }
@@ -67,10 +67,10 @@ export class UserService {
 		    adref.child(String(keytodelete)).remove()
 	  });
 	});
-    		
+
     }
 
-    });	
+    });
 
 
   }
@@ -133,7 +133,7 @@ export class UserService {
 
 					console.log(itr);
 					list_sub = list_sub.concat(this.setCalSubs(cal, itr));
-					
+
 				});
 		console.log(list_sub);
 		return list_sub;
@@ -145,14 +145,14 @@ export class UserService {
   	var in_list = false;
   	var list_user_subs = new Array();
 		var sub = new SubscriptionType();
-  	// Some Asynchronous stuff going on -> need to populate 
+  	// Some Asynchronous stuff going on -> need to populate
 		this.getUserSubscriptions(1).then((itr) => {
   		list_user_subs = itr;
 			console.log(itr);
 			console.log(list_user_subs);
 			return itr
     });
-    
+
   }
 
 	setCalSubs(cal, list_u_s){
@@ -164,7 +164,7 @@ export class UserService {
 			sub.icon = 'checkmark';
 		}
 
-		return sub;	
+		return sub;
 	}
 
 }

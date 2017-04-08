@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 
 import { NavController, NavParams } from 'ionic-angular';
 
@@ -18,7 +19,7 @@ export class ListPage {
   items: Array<SubscriptionType>;//all the calendars
   subscribed: Array<SubscriptionType>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService, private userService: UserService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public cd: ChangeDetectorRef, private eventService: EventService, private userService: UserService) {
     this.load();
   }
 
@@ -36,10 +37,26 @@ export class ListPage {
   }
 
   subscribe(item){
-    console.log("Change subscribe! "+item.calendartype);
-    
+
+    if(item.icon=='checkmark'){
+      console.log("unsubscribe "+item.calendartype);
+      this.userService.removeUserSubscriptions(1,item.calendartype);
+      // item.icon="close-circle";
+      //this.load();
+      // location.reload();
+    }
+    else{
+      console.log("subscribe "+item.calendartype);
+      this.userService.updateUserSubscriptions(1,item.calendartype);
+      // item.icon="checkmark";
+      //this.load();
+      // location.reload();
+    }
+
     // console.log(this.isToggled);
   }
+
+
 }
 
 
