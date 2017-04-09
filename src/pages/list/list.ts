@@ -8,6 +8,7 @@ import { ItemDetailsPage } from '../item-details/item-details';
 import { EventService } from '../../services/event-service';
 import { UserService } from '../../services/user-service';
 import { SubscriptionType } from '../../models/subscriptiontype';
+import * as firebase from "firebase";
 
 @Component({
   selector: 'page-list',
@@ -25,11 +26,13 @@ export class ListPage {
 
   load() {
 
-    this.userService.fetchCalendars().then((calendars) => {
+    var user = firebase.auth().currentUser;
+    var uid = user.uid;
+    this.userService.fetchCalendars(uid).then((calendars) => {
       this.items = calendars
      })
 
-     this.userService.getUserSubscriptions(1).then((subscriptions)=>{
+     this.userService.getUserSubscriptions(uid).then((subscriptions)=>{
        this.subscribed=subscriptions
 
      })
@@ -38,13 +41,15 @@ export class ListPage {
 
   subscribe(item){
 
+    var user = firebase.auth().currentUser;
+    var uid = user.uid;
     if(item.icon=='checkmark'){
       console.log("unsubscribe "+ item.calendartype);
-      this.userService.removeUserSubscriptions(1,item.calendartype);
+      this.userService.removeUserSubscriptions(uid,item.calendartype);
     }
     else{
       console.log("subscribe "+item.calendartype);
-      this.userService.updateUserSubscriptions(1,item.calendartype);
+      this.userService.updateUserSubscriptions(uid,item.calendartype);
     }
   }
 

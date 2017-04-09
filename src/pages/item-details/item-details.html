@@ -52,7 +52,7 @@
 
 <div class="buttondiv">
 
-<button ion-button [color]="isDanger ? 'danger' : 'primary'" [outline]="isOutline" (click)="addtoCalendar($event)">
+<button ion-button [disabled]="buttonDisabled" [color]="isDanger ? 'danger' : 'primary'" [outline]="isOutline" (click)="addtoCalendar($event)">
   {{ displaybuttonname() }}
   <!-- Subscribe to Similar Events -->
 </button>

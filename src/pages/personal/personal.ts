@@ -6,7 +6,8 @@ import { UserService } from '../../services/user-service';
 
 import { Event } from '../../models/event';
 
-import { ItemDetailsPage } from '../item-details/item-details'
+import { ItemDetailsPage } from '../item-details/item-details';
+import * as firebase from "firebase";
 
 @Component({
   selector: 'page-personal',
@@ -24,8 +25,9 @@ export class PersonalPage {
   }
 
   load() {
-
-    this.userService.fetchEventsPersonal().then((events) => {
+    var user = firebase.auth().currentUser;
+    var uid = user.uid;
+    this.userService.fetchEventsPersonal(uid).then((events) => {
       this.events = events;
     });
   }

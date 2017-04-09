@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, NgZone } from '@angular/core';
 
 import { Platform, MenuController, Nav } from 'ionic-angular';
 
@@ -9,6 +9,8 @@ import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { ListPage } from '../pages/list/list';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { PersonalPage } from '../pages/personal/personal';
+import { LoginPage } from '../pages/login/login';
+import *  as firebase from 'firebase';
 
 @Component({
   templateUrl: 'app.html'
@@ -18,7 +20,8 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // make HelloIonicPage the root (or first) page
-  rootPage: any = HelloIonicPage;
+  rootPage: any;
+  zone: NgZone;
   pages: Array<{title: string, component: any}>;
 
   constructor(
@@ -26,15 +29,27 @@ export class MyApp {
     public menu: MenuController,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen
-  ) {
-    this.initializeApp();
 
+  ) {
+    this.zone = new NgZone({});
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+    this.zone.run( () => {
+    if (!user) {
+      this.rootPage = LoginPage;
+      unsubscribe();
+    } else { 
+      this.rootPage = HelloIonicPage; 
+      unsubscribe();
+    }
+    });     
+  });
+
+    this.initializeApp();
     // set our app's pages
     this.pages = [
       { title: 'All Events', component: HelloIonicPage },
       { title: 'Personal Feed', component: PersonalPage },
       { title: 'Manage Subscriptions', component: ListPage }
-
     ];
   }
 

@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { UserService } from '../../services/user-service';
 import { Event } from '../../models/event'
 import * as moment from 'moment';
+import * as firebase from "firebase";
 
 @Component({
   selector: 'page-item-details',
@@ -38,11 +39,16 @@ export class ItemDetailsPage {
   addtoCalendar(event) {
     // assuming post event to firebase
     // console.log(JSON.stringify(this.selectedItem.calendartype));
+    var user = firebase.auth().currentUser;
+    var uid = user.uid;
+    console.log(uid);
     if (this.priorView == 'PersonalPage'){
-       this.userService.removeUserSubscriptions(1, this.selectedItem.calendartype);
+       this.userService.removeUserSubscriptions(uid, this.selectedItem.calendartype);
+       event.buttonDisabled = true;
     }
     else{
-      this.userService.updateUserSubscriptions(1, this.selectedItem.calendartype);
+      this.userService.updateUserSubscriptions(uid, this.selectedItem.calendartype);
+      console.log('hello');
     }
     
   }

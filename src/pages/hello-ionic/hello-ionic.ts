@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ItemDetailsPage } from '../item-details/item-details'
-
-
+import { AuthData } from '../../providers/auth-data';
 import { EventService } from '../../services/event-service';
 import { UserService } from '../../services/user-service';
+import { LoginPage } from '../login/login';
 
 import { Event } from '../../models/event';
 
@@ -19,7 +19,7 @@ export class HelloIonicPage {
   icons: string[];
   items: Array<{title: string, note: string, icon: string}>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService, private userService: UserService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService, private userService: UserService, public authData: AuthData) {
     this.load();
     //console.log(this.userService.getUserSubscriptions(1));
   }
@@ -43,6 +43,11 @@ export class HelloIonicPage {
     let view = this.navCtrl.getActive().component.name;
   	this.navCtrl.push(ItemDetailsPage, {
   		item: item, view: view });
+  }
+
+  logOut(event){
+    this.authData.logoutUser();
+    this.navCtrl.setRoot(LoginPage);
   }
 
 }

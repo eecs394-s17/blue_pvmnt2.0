@@ -27,7 +27,7 @@ export class UserService {
   updateUserSubscriptions(id, item){
   	var database = firebase.database();
   	var in_list = false;
-    this.getUserSubscriptions(1).then((sub) => {
+    this.getUserSubscriptions(id).then((sub) => {
     	if (sub.length > 0){
 	    	if (sub.indexOf(item) >= 0){
 	    		in_list = true;
@@ -49,7 +49,7 @@ export class UserService {
   	var keytodelete = '';
   	var in_list = false;
   	// console.log(item);
-  	this.getUserSubscriptions(1).then((sub) => {
+  	this.getUserSubscriptions(id).then((sub) => {
     	if (sub.indexOf(item) >= 0){
     		in_list = true;
     	}
@@ -76,15 +76,15 @@ export class UserService {
 
   }
 
-  fetchEventsPersonal(){
+  fetchEventsPersonal(id){
 
   	var list_user_subs = new Array();
-    if (this.getUserSubscriptions(1) === undefined){
+    if (this.getUserSubscriptions(id) === undefined){
       console.log('wow')
       return undefined;
     }
     else{
-      this.getUserSubscriptions(1).then((sub) => {
+      this.getUserSubscriptions(id).then((sub) => {
       // console.log(sub)
       list_user_subs = sub;
        });
@@ -121,12 +121,12 @@ export class UserService {
 		return e;
   }
 
-  fetchCalendars() {
+  fetchCalendars(id) {
 		return firebase.database().ref('/calendar/').once('value').then((snapshot) => {
 			var calendars = snapshot.val();
 			let list_sub = [];
 
-			return this.getUserSubscriptions(1).then((itr) => {
+			return this.getUserSubscriptions(id).then((itr) => {
 
 				Object.keys(calendars).forEach((cal) => {
 
@@ -140,19 +140,19 @@ export class UserService {
 		})
   }
 
-  fetchCalendarHelper(){
-  	var in_list = false;
-  	var list_user_subs = new Array();
-		var sub = new SubscriptionType();
-  	// Some Asynchronous stuff going on -> need to populate
-		this.getUserSubscriptions(1).then((itr) => {
-  		list_user_subs = itr;
-			console.log(itr);
-			console.log(list_user_subs);
-			return itr
-    });
+  // fetchCalendarHelper(){
+  // 	var in_list = false;
+  // 	var list_user_subs = new Array();
+		// var sub = new SubscriptionType();
+  // 	// Some Asynchronous stuff going on -> need to populate
+		// this.getUserSubscriptions(id).then((itr) => {
+  // 		list_user_subs = itr;
+		// 	console.log(itr);
+		// 	console.log(list_user_subs);
+		// 	return itr
+  //   });
 
-  }
+  // }
 
 	setCalSubs(cal, list_u_s){
 		var sub = new SubscriptionType();
