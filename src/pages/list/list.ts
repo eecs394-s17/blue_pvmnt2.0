@@ -46,13 +46,14 @@ export class ListPage {
     if(item.icon=='checkmark'){
       console.log("unsubscribe "+ item.calendartype);
       this.userService.removeUserSubscriptions(uid,item.calendartype);
+      item.icon='close-circle';
     }
     else{
       console.log("subscribe "+item.calendartype);
       this.userService.updateUserSubscriptions(uid,item.calendartype);
+      item.icon='checkmark';
     }
   }
 
 
 }
-
