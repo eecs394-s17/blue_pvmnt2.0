@@ -15,8 +15,9 @@
           <!-- <ion-label >{{item.calendartype}}</ion-label> -->
           <ion-label> {{item.calendartype}} </ion-label>
           <!-- <ion-label>{{item.icon}}</ion-label> -->
-          <ion-toggle value="foo" *ngIf="item.icon=='checkmark'" checked="true" (ionChange)="subscribe(item)"></ion-toggle>
-          <ion-toggle value="foo" *ngIf="item.icon=='close-circle'" checked="false" (ionChange)="subscribe(item)"></ion-toggle>
+          <ion-toggle value="foo" *ngIf="item.icon=='checkmark' && item.calendartype!='northwestern'" checked="true" (ionChange)="subscribe(item)"></ion-toggle>
+          <ion-toggle value="foo" *ngIf="item.icon=='close-circle' && item.calendartype!='northwestern'" checked="false" (ionChange)="subscribe(item)"></ion-toggle>
+          <ion-toggle value="foo" *ngIf="item.calendartype=='northwestern'" checked="true" (ionChange)="subscribe(item)" disabled="true"></ion-toggle>
     </ion-item>
 
   </ion-list>
