@@ -42,7 +42,7 @@ export class ItemDetailsPage {
     // console.log(JSON.stringify(this.selectedItem.calendartype));
     var user = firebase.auth().currentUser;
     var uid = user.uid;
-    if(this.selectedItem.calendartype=='northwestern'){
+    if(this.selectedItem.calendartype=='northwestern' && this.priorView == 'PersonalPage'){
       let alert = this.alertCtrl.create({
         title: 'Alert!',
         subTitle: 'You cannot unsubscribe Northwestern events since you are a student in Northwestern.',
