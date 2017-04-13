@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ItemDetailsPage } from '../item-details/item-details'
 import { AuthData } from '../../providers/auth-data';
@@ -22,6 +22,10 @@ export class HelloIonicPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService, private userService: UserService, public authData: AuthData) {
     this.load();
     //console.log(this.userService.getUserSubscriptions(1));
+  }
+
+  ionViewDidEnter(){
+    this.load();
   }
 
   load() {

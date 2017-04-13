@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 
 import { NavController, NavParams } from 'ionic-angular';
@@ -24,6 +24,10 @@ export class ListPage {
     this.load();
   }
 
+  ionViewDidEnter(){
+    this.load();
+  }
+  
   load() {
 
     var user = firebase.auth().currentUser;

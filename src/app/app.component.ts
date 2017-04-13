@@ -10,7 +10,23 @@ import { ListPage } from '../pages/list/list';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { PersonalPage } from '../pages/personal/personal';
 import { LoginPage } from '../pages/login/login';
+import { TabsPage } from '../pages/tabs/tabs';
+import { SignupPage } from '../pages/signup/signup';
+import { ResetPasswordPage } from '../pages/reset-password/reset-password'
+
 import *  as firebase from 'firebase';
+
+export interface PageInterface {
+  title: string;
+  name: string;
+  component: any;
+  icon: string;
+  logsOut?: boolean;
+  index?: number;
+  tabName?: string;
+  tabComponent?: any;
+}
+
 
 @Component({
   templateUrl: 'app.html'
@@ -29,8 +45,8 @@ export class MyApp {
     public menu: MenuController,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen
-
-  ) {
+  ) 
+  {
     this.zone = new NgZone({});
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
     this.zone.run( () => {
@@ -38,13 +54,13 @@ export class MyApp {
       this.rootPage = LoginPage;
       unsubscribe();
     } else { 
-      this.rootPage = HelloIonicPage; 
+      this.rootPage = TabsPage; 
       unsubscribe();
     }
     });     
   });
 
-    this.initializeApp();
+  this.initializeApp();
     // set our app's pages
     this.pages = [
       { title: 'All Events', component: HelloIonicPage },
@@ -62,10 +78,11 @@ export class MyApp {
     });
   }
 
-  openPage(page) {
+  openPage(page: PageInterface) {
     // close the menu when clicking a link from the menu
     this.menu.close();
     // navigate to the new page if it is not the current page
     this.nav.setRoot(page.component);
   }
+
 }

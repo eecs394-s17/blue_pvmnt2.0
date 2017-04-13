@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { EventService } from '../../services/event-service';
@@ -14,6 +14,7 @@ import * as firebase from "firebase";
   templateUrl: 'personal.html',
   providers: [EventService, UserService]
 })
+
 export class PersonalPage {
   events: Array<Event>;
   subscriptions: string[];
@@ -21,6 +22,10 @@ export class PersonalPage {
   items: Array<{title: string, note: string, icon: string}>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService, private userService: UserService) {
+    this.load();
+  }
+
+  ionViewDidEnter(){
     this.load();
   }
 
@@ -37,7 +42,5 @@ export class PersonalPage {
   	this.navCtrl.push(ItemDetailsPage, {
   		item: item, view: view });
 	}
-
-
 
 }
