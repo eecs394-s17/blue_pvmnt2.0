@@ -3,15 +3,16 @@
 <!--     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button> -->
-    <ion-title>My Events</ion-title>
+    <ion-title> Recommended Events </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content no-padding no-margin style="background-color: #E8E8E8;">
 
   <!-- <button ion-button block color="dark" (click)="doAlert()">Incoming Events!</button> -->
-<ion-list>
 
+<ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+<ion-list>
 <!--add logic such that only if certain property is met then display !-->
 <event-card *ngFor="let e of events" [event]="e" (click)="itemTapped($event, e)">
 </event-card>

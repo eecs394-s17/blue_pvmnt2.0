@@ -17,6 +17,7 @@ import * as firebase from "firebase";
 
 export class PersonalPage {
   events: Array<Event>;
+  loadedevents: any;
   subscriptions: string[];
   icons: string[];
   items: Array<{title: string, note: string, icon: string}>;
@@ -34,6 +35,7 @@ export class PersonalPage {
     var uid = user.uid;
     this.userService.fetchEventsPersonal(uid).then((events) => {
       this.events = events;
+      this.loadedevents = events;
     });
   }
 
@@ -42,5 +44,37 @@ export class PersonalPage {
   	this.navCtrl.push(ItemDetailsPage, {
   		item: item, view: view });
 	}
+
+  initializeItems(): void {
+    this.events = this.loadedevents;
+  }
+
+  getItems(searchbar){
+    
+    this.initializeItems();
+
+    var q = searchbar.srcElement.value;
+
+
+    if (!q) {
+      return;
+    }
+
+    this.events = this.events.filter((v) => {
+      if(v.name && q || v.calendartype && q || v.host && q) {
+        if (v.name.toLowerCase().indexOf(q.toLowerCase()) > -1) {
+          return true;
+        }
+        else if (v.calendartype.toLowerCase().indexOf(q.toLowerCase()) > -1){
+          return true;
+        }
+        else if (v.calendartype.toLowerCase().indexOf(q.toLowerCase()) > -1){
+          return true;
+        }
+        return false;
+      } 
+    });
+
+  }
 
 }
