@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Pvmnt 2.0</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+	<ion-item>
+	  <ion-label stacked>Start Date</ion-label>
+	  <ion-datetime id="date" displayFormat="DD/MM/YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="startdate"></ion-datetime>
+	</ion-item>
+
+	<ion-item>
+	  <ion-label stacked>End Date</ion-label>
+	  <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="enddate"></ion-datetime>
+	</ion-item>
+
+	<div class="savedates">
+		<button ion-button (click)="exitPage($event)">
+		  <p> Save Dates </p>
+		</button>
+	</div>
+
+</ion-content>

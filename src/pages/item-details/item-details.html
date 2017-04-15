@@ -9,36 +9,32 @@
 
   <ion-card class="background-img-card">
     <img src={{selectedItem.img}}/>
-    <div class="card-title" text-wrap *ngIf="selectedItem"> {{selectedItem.name}} </div>
-    <div class="card-subtitle"> {{selectedItem.host}}</div>
+<!--     <div class="card-title" text-wrap *ngIf="selectedItem"> {{selectedItem.name}} </div>
+    <div class="card-subtitle"> {{selectedItem.host}}</div> -->
   </ion-card>
 
   <ion-card>
       <ion-item>
-        <!-- <ion-avatar item-left>
-          <img src="assets/img/calendaricon.png">
-        </ion-avatar> -->
         <ion-thumbnail item-left class="calendar">
           <h1 class="day">{{getDay()}}</h1>
           <h1 class = "month">{{getMonth()}}</h1>
-          <!--<h4 class="time">{{getTime()}}</h4>-->
         </ion-thumbnail>
         <h2 *ngIf="selectedItem"> {{selectedItem.name}}</h2>
         <p *ngIf="selectedItem"> {{selectedItem.host}}</p>
       </ion-item>
 
-      <ion-item class="avatartop">
+      <ion-item>
         <ion-avatar item-left class="iconavatar">
           <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon>
         </ion-avatar>
         <h3 class="icontext"> {{getMonth()}} {{getDay()}} at {{getTime()}} </h3>
       </ion-item>
-      <ion-item>
+      <ion-item class="avatartop">
         <ion-avatar item-left class="iconavatar">
           <ion-icon ios="ios-locate" md="md-locate"> </ion-icon>
         </ion-avatar>
           <h3 class="icontext" *ngIf="selectedItem"> {{selectedItem.place}} </h3>
-       </ion-item>
+      </ion-item>
   </ion-card>
 
 <ion-card>

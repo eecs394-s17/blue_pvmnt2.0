@@ -1,5 +1,30 @@
 page-hello-ionic {
 
+.item-datetime ion-label {
+  -webkit-flex: initial;
+  -ms-flex: initial;
+  flex: initial;
+  max-width: 100px;
+  pointer-events: none;
+}
+
+.search{
+    width:58.5%;
+    float: left;
+}
+
+.datetime {
+    width:38.5%;
+    float: left;
+    margin-top: -1%; 
+}
+
+.clearfix{
+    clear:both
+}
+
+
+s
   .label {
     margin: 0px;
   }

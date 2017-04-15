@@ -9,6 +9,7 @@ import { LoginPage } from '../pages/login/login';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
+import { FilterDatePage } from '../pages/filterdate/filterdate'
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -34,7 +35,8 @@ const myFirebaseAuthConfig = {
         ResetPasswordPage,
         SignupPage,
         EventCard,
-        TabsPage
+        TabsPage,
+        FilterDatePage
     ],
     imports: [
         IonicModule.forRoot(MyApp)
@@ -51,7 +53,8 @@ const myFirebaseAuthConfig = {
         EventCard,
         ResetPasswordPage,
         SignupPage,
-        TabsPage
+        TabsPage,
+        FilterDatePage
     ],
     providers: [
         StatusBar,

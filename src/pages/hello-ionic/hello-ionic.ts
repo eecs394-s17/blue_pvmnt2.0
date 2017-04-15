@@ -5,6 +5,7 @@ import { AuthData } from '../../providers/auth-data';
 import { EventService } from '../../services/event-service';
 import { UserService } from '../../services/user-service';
 import { LoginPage } from '../login/login';
+import { FilterDatePage } from '../filterdate/filterdate';
 
 import { Event } from '../../models/event';
 
@@ -19,23 +20,78 @@ export class HelloIonicPage {
   loadedevents: any;
   icons: string[];
   items: Array<{title: string, note: string, icon: string}>;
+  filter_date_array: any;
+  start_date: any;
+  end_date: any;
+  button_press_count: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService, private userService: UserService, public authData: AuthData) {
     this.load();
-    //console.log(this.userService.getUserSubscriptions(1));
+    this.button_press_count = 0;
   }
 
-  ionViewDidEnter(){
-    this.load();
+  myCallbackFunction = (_params) => {
+  return new Promise((resolve, reject) => {
+     this.filter_date_array = _params;
+     this.start_date = this.filter_date_array[0];
+     this.end_date = this.filter_date_array[1];
+     this.filterDateHelper();
+     resolve();
+  })
   }
+
+  filterDates(event){
+    console.log(this.button_press_count);
+    if ((this.button_press_count % 2) == 0){
+      this.navCtrl.push(FilterDatePage, {
+        callback: this.myCallbackFunction
+      });
+    }
+    else{
+      this.initializeItems();
+    }
+    this.button_press_count = this.button_press_count + 1;
+  }
+
+  filterDateHelper(){
+
+    this.initializeItems();
+
+    var dates = new Array();
+    var start = this.start_date;
+    var end = this.end_date;
+
+    this.events = this.events.filter((v) => {
+      if(start <= v.date && end >= v.date) {
+        return true;
+      } 
+      else{
+        return false;
+      }
+    });
+
+  }
+
+  displaybuttonname(){
+    var buttontext = '';
+    if ((this.button_press_count % 2) == 0){
+      buttontext = 'Filter by Date';
+    }
+    else{
+      buttontext = 'Remove Filter'
+    }
+    return buttontext;
+  }
+
+  // ionViewDidEnter(){
+  //   this.initializeItems();
+  // }
 
   load() {
-    // localStorage.setItem("id", "hello");
-    // console.log(localStorage.getItem("id"));
-    // Fetches all calendars (to produce a list to subscribe to)
-    this.eventService.fetchCalendars().then((calendars) => {
-      // console.log(calendars);
-    });
+
+    // this.eventService.fetchCalendars().then((calendars) => {
+    //   // console.log(calendars);
+    // });
 
     // Fetches all events that the user is currently subscribed to
     this.eventService.fetchEvents().then((events) => {
