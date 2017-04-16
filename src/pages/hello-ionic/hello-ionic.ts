@@ -97,6 +97,9 @@ export class HelloIonicPage {
     this.eventService.fetchEvents().then((events) => {
       this.events = events;
       this.loadedevents = events;
+      this.eventService.fetchAllUpcomingEvents().then((events) => {
+        console.log(events);
+      });
     });
   }
 
