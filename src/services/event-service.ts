@@ -90,52 +90,6 @@ export class EventService {
 	}
 
 	// Graph Database Shiz
-	createCalendar(name) {
-		var query = 'CREATE (c: Calendar {name: {calendarName}}) \
-					 RETURN c';
-		var params = {calendarName: name};
-
-		db.query(query, params, (err, results) => {
-	  		if (err) {
-	      		console.error(err);
-	  		} else {
-	      		console.log(results);
-	  		}
-		});
-	}
-
-	fetchCalendar(name) {
-		var query = 'MATCH (c: Calendar) \
-					 WHERE c.name = {calendarName} \
-					 RETURN c';
-		var params = {calendarName: name};
-		
-		db.query(query, params, (err, results) => {
-			if (err) {
-				console.error(err);
-			} else {
-				console.log(results);
-			}
-		});
-	}
-
-	createEventForCalendar(calendar, event) {
-		var query = 'MATCH (c: Calendar) 			\
-					 WHERE c.name = {calendarName} 	\
-					 CREATE (e:Event {eventData}) 	\
-					 CREATE (c)-[r:HOSTING]->(e)	\
-					 RETURN e';
-		var params = {calendarName: calendar, eventData: event};
-
-		db.query(query, params, (err, results) => {
-			if (err) {
-				console.error(err);
-			} else {
-				console.log(results);
-			}
-		});
-	}
-
 	fetchUpcomingEventsForCalendar(calendar) {
 		var query = '	MATCH (c:Calendar) 										\
 					 	WHERE c.name = {calendarName}							\
@@ -145,12 +99,15 @@ export class EventService {
 						RETURN e 												\
 					';
 		var params = {calendarName: calendar, currentDate: (+ new Date())/1000};
-		db.query(query, params, (err, results) => {
-			if (err) {
-				console.error(err);
-			} else {
-				console.log(results);
-			}
+		return new Promise((resolve, reject) => {
+			db.query(query, params, (err, results) => {
+				if (err) {
+					console.error(err);
+					reject(err);
+				} else {
+					resolve(results);
+				}
+			});
 		});
 	}
 
@@ -158,12 +115,15 @@ export class EventService {
 		var query = 'CREATE (u: User {id: {userId}}) \
 					 RETURN u';
 		var params = {userId: user};
-		db.query(query, params, (err, results) => {
-			if (err) {
-				console.error(err);
-			} else {
-				console.log(results);
-			}
+		return new Promise((resolve, reject) => {
+			db.query(query, params, (err, results) => {
+				if (err) {
+					console.error(err);
+					reject(err);
+				} else {
+					resolve(results);
+				}
+			});
 		});
 	}
 
@@ -176,12 +136,15 @@ export class EventService {
 						RETURN u 												\
 					';
 		var params = {calendarName: calendar, userId: user};
-		db.query(query, params, (err, results) => {
-			if (err) {
-				console.error(err);
-			} else {
-				console.log(results);
-			}
+		return new Promise((resolve, reject) => {
+			db.query(query, params, (err, results) => {
+				if (err) {
+					console.error(err);
+					reject(err);
+				} else {
+					resolve(results);
+				}
+			});
 		});
 	}
 
@@ -190,12 +153,15 @@ export class EventService {
 						DELETE r																			\
 					';
 		var params = {calendarName: calendar, userId: user};
-		db.query(query, params, (err, results) => {
-			if (err) {
-				console.error(err);
-			} else {
-				console.log(results);
-			}
+		return new Promise((resolve, reject) => {
+			db.query(query, params, (err, results) => {
+				if (err) {
+					console.error(err);
+					reject(err);
+				} else {
+					resolve(results);
+				}
+			});
 		});
 	}
 
@@ -208,12 +174,15 @@ export class EventService {
 						ORDER BY e.date																	\
 					';
 		var params = {userId: userId};
-		db.query(query, params, (err, results) => {
-			if (err) {
-				console.error(err);
-			} else {
-				console.log(results);
-			}
+		return new Promise((resolve, reject) => {
+			db.query(query, params, (err, results) => {
+				if (err) {
+					console.error(err);
+					reject(err);
+				} else {
+					resolve(results);
+				}
+			});
 		});
 	}
 

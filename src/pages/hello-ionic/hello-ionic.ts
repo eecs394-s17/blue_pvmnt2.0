@@ -93,14 +93,20 @@ export class HelloIonicPage {
     //   // console.log(calendars);
     // });
 
-    // Fetches all events that the user is currently subscribed to
-    this.eventService.fetchEvents().then((events) => {
-      this.events = events;
-      this.loadedevents = events;
-      this.eventService.fetchAllUpcomingEvents().then((events) => {
-        console.log(events);
+     this.eventService.fetchAllUpcomingEvents().then((events: Event[]) => {
+         this.events = events;
+         this.loadedevents = events;
       });
-    });
+      
+      this.eventService.createUser(5).then((res) => {
+        console.log(res);
+      });
+
+    // Fetches all events that the user is currently subscribed to
+    // this.eventService.fetchEvents().then((events) => {
+    //   this.events = events;
+    //   this.loadedevents = events;
+    // });
   }
 
   itemTapped(event, item) {
