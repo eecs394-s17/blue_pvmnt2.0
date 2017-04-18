@@ -41,7 +41,7 @@ export class HelloIonicPage {
   }
 
   filterDates(event){
-    console.log(this.button_press_count);
+    //console.log(this.button_press_count);
     if ((this.button_press_count % 2) == 0){
       this.navCtrl.push(FilterDatePage, {
         callback: this.myCallbackFunction
@@ -60,8 +60,11 @@ export class HelloIonicPage {
     var dates = new Array();
     var start = this.start_date;
     var end = this.end_date;
+    console.log('start ' + start);
+    console.log('end ' + end);
 
     this.events = this.events.filter((v) => {
+      console.log(v);
       if(start <= v.date && end >= v.date) {
         return true;
       } 

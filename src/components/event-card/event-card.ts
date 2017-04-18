@@ -25,6 +25,7 @@ export class EventCard {
   // }
 
   getDay() {
+    console.log('event date ' + this.event.date);
     return moment.unix(this.event.date).format("DD");
   }
   getMonth() {
