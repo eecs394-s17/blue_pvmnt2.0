@@ -6,25 +6,15 @@ import { FIREBASE_CONFIG, NEO4J_CONFIG } from "../../APP_SECRETS";
 firebase.initializeApp(FIREBASE_CONFIG);
 
 import { Event } from '../models/event';
-
-import seraph from 'seraph'
-var db = seraph({
-  server: NEO4J_CONFIG.url,
-  user: NEO4J_CONFIG.username,
-  pass: NEO4J_CONFIG.password
-});
-
+import { NeoService } from './neo-service';
 
 @Injectable()
 export class EventService {
+	neo: NeoService;
 
-	// fetch() {
-	// 		return firebase.database().ref('/event/').once('value').then((snapshot) => {
-	//
-  // 				var eventJSONs = snapshot.val();
-  // 				return eventJSONs.slice(1).map(this.jsonToEvent);
-	// 		});
-	// }
+	constructor() {
+		this.neo = new NeoService();
+	}
 
 	jsonToEvent(json) {
 		var e = new Event();
@@ -99,7 +89,7 @@ export class EventService {
 						RETURN e 												\
 					';
 		var params = {calendarName: calendar};
-		return this.graphQuery(query, params).then((results: Event[]) => {
+		return this.neo.runQuery(query, params).then((results: Event[]) => {
 			return results.map(this.parseEventData);
 		});	
 	}
@@ -108,7 +98,7 @@ export class EventService {
 		var query = 'CREATE (u: User {id: {userId}}) \
 					 RETURN u';
 		var params = {userId: user};
-		return this.graphQuery(query, params).then((results) => {
+		return this.neo.runQuery(query, params).then((results) => {
 			return results;
 		});
 	}
@@ -122,7 +112,7 @@ export class EventService {
 						RETURN u 												\
 					';
 		var params = {calendarName: calendar, userId: user};
-		return this.graphQuery(query, params).then((results) => {
+		return this.neo.runQuery(query, params).then((results) => {
 			return results;
 		});
 	}
@@ -132,7 +122,7 @@ export class EventService {
 						DELETE r																			\
 					';
 		var params = {calendarName: calendar, userId: user};
-		return this.graphQuery(query, params).then((results) => {
+		return this.neo.runQuery(query, params).then((results) => {
 			return results;
 		});	
 	}
@@ -146,7 +136,7 @@ export class EventService {
 						ORDER BY e.date																	\
 					';
 		var params = {userId: userId};
-		return this.graphQuery(query, params).then((results: Event[]) => {
+		return this.neo.runQuery(query, params).then((results: Event[]) => {
 			return results.map(this.parseEventData);
 		});	
 	}
@@ -159,21 +149,9 @@ export class EventService {
 						ORDER BY e.date								\
 					';
 		var params = {};
-		return this.graphQuery(query, params).then((results: Event[]) => {
+		return this.neo.runQuery(query, params).then((results: Event[]) => {
 			return results.map(this.parseEventData);
 		});		
-	}
-
-	graphQuery(query, params) {
-		return new Promise((resolve, reject) => {
-			db.query(query, params, (err, results) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(results);
-				}
-			});
-		});	
 	}
 
 	parseEventData(data) {
