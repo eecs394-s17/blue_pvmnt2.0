@@ -104,6 +104,15 @@ export class HelloIonicPage {
     // });
   }
 
+  ionViewDidEnter(){
+    if ((this.button_press_count % 2) == 0){
+      this.load();
+    }
+    else{
+      console.log('Do Nothing');
+    } 
+  }
+
   itemTapped(event, item) {
 
     let view = this.navCtrl.getActive().component.name;

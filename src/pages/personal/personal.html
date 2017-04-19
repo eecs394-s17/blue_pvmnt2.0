@@ -11,7 +11,18 @@
 
   <!-- <button ion-button block color="dark" (click)="doAlert()">Incoming Events!</button> -->
 
-<ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+<div class="search">
+  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>    
+</div>
+<div class="datetime">
+  <button ion-button item-right icon-left (click)="filterDates($event)">
+    <ion-icon name="calendar"></ion-icon>
+      <p> {{ displaybuttonname() }} </p>
+  </button>
+</div>
+<div class="clearfix"></div>
+
+
 <ion-list>
 <!--add logic such that only if certain property is met then display !-->
 <event-card *ngFor="let e of events" [event]="e" (click)="itemTapped($event, e)">
