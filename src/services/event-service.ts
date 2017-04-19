@@ -94,36 +94,22 @@ export class EventService {
 		var query = '	MATCH (c:Calendar) 										\
 					 	WHERE c.name = {calendarName}							\
 						MATCH (e:Event)											\
-						WHERE (c)-[:HOSTING]->(e) AND e.date >= {currentDate}	\
+						WHERE (c)-[:HOSTING]->(e) AND e.date >= timestamp()/1000	\
 						SET e.host = c.name 									\
 						RETURN e 												\
 					';
-		var params = {calendarName: calendar, currentDate: (+ new Date())/1000};
-		return new Promise((resolve, reject) => {
-			db.query(query, params, (err, results) => {
-				if (err) {
-					console.error(err);
-					reject(err);
-				} else {
-					resolve(results);
-				}
-			});
-		});
+		var params = {calendarName: calendar};
+		return this.graphQuery(query, params).then((results: Event[]) => {
+			return results.map(this.parseEventData);
+		});	
 	}
 
 	createUser(user) {
 		var query = 'CREATE (u: User {id: {userId}}) \
 					 RETURN u';
 		var params = {userId: user};
-		return new Promise((resolve, reject) => {
-			db.query(query, params, (err, results) => {
-				if (err) {
-					console.error(err);
-					reject(err);
-				} else {
-					resolve(results);
-				}
-			});
+		return this.graphQuery(query, params).then((results) => {
+			return results;
 		});
 	}
 
@@ -136,15 +122,8 @@ export class EventService {
 						RETURN u 												\
 					';
 		var params = {calendarName: calendar, userId: user};
-		return new Promise((resolve, reject) => {
-			db.query(query, params, (err, results) => {
-				if (err) {
-					console.error(err);
-					reject(err);
-				} else {
-					resolve(results);
-				}
-			});
+		return this.graphQuery(query, params).then((results) => {
+			return results;
 		});
 	}
 
@@ -153,16 +132,9 @@ export class EventService {
 						DELETE r																			\
 					';
 		var params = {calendarName: calendar, userId: user};
-		return new Promise((resolve, reject) => {
-			db.query(query, params, (err, results) => {
-				if (err) {
-					console.error(err);
-					reject(err);
-				} else {
-					resolve(results);
-				}
-			});
-		});
+		return this.graphQuery(query, params).then((results) => {
+			return results;
+		});	
 	}
 
 	fetchUpcomingEventsForUser(userId) {
@@ -174,16 +146,9 @@ export class EventService {
 						ORDER BY e.date																	\
 					';
 		var params = {userId: userId};
-		return new Promise((resolve, reject) => {
-			db.query(query, params, (err, results) => {
-				if (err) {
-					console.error(err);
-					reject(err);
-				} else {
-					resolve(results);
-				}
-			});
-		});
+		return this.graphQuery(query, params).then((results: Event[]) => {
+			return results.map(this.parseEventData);
+		});	
 	}
 
 	fetchAllUpcomingEvents() {
@@ -194,18 +159,21 @@ export class EventService {
 						ORDER BY e.date								\
 					';
 		var params = {};
+		return this.graphQuery(query, params).then((results: Event[]) => {
+			return results.map(this.parseEventData);
+		});		
+	}
+
+	graphQuery(query, params) {
 		return new Promise((resolve, reject) => {
 			db.query(query, params, (err, results) => {
 				if (err) {
-					console.error(err);
 					reject(err);
 				} else {
-					resolve(results.map(this.parseEventData));
+					resolve(results);
 				}
 			});
-		});
-
-		
+		});	
 	}
 
 	parseEventData(data) {
