@@ -35,20 +35,20 @@ export class ListPage {
     var user = firebase.auth().currentUser;
     var uid = user.uid;
 
-    this.calendarService.fetchallCalendars().then((calendars) => {
-      console.log(calendars);
-      this.items = calendars;
-    })
-
-    // this.userService.fetchCalendars(uid).then((calendars) => {
+    // this.calendarService.fetchallCalendars().then((calendars) => {
     //   console.log(calendars);
-    //   this.items = calendars
-    //  })
+    //   this.items = calendars;
+    // })
 
-    //  this.userService.getUserSubscriptions(uid).then((subscriptions)=>{
-    //    this.subscribed = subscriptions
+    this.userService.fetchCalendars(uid).then((calendars) => {
+      console.log(calendars);
+      this.items = calendars
+     })
 
-    //  })
+     this.userService.getUserSubscriptions(uid).then((subscriptions)=>{
+       this.subscribed = subscriptions
+
+     })
 
   }
 

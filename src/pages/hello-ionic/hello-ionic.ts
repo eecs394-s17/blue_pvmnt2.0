@@ -60,11 +60,11 @@ export class HelloIonicPage {
     var dates = new Array();
     var start = this.start_date;
     var end = this.end_date;
-    console.log('start ' + start);
-    console.log('end ' + end);
+    // console.log('start ' + start);
+    // console.log('end ' + end);
 
     this.events = this.events.filter((v) => {
-      console.log(v);
+      // console.log(v);
       if(start <= v.date && end >= v.date) {
         return true;
       } 
