@@ -1,14 +1,24 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 
+
 import * as firebase from "firebase";
+import { FIREBASE_CONFIG, NEO4J_CONFIG } from "../../APP_SECRETS";
+firebase.initializeApp(FIREBASE_CONFIG);
 
 import { Event } from '../models/event';
 import { SubscriptionType } from '../models/subscriptiontype';
 
 @Injectable()
 export class UserService {
-
+  // createUser(user) {
+  //   var query = 'CREATE (u: User {id: {userId}}) \
+  //          RETURN u';
+  //   var params = {userId: user};
+  //   return this.neo.runQuery(query, params).then((results) => {
+  //     return results;
+  //   });
+  // }
 
   getUserSubscriptions(id){
     return firebase.database().ref('/user/' + id + '/subscriptions').once('value').then((snapshot) => {

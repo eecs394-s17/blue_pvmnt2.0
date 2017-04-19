@@ -97,11 +97,7 @@ export class HelloIonicPage {
          this.events = events;
          this.loadedevents = events;
       });
-      
-      this.eventService.createUser(5).then((res) => {
-        console.log(res);
-      });
-
+    
     // Fetches all events that the user is currently subscribed to
     // this.eventService.fetchEvents().then((events) => {
     //   this.events = events;
