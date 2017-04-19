@@ -55,10 +55,8 @@ export class FilterDatePage {
     this.load(str_start, str_end);
   }
 
-
-
   exitPage(event){
-    this.date_array = [Math.round(new Date(this.startdate).getTime()/1000), Math.round(new Date(this.enddate).getTime()/1000)];     
+    this.date_array = [Math.round(new Date(this.startdate).getTime()/1000), Math.round(new Date(this.enddate).getTime()/1000)];    
     this.callback(this.date_array).then(()=>{
        this.navCtrl.pop();
     });
