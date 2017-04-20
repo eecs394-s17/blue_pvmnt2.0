@@ -41,15 +41,26 @@ export class EventService {
 		});
 	}
 
+
 	unsubscribeUserFromCalendar(userId, calendarId) {
 		var query = `	MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar {id: {calendarId}}) 	
-						DELETE r																			
 					`;
 		var params = {calendarId: calendarId, userId: userId};
 		return this.neo.runQuery(query, params).then((results) => {
 			return results;
 		});	
 	}
+
+	userIsInterestedIn(user){
+        var query =`	MATCH (u:User)-[:INTERESTED]->(e:Event)
+                    	WHERE u.id = {uid}
+                        RETURN e
+                    `;
+        var params = {uid: user}
+        return this.neo.runQuery(query, params).then((results) => {
+                return results;
+        });
+    }
 
 	fetchUpcomingEventsForUser(userId) {
 		var query = `	MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar) 	
@@ -84,12 +95,14 @@ export class EventService {
 	parseEventData(data) {
 		let e = new Event();
 		e.name = data.name;
+		e.id = data.id;
 		e.desc = data.desc;
 		e.date = data.date;
 		e.img = data.img;
 		e.host = data.host;
 		e.calendartype = 'Calendar Type';
 		e.place = data.location;
+		//console.log(data);
 		return e;
 	}
 }

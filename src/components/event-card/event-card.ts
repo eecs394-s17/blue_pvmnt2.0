@@ -1,13 +1,16 @@
 import { Component, Input } from '@angular/core';
-import { NavController } from 'ionic-angular'
+import { NavController, NavParams } from 'ionic-angular'
 import { Event } from '../../models/event'
-
+import { EventService } from '../../services/event-service';
+import * as firebase from "firebase";
 import * as moment from 'moment';
+import { AuthData } from '../../providers/auth-data';
 
 
 @Component({
   selector: 'event-card',
-  templateUrl: 'event-card.html'
+  templateUrl: 'event-card.html',
+  providers: [EventService]
 })
 
 export class EventCard {
@@ -15,14 +18,16 @@ export class EventCard {
   day: string;
   month: string;
   time: string;
+  selectedItem: any;
 
 
-  // constructor(){
+   constructor(private eventService: EventService, public navParams: NavParams, public authData: AuthData){
   //   var t = moment.unix(this.event.date);
   //   this.day = t.format("DD");
   //   this.month = t.format("MM");
   //   this.time = t.format("h:mm a");
-  // }
+  this.selectedItem = navParams.get('item');
+   }
 
   getDay() {
     return moment.unix(this.event.date).format("DD");
@@ -39,4 +44,14 @@ export class EventCard {
     console.log('hello');
     
   }
+
+  interestedIn(event){
+//var user = firebase.auth().currentUser;
+    var uid = this.authData.getFirebaseId();
+    this.eventService.interestedUserToEvent(uid, this.event.id);
+    console.log(uid);
+    console.log(this.event.id);
+    console.log('hello');
+  }
+
 }
