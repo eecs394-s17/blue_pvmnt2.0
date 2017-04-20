@@ -7,6 +7,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AuthData } from '../../providers/auth-data';
 import { EmailValidator } from '../../validators/email';
 import { HelloIonicPage } from '../hello-ionic/hello-ionic';
+import { TabsPage } from '../tabs/tabs';
 
 @Component({
   selector: 'page-signup',
@@ -40,7 +41,7 @@ export class SignupPage {
       this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password)
       .then(() => {
         this.loading.dismiss().then( () => {
-          this.nav.setRoot(HelloIonicPage);
+          this.nav.setRoot(TabsPage);
         });
       }, (error) => {
         this.loading.dismiss().then( () => {
@@ -58,6 +59,7 @@ export class SignupPage {
       });
       this.loading = this.loadingCtrl.create();
       this.loading.present();
+      this.nav.setRoot(TabsPage)
     }
   }
 }

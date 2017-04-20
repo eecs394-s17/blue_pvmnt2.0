@@ -8,7 +8,8 @@ import { AuthData } from '../../providers/auth-data';
 import { SignupPage } from '../signup/signup';
 import { HelloIonicPage } from '../hello-ionic/hello-ionic';
 import { ResetPasswordPage } from '../reset-password/reset-password';
-import { EmailValidator } from '../../validators/email';
+import { EmailValidator } from '../../validators/email'; 
+import { TabsPage } from '../tabs/tabs';
 
 @Component({
   selector: 'page-login',
@@ -45,7 +46,7 @@ export class LoginPage {
     } else {
       this.authData.loginUser(this.loginForm.value.email, this.loginForm.value.password).then( authData => {
         this.loading.dismiss().then( () => {
-          this.nav.setRoot(HelloIonicPage);
+          this.nav.setRoot(TabsPage);
         });
       }, error => {
         this.loading.dismiss().then( () => {
