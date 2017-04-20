@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, App } from 'ionic-angular';
 import { ItemDetailsPage } from '../item-details/item-details'
 import { AuthData } from '../../providers/auth-data';
 import { EventService } from '../../services/event-service';
@@ -25,7 +25,7 @@ export class HelloIonicPage {
   end_date: any;
   button_press_count: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService, private userService: UserService, public authData: AuthData) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService, private userService: UserService, public authData: AuthData, public app: App) {
     this.load();
     this.button_press_count = 0;
   }
