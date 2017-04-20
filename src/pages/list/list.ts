@@ -9,6 +9,7 @@ import { EventService } from '../../services/event-service';
 import { UserService } from '../../services/user-service';
 import { SubscriptionType } from '../../models/subscriptiontype';
 import { CalendarService } from '../../services/calendar-service';
+import { Calendar } from '../../models/calendar';
 
 import * as firebase from "firebase";
 
@@ -21,6 +22,7 @@ import * as firebase from "firebase";
 export class ListPage {
   items: Array<SubscriptionType>;//all the calendars
   subscribed: Array<SubscriptionType>;
+  calendars: Array<Calendar>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public cd: ChangeDetectorRef, private eventService: EventService, private userService: UserService, private calendarService: CalendarService) {
     this.load();
@@ -36,9 +38,8 @@ export class ListPage {
     var uid = user.uid;
 
     this.calendarService.fetchallCalendars().then((calendars) => {
-      console.log(calendars);
-      //this.items = calendars;
-    })
+      this.calendars = calendars;
+    });
 
     // this.userService.fetchCalendars(uid).then((calendars) => {
     //   console.log(calendars);
