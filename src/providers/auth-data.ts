@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase';
-
+import { NeoService } from '../services/neo-service';
 
 @Injectable()
 export class AuthData {
+  neo: NeoService;
   public fireAuth: any;
   public userProfile: any;
+  static firebaseId: string;
+
   constructor() {
     this.fireAuth = firebase.auth();
     this.userProfile = firebase.database().ref('/user/');
+    this.neo = new NeoService();
   }
 
   /**
@@ -33,8 +37,20 @@ export class AuthData {
     return firebase.auth().createUserWithEmailAndPassword(email, password).then((newUser) => {
       firebase.database().ref('/user/').child(newUser.uid).set({
         email: email,
-        subscriptions: ["northwestern"]
+        subscriptions: ["northwestern"],
+        
       });
+      AuthData.firebaseId = newUser.uid;
+      return this.createUser(newUser.uid);
+    });
+  }
+
+  createUser(user) {
+    var query = 'CREATE (u: User {firebaseId: {userId}}) \
+           RETURN u';
+    var params = {userId: user};
+    return this.neo.runQuery(query, params).then((results) => {
+      return results;
     });
   }
 
@@ -53,7 +69,11 @@ export class AuthData {
    * This function doesn't take any params, it just logs the current user out of the app.
    */
   logoutUser(): firebase.Promise<any> {
+    AuthData.firebaseId = "";
     return firebase.auth().signOut();
   }
 
+  getFirebaseId() {
+    return AuthData.firebaseId;
+  }
 }

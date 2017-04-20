@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 
+
 import * as firebase from "firebase";
+import { FIREBASE_CONFIG, NEO4J_CONFIG } from "../../APP_SECRETS";
+firebase.initializeApp(FIREBASE_CONFIG);
 
 import { Event } from '../models/event';
 import { SubscriptionType } from '../models/subscriptiontype';
 
 @Injectable()
 export class UserService {
-
 
   getUserSubscriptions(id){
     return firebase.database().ref('/user/' + id + '/subscriptions').once('value').then((snapshot) => {

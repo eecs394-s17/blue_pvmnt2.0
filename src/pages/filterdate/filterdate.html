@@ -5,19 +5,27 @@
 </ion-header>
 
 <ion-content>
-	<ion-item>
-	  <ion-label stacked>Start Date</ion-label>
-	  <ion-datetime id="date" displayFormat="DD/MM/YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="startdate"></ion-datetime>
-	</ion-item>
 
-	<ion-item>
-	  <ion-label stacked>End Date</ion-label>
-	  <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="enddate"></ion-datetime>
-	</ion-item>
+	<div class = "row">
+	   	<button ion-button class="tomorrow"(click)="getTomorrowDates($event)"> Tomorrow </button>
+	   	<button ion-button class="week" (click)="getWeekDates($event)"> This Week </button>
+	</div>
+
+	<div class = "inputs">
+		<ion-item>
+		  <ion-label stacked>Start Date</ion-label>
+		  <ion-datetime id="date" displayFormat="MM/DD/YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="startdate"> </ion-datetime>
+		</ion-item>
+
+		<ion-item>
+		  <ion-label stacked>End Date</ion-label>
+		  <ion-datetime displayFormat="MM/DD/YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="enddate"></ion-datetime>
+		</ion-item>
+	</div> 
 
 	<div class="savedates">
 		<button ion-button (click)="exitPage($event)">
-		  <p> Save Dates </p>
+		  <p> Filter by Date </p>
 		</button>
 	</div>
 

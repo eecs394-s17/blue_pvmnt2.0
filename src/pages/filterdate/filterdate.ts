@@ -20,14 +20,43 @@ export class FilterDatePage {
 
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams, private userService: UserService) {
-    // If we navigated to this page, we will have an item available as a nav param
-    this.startdate = new Date().toISOString();
-    this.enddate = new Date().toISOString();
-    //
+    var start = new Date().toISOString();
+    var end = new Date().toISOString();
+    this.load(start, end);
+  }
+
+  load(start, end){
+    this.startdate = start;
+    this.enddate = end;
+  }
+
+
+  getTomorrowDates(event){
+    var start_date = new Date();
+    start_date.setDate(start_date.getDate());
+    var str_start = start_date.toISOString();
+
+    var end_date = new Date();
+    end_date.setDate(end_date.getDate() + 1)
+    var str_end = end_date.toISOString();
+
+    this.load(str_start, str_end);
+  }
+
+  getWeekDates(event){
+    var start_date = new Date();
+    start_date.setDate(start_date.getDate())    
+    var str_start = start_date.toISOString();
+
+    var end_date = new Date();
+    end_date.setDate(end_date.getDate() + 7)
+    var str_end = end_date.toISOString()
+
+    this.load(str_start, str_end);
   }
 
   exitPage(event){
-    this.date_array = [Math.round(new Date(this.startdate).getTime()/1000), Math.round(new Date(this.enddate).getTime()/1000)];     
+    this.date_array = [Math.round(new Date(this.startdate).getTime()/1000), Math.round(new Date(this.enddate).getTime()/1000)];    
     this.callback(this.date_array).then(()=>{
        this.navCtrl.pop();
     });
@@ -35,7 +64,6 @@ export class FilterDatePage {
 
   ionViewWillEnter() {
     this.callback = this.navParams.get("callback")
-    // console.log(this.callback)
   }
 
 }

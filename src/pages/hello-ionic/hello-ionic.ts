@@ -41,7 +41,6 @@ export class HelloIonicPage {
   }
 
   filterDates(event){
-    console.log(this.button_press_count);
     if ((this.button_press_count % 2) == 0){
       this.navCtrl.push(FilterDatePage, {
         callback: this.myCallbackFunction
@@ -97,16 +96,21 @@ export class HelloIonicPage {
          this.events = events;
          this.loadedevents = events;
       });
-      
-      this.eventService.createUser(5).then((res) => {
-        console.log(res);
-      });
-
+    
     // Fetches all events that the user is currently subscribed to
     // this.eventService.fetchEvents().then((events) => {
     //   this.events = events;
     //   this.loadedevents = events;
     // });
+  }
+
+  ionViewDidEnter(){
+    if ((this.button_press_count % 2) == 0){
+      this.load();
+    }
+    else{
+      console.log('Do Nothing');
+    } 
   }
 
   itemTapped(event, item) {
