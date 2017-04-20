@@ -7,7 +7,6 @@ export class AuthData {
   neo: NeoService;
   public fireAuth: any;
   public userProfile: any;
-  static firebaseId: string;
 
   constructor() {
     this.fireAuth = firebase.auth();
@@ -40,7 +39,6 @@ export class AuthData {
         subscriptions: ["northwestern"],
         
       });
-      AuthData.firebaseId = newUser.uid;
       return this.createUser(newUser.uid);
     });
   }
@@ -69,11 +67,10 @@ export class AuthData {
    * This function doesn't take any params, it just logs the current user out of the app.
    */
   logoutUser(): firebase.Promise<any> {
-    AuthData.firebaseId = "";
     return firebase.auth().signOut();
   }
 
   getFirebaseId() {
-    return AuthData.firebaseId;
+    return firebase.auth().currentUser.uid;
   }
 }
