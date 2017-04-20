@@ -51,12 +51,11 @@ export class EventService {
 		});	
 	}
 
-	userIsInterestedIn(user){
-        var query =`	MATCH (u:User)-[:INTERESTED]->(e:Event)
-                    	WHERE u.id = {uid}
+	userIsInterestedIn(userId){
+        var query =`	MATCH (u:FBUser {firebaseId: {userId}})-[:INTERESTED]->(e:Event)
                         RETURN e
                     `;
-        var params = {uid: user}
+        var params = {userId: userId}
         return this.neo.runQuery(query, params).then((results) => {
                 return results;
         });
