@@ -43,7 +43,8 @@ export class EventService {
 
 
 	unsubscribeUserFromCalendar(userId, calendarId) {
-		var query = `	MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar {id: {calendarId}}) 	
+		var query = `	MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar {id: {calendarId}}) 
+						DELETE r	
 					`;
 		var params = {calendarId: calendarId, userId: userId};
 		return this.neo.runQuery(query, params).then((results) => {
@@ -89,6 +90,38 @@ export class EventService {
 			console.log(results);
 			return results.map(this.parseEventData);
 		});		
+	}
+
+	fetchInterestedEventsForUser(userId) {
+		var query =`	MATCH (u:FBUser {firebaseId: {userId}})-[:INTERESTED]->(e:Event)
+                        RETURN e
+                    `;
+        var params = {userId: userId}
+        return this.neo.runQuery(query, params).then((results) => {
+                return results;
+        });
+	}
+
+	markUserInterestedInEvent(userId, eventId) {
+		var query =	`
+						CREATE (u: FBUser {firebaseId: {userId}})-[:INTERESTED]->(e: Event {id: {eventId}}))
+						RETURN e
+                    `;
+        var params = {userId: userId, eventId: eventId}
+        return this.neo.runQuery(query, params).then((results) => {
+                return results;
+        });
+	}
+
+	unmarkUserInterestedInEvent(userId, eventId) {
+		var query =	`
+						MATCH (u: FBUser {firebaseId: {userId}})-[r:INTERESTED]->(e: Event {id: {eventId}}))
+						DELETE r
+                    `;
+        var params = {userId: userId, eventId: eventId}
+        return this.neo.runQuery(query, params).then((results) => {
+                return results;
+        });
 	}
 
 	parseEventData(data) {
