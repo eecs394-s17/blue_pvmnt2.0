@@ -43,7 +43,7 @@ export class EventService {
 	interestedUserToEvent(user, eventID) {
 		var query = '	MATCH (e:Event) 										\
 					 	WHERE ID(e) = {eventId}							\
-						MATCH (u:USER)											\
+						MATCH (u:FBUser)											\
 						WHERE u.firebaseId = {userId}									\
 						CREATE (u)-[r:INTERESTED]->(e)							\
 						RETURN u 												\

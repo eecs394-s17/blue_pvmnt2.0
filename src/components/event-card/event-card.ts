@@ -4,6 +4,7 @@ import { Event } from '../../models/event'
 import { EventService } from '../../services/event-service';
 import * as firebase from "firebase";
 import * as moment from 'moment';
+import { AuthData } from '../../providers/auth-data';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class EventCard {
   selectedItem: any;
 
 
-   constructor(private eventService: EventService, public navParams: NavParams){
+   constructor(private eventService: EventService, public navParams: NavParams, public authData: AuthData){
   //   var t = moment.unix(this.event.date);
   //   this.day = t.format("DD");
   //   this.month = t.format("MM");
@@ -45,9 +46,9 @@ export class EventCard {
   }
 
   interestedIn(event){
-    var user = firebase.auth().currentUser;
-    var uid = user.uid;
-    this.eventService.interestedUserToEvent(1, this.event.id);
+//var user = firebase.auth().currentUser;
+    var uid = this.authData.getFirebaseId();
+    this.eventService.interestedUserToEvent(uid, this.event.id);
     console.log(uid);
     console.log(this.event.id);
     console.log('hello');
