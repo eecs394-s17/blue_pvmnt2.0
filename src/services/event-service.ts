@@ -17,7 +17,8 @@ export class EventService {
 					 	WHERE c.name = {calendarName}							
 						MATCH (e:Event)											
 						WHERE (c)-[:HOSTING]->(e) AND e.date >= timestamp()/1000	
-						SET e.host = c.name 									
+						SET e.host = c.name 	
+						SET e.calendarId = c.id								
 						RETURN e 												
 					`;
 		var params = {calendarName: calendar};
@@ -26,35 +27,36 @@ export class EventService {
 		});	
 	}
 
-	subscribeUserToCalendar(user, calendar) {
+	subscribeUserToCalendar(userId, calendarId) {
 		var query = `	MATCH (c:Calendar) 										
-					 	WHERE c.name = {calendarName}							
-						MATCH (u:User)											
-						WHERE u.id = {userId}									
+						WHERE c.id = {cId}
+						MATCH (u:FBUser)											
+						WHERE u.firebaseId = {userId}									
 						CREATE (u)-[r:SUBSCRIBED]->(c)							
 						RETURN u 												
 					`;
-		var params = {calendarName: calendar, userId: user};
+	var params = {cId: calendarId, userId: userId};
 		return this.neo.runQuery(query, params).then((results) => {
 			return results;
 		});
 	}
 
-	unsubscribeUserFromCalendar(user, calendar) {
-		var query = `	MATCH (u:User {id: {userId}})-[r:SUBSCRIBED]->(c:Calendar {name: {calendarName}}) 	
+	unsubscribeUserFromCalendar(userId, calendarId) {
+		var query = `	MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar {id: {calendarId}}) 	
 						DELETE r																			
 					`;
-		var params = {calendarName: calendar, userId: user};
+		var params = {calendarId: calendarId, userId: userId};
 		return this.neo.runQuery(query, params).then((results) => {
 			return results;
 		});	
 	}
 
 	fetchUpcomingEventsForUser(userId) {
-		var query = `	MATCH (u:User {id: {userId}})-[r:SUBSCRIBED]->(c:Calendar) 	
+		var query = `	MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar) 	
 						MATCH (c)-[:HOSTING]->(e: Event)													
 						WHERE e.date >= timestamp()/1000													
-						SET e.host = c.name 																
+						SET e.host = c.name
+						SET e.calendarId = c.id 																
 						RETURN e 																			
 						ORDER BY e.date																	
 					`;
@@ -67,7 +69,8 @@ export class EventService {
 	fetchAllUpcomingEvents() {
 		var query = `	MATCH (c:Calendar)-[:HOSTING]->(e:Event)	
 						WHERE e.date >= timestamp()/1000		
-						SET e.host = c.name							
+						SET e.host = c.name	
+						SET e.calendarId = c.id						
 						RETURN e 									
 						ORDER BY e.date								
 					`;
