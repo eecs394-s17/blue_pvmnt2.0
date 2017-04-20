@@ -111,6 +111,15 @@ export class HelloIonicPage {
     this.events = this.loadedevents;
   }
 
+  ionViewDidEnter(){
+    if ((this.button_press_count % 2) == 0){
+      this.load();
+    }
+    else{
+      console.log('Do Nothing');
+    } 
+  }
+
   getItems(searchbar){
  
     this.initializeItems();

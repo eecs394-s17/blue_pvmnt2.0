@@ -7,6 +7,8 @@ import { UserService } from '../../services/user-service';
 import { Event } from '../../models/event';
 
 import { ItemDetailsPage } from '../item-details/item-details';
+import { FilterDatePage } from '../filterdate/filterdate';
+
 import * as firebase from "firebase";
 
 @Component({
@@ -21,13 +23,77 @@ export class PersonalPage {
   subscriptions: string[];
   icons: string[];
   items: Array<{title: string, note: string, icon: string}>;
+  filter_date_array: any;
+  start_date: any;
+  end_date: any;
+  button_press_count: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService, private userService: UserService) {
     this.load();
+    this.button_press_count = 0;
   }
 
+    myCallbackFunction = (_params) => {
+     return new Promise((resolve, reject) => {
+     this.filter_date_array = _params;
+     this.start_date = this.filter_date_array[0];
+     this.end_date = this.filter_date_array[1];
+     this.filterDateHelper();
+     resolve();
+  })
+  }
+
+  filterDates(event){
+    if ((this.button_press_count % 2) == 0){
+      this.navCtrl.push(FilterDatePage, {
+        callback: this.myCallbackFunction
+      });
+    }
+    else{
+      this.initializeItems();
+    }
+    this.button_press_count = this.button_press_count + 1;
+  }
+
+  filterDateHelper(){
+
+    this.initializeItems();
+
+    var dates = new Array();
+    var start = this.start_date;
+    var end = this.end_date;
+
+    this.events = this.events.filter((v) => {
+      if(start <= v.date && end >= v.date) {
+        return true;
+      } 
+      else{
+        return false;
+      }
+    });
+
+  }
+
+  displaybuttonname(){
+    var buttontext = '';
+    if ((this.button_press_count % 2) == 0){
+      buttontext = 'Filter by Date';
+    }
+    else{
+      buttontext = 'Remove Filter'
+    }
+    return buttontext;
+  }
+
+
   ionViewDidEnter(){
-    this.load();
+    if ((this.button_press_count % 2) == 0){
+      this.load();
+    }
+    else{
+      console.log('Do Nothing');
+    }
+    
   }
 
   load() {
