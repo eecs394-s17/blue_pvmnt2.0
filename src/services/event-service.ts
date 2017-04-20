@@ -73,6 +73,7 @@ export class EventService {
 					`;
 		var params = {};
 		return this.neo.runQuery(query, params).then((results: Event[]) => {
+			console.log(results);
 			return results.map(this.parseEventData);
 		});		
 	}
