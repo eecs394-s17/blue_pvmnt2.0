@@ -30,7 +30,6 @@ export class EventService {
 		});	
 	}
 
-
 	userIsInterestedIn(eventId){
         var query =`	MATCH (u:FBUser {firebaseId: {userId}})-[:INTERESTED]->(e:Event {id: {eventId}})
                         RETURN e
@@ -115,6 +114,7 @@ export class EventService {
 		e.calendartype = 'Calendar Type';
 		e.place = data.location;
 		e.calendarId = data.calendarId;
+		e.summary = data.summary;
 		//console.log(data);
 		return e;
 	}

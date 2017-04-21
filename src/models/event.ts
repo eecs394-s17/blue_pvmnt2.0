@@ -9,4 +9,5 @@ export class Event {
 	tags: string[];
 	place: string;    //location
 	host: string;     // who is hosting the event
+	summary: string;
 }
