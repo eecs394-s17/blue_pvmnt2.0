@@ -96,8 +96,8 @@ export class PersonalPage {
   }
 
   load() {
-    
-    this.eventService.fetchUpcomingEventsForUser().then((events: Event[]) => {
+
+    this.eventService.fetchUpcomingEventsForCurrentUser().then((events: Event[]) => {
         this.events = events;
         this.loadedevents = events;
     });
