@@ -30,7 +30,7 @@ export class EventService {
 		});	
 	}
 
-	subscribeUserToCalendar(calendarId) {
+	subscribeCurrentUserToCalendar(calendarId) {
 		var query = `	MATCH (c:Calendar) 										
 						WHERE c.id = {cId}
 						MATCH (u:FBUser)											
@@ -45,7 +45,7 @@ export class EventService {
 	}
 
 
-	unsubscribeUserFromCalendar(calendarId) {
+	unsubscribeCurrentUserFromCalendar(calendarId) {
 		var query = `	MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar {id: {calendarId}}) 
 						DELETE r	
 					`;
@@ -54,18 +54,8 @@ export class EventService {
 			return results;
 		});	
 	}
-
-	userIsInterestedIn(eventId){
-        var query =`	MATCH (u:FBUser {firebaseId: {userId}})-[:INTERESTED]->(e:Event {id: {eventId}})
-                        RETURN e
-                    `;
-        var params = {userId: this.authData.getFirebaseId(), eventId: eventId};
-        return this.neo.runQuery(query, params).then((results) => {
-                return results;
-        });
-    }
-
-	fetchUpcomingEventsForUser() {
+	
+	fetchUpcomingEventsForCurrentUser() {
 		var query = `	MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar) 	
 						MATCH (c)-[:HOSTING]->(e: Event)													
 						WHERE e.date >= timestamp()/1000													
@@ -95,7 +85,7 @@ export class EventService {
 		});		
 	}
 
-	fetchInterestedEventsForUser() {
+	fetchInterestedEventsForCurrentUser() {
 		var query =`	MATCH (u:FBUser {firebaseId: {userId}})-[:INTERESTED]->(e:Event)
                         RETURN e
                     `;
@@ -105,7 +95,7 @@ export class EventService {
         });
 	}
 
-	markUserInterestedInEvent(eventId) {
+	markCurrentUserInterestedInEvent(eventId) {
 		var query =	`
 						CREATE (u: FBUser {firebaseId: {userId}})-[:INTERESTED]->(e: Event {id: {eventId}}))
 						RETURN e
@@ -116,7 +106,7 @@ export class EventService {
         });
 	}
 
-	unmarkUserInterestedInEvent(eventId) {
+	unmarkCurrentUserInterestedInEvent(eventId) {
 		var query =	`
 						MATCH (u: FBUser {firebaseId: {userId}})-[r:INTERESTED]->(e: Event {id: {eventId}}))
 						DELETE r
