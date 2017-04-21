@@ -52,13 +52,14 @@ export class ItemDetailsPage {
       alert.present();
       return;
     }
+    
     console.log(uid);
     if (this.priorView == 'PersonalPage'){
-       this.userService.unsubscribeUserFromCalendar(this.selectedItem.calendarId);
+       this.userService.unsubscribeCurrentUserFromCalendar(this.selectedItem.calendarId);
        event.buttonDisabled = true;
     }
     else{
-      this.userService.subscribeUserToCalendar(this.selectedItem.calendarId);
+      this.userService.subscribeCurrentUserToCalendar(this.selectedItem.calendarId);
     }
 
   }
