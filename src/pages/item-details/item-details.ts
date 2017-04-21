@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { UserService } from '../../services/user-service';
+import { CalendarService } from '../../services/calendar-service';
 import { Event } from '../../models/event'
 import { AlertController } from 'ionic-angular';
 import * as moment from 'moment';
@@ -9,7 +9,7 @@ import * as firebase from "firebase";
 @Component({
   selector: 'page-item-details',
   templateUrl: 'item-details.html',
-  providers: [UserService]
+  providers: [CalendarService]
 })
 
 export class ItemDetailsPage {
@@ -19,7 +19,7 @@ export class ItemDetailsPage {
   time: string;
   priorView: string;
 
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams, private userService: UserService) {
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams, private calendarService: CalendarService) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
     this.priorView = navParams.get('view');
@@ -38,11 +38,9 @@ export class ItemDetailsPage {
 
 
   addtoCalendar(event) {
-    // assuming post event to firebase
-    // console.log(JSON.stringify(this.selectedItem.calendartype));
     var user = firebase.auth().currentUser;
     var uid = user.uid;
-    if(this.selectedItem.calendartype=='northwestern' && this.priorView == 'PersonalPage'){
+    if((this.selectedItem.host).toLowerCase() == 'northwestern' && this.priorView == 'PersonalPage'){
       let alert = this.alertCtrl.create({
         title: 'Alert!',
         subTitle: 'You cannot unsubscribe Northwestern events since you are a student in Northwestern.',
@@ -51,14 +49,14 @@ export class ItemDetailsPage {
       alert.present();
       return;
     }
+
     console.log(uid);
     if (this.priorView == 'PersonalPage'){
-       this.userService.removeUserSubscriptions(uid, this.selectedItem.calendartype);
+       this.calendarService.unsubscribeCurrentUserFromCalendar(this.selectedItem.calendarId);
        event.buttonDisabled = true;
     }
     else{
-      this.userService.updateUserSubscriptions(uid, this.selectedItem.calendartype);
-      console.log('hello');
+      this.calendarService.subscribeCurrentUserToCalendar(this.selectedItem.calendarId);
     }
 
   }

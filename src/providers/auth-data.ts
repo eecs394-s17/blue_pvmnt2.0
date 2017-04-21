@@ -43,10 +43,11 @@ export class AuthData {
     });
   }
 
-  createUser(user) {
-    var query = 'CREATE (u: User {firebaseId: {userId}}) \
-           RETURN u';
-    var params = {userId: user};
+  createUser(userId) {
+    var query = `  CREATE (u: FBUser {firebaseId: {userId}}) 
+                   RETURN u
+                `;
+    var params = {userId: userId};
     return this.neo.runQuery(query, params).then((results) => {
       return results;
     });
@@ -71,6 +72,7 @@ export class AuthData {
   }
 
   getFirebaseId() {
+
     return firebase.auth().currentUser.uid;
   }
 }
