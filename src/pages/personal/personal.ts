@@ -96,12 +96,12 @@ export class PersonalPage {
   }
 
   load() {
-    var user = firebase.auth().currentUser;
-    var uid = user.uid;
-    this.userService.fetchEventsPersonal(uid).then((events) => {
-      this.events = events;
-      this.loadedevents = events;
+    
+    this.eventService.fetchUpcomingEventsForUser().then((events: Event[]) => {
+        this.events = events;
+        this.loadedevents = events;
     });
+
   }
 
   itemTapped(event, item) {

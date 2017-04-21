@@ -3,7 +3,7 @@ import 'rxjs/add/operator/map';
 
 import { Event } from '../models/event';
 import { NeoService } from './neo-service';
-import {AuthData} from '../providers/auth-data'
+import { AuthData } from '../providers/auth-data'
 
 @Injectable()
 export class EventService {
@@ -30,30 +30,30 @@ export class EventService {
 		});	
 	}
 
-	subscribeUserToCalendar(calendarId) {
-		var query = `	MATCH (c:Calendar) 										
-						WHERE c.id = {cId}
-						MATCH (u:FBUser)											
-						WHERE u.firebaseId = {userId}									
-						CREATE (u)-[r:SUBSCRIBED]->(c)							
-						RETURN u 												
-					`;
-	var params = {cId: calendarId, userId: this.authData.getFirebaseId()};
-		return this.neo.runQuery(query, params).then((results) => {
-			return results;
-		});
-	}
+	// subscribeUserToCalendar(calendarId) {
+	// 	var query = `	MATCH (c:Calendar) 										
+	// 					WHERE c.id = {cId}
+	// 					MATCH (u:FBUser)											
+	// 					WHERE u.firebaseId = {userId}									
+	// 					CREATE (u)-[r:SUBSCRIBED]->(c)							
+	// 					RETURN u 												
+	// 				`;
+	// var params = {cId: calendarId, userId: this.authData.getFirebaseId()};
+	// 	return this.neo.runQuery(query, params).then((results) => {
+	// 		return results;
+	// 	});
+	// }
 
 
-	unsubscribeUserFromCalendar(calendarId) {
-		var query = `	MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar {id: {calendarId}}) 
-						DELETE r	
-					`;
-		var params = {calendarId: calendarId, userId: this.authData.getFirebaseId()};
-		return this.neo.runQuery(query, params).then((results) => {
-			return results;
-		});	
-	}
+	// unsubscribeUserFromCalendar(calendarId) {
+	// 	var query = `	MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar {id: {calendarId}}) 
+	// 					DELETE r	
+	// 				`;
+	// 	var params = {calendarId: calendarId, userId: this.authData.getFirebaseId()};
+	// 	return this.neo.runQuery(query, params).then((results) => {
+	// 		return results;
+	// 	});	
+	// }
 
 	userIsInterestedIn(eventId){
         var query =`	MATCH (u:FBUser {firebaseId: {userId}})-[:INTERESTED]->(e:Event {id: {eventId}})
@@ -137,6 +137,7 @@ export class EventService {
 		e.host = data.host;
 		e.calendartype = 'Calendar Type';
 		e.place = data.location;
+		e.calendarId = data.calendarId;
 		//console.log(data);
 		return e;
 	}

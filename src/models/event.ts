@@ -4,6 +4,7 @@ export class Event {
 	desc: string;
 	date: number;
 	calendartype: string;  
+	calendarId: number;
 	img: string;
 	tags: string[];
 	place: string;    //location

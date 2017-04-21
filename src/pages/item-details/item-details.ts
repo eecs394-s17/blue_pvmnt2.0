@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { UserService } from '../../services/user-service';
+import { EventService } from '../../services/event-service';
 import { Event } from '../../models/event'
 import { AlertController } from 'ionic-angular';
 import * as moment from 'moment';
@@ -42,7 +43,7 @@ export class ItemDetailsPage {
     // console.log(JSON.stringify(this.selectedItem.calendartype));
     var user = firebase.auth().currentUser;
     var uid = user.uid;
-    if(this.selectedItem.calendartype=='northwestern' && this.priorView == 'PersonalPage'){
+    if((this.selectedItem.host).toLowerCase() == 'northwestern' && this.priorView == 'PersonalPage'){
       let alert = this.alertCtrl.create({
         title: 'Alert!',
         subTitle: 'You cannot unsubscribe Northwestern events since you are a student in Northwestern.',
@@ -53,12 +54,11 @@ export class ItemDetailsPage {
     }
     console.log(uid);
     if (this.priorView == 'PersonalPage'){
-       this.userService.removeUserSubscriptions(uid, this.selectedItem.calendartype);
+       this.userService.unsubscribeUserFromCalendar(this.selectedItem.calendarId);
        event.buttonDisabled = true;
     }
     else{
-      this.userService.updateUserSubscriptions(uid, this.selectedItem.calendartype);
-      console.log('hello');
+      this.userService.subscribeUserToCalendar(this.selectedItem.calendarId);
     }
 
   }

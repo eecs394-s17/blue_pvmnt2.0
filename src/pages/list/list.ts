@@ -37,7 +37,7 @@ export class ListPage {
     var user = firebase.auth().currentUser;
     var uid = user.uid;
 
-    this.calendarService.fetchallCalendars().then((calendars) => {
+    this.calendarService.fetchallCalendars().then((calendars: Calendar[]) => {
       this.calendars = calendars;
     });
 
@@ -53,21 +53,21 @@ export class ListPage {
 
   }
 
-  subscribe(item){
+  // subscribe(item){
 
-    var user = firebase.auth().currentUser;
-    var uid = user.uid;
-    if(item.icon=='checkmark'){
-      console.log("unsubscribe "+ item.calendartype);
-      this.userService.removeUserSubscriptions(uid,item.calendartype);
-      item.icon='close-circle';
-    }
-    else{
-      console.log("subscribe "+item.calendartype);
-      this.userService.updateUserSubscriptions(uid,item.calendartype);
-      item.icon='checkmark';
-    }
-  }
+  //   var user = firebase.auth().currentUser;
+  //   var uid = user.uid;
+  //   if(item.icon=='checkmark'){
+  //     console.log("unsubscribe "+ item.calendartype);
+  //     this.userService.removeUserSubscriptions(uid,item.calendartype);
+  //     item.icon='close-circle';
+  //   }
+  //   else{
+  //     console.log("subscribe "+item.calendartype);
+  //     this.userService.updateUserSubscriptions(uid,item.calendartype);
+  //     item.icon='checkmark';
+  //   }
+  // }
 
 
 }
