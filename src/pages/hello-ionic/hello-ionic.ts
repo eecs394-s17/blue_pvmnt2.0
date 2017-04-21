@@ -3,7 +3,6 @@ import { NavController, NavParams } from 'ionic-angular';
 import { ItemDetailsPage } from '../item-details/item-details'
 import { AuthData } from '../../providers/auth-data';
 import { EventService } from '../../services/event-service';
-import { UserService } from '../../services/user-service';
 import { LoginPage } from '../login/login';
 import { FilterDatePage } from '../filterdate/filterdate';
 
@@ -12,7 +11,7 @@ import { Event } from '../../models/event';
 @Component({
   selector: 'page-hello-ionic',
   templateUrl: 'hello-ionic.html',
-  providers: [EventService, UserService]
+  providers: [EventService]
 })
 
 export class HelloIonicPage {
@@ -25,7 +24,7 @@ export class HelloIonicPage {
   end_date: any;
   button_press_count: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService, private userService: UserService, public authData: AuthData) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService,  public authData: AuthData) {
     this.load();
     this.button_press_count = 0;
   }

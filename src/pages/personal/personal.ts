@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { EventService } from '../../services/event-service';
-import { UserService } from '../../services/user-service';
 import { FilterDatePage } from '../filterdate/filterdate';
 
 import { Event } from '../../models/event';
@@ -13,7 +12,7 @@ import * as firebase from "firebase";
 @Component({
   selector: 'page-personal',
   templateUrl: 'personal.html',
-  providers: [EventService, UserService]
+  providers: [EventService]
 })
 
 export class PersonalPage {
@@ -27,7 +26,7 @@ export class PersonalPage {
   end_date: any;
   button_press_count: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService, private userService: UserService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService) {
     this.load();
     this.button_press_count = 0;
   }

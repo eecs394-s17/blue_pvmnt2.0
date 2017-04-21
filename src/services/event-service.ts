@@ -30,30 +30,6 @@ export class EventService {
 		});	
 	}
 
-	// subscribeUserToCalendar(calendarId) {
-	// 	var query = `	MATCH (c:Calendar) 										
-	// 					WHERE c.id = {cId}
-	// 					MATCH (u:FBUser)											
-	// 					WHERE u.firebaseId = {userId}									
-	// 					CREATE (u)-[r:SUBSCRIBED]->(c)							
-	// 					RETURN u 												
-	// 				`;
-	// var params = {cId: calendarId, userId: this.authData.getFirebaseId()};
-	// 	return this.neo.runQuery(query, params).then((results) => {
-	// 		return results;
-	// 	});
-	// }
-
-
-	// unsubscribeUserFromCalendar(calendarId) {
-	// 	var query = `	MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar {id: {calendarId}}) 
-	// 					DELETE r	
-	// 				`;
-	// 	var params = {calendarId: calendarId, userId: this.authData.getFirebaseId()};
-	// 	return this.neo.runQuery(query, params).then((results) => {
-	// 		return results;
-	// 	});	
-	// }
 
 	userIsInterestedIn(eventId){
         var query =`	MATCH (u:FBUser {firebaseId: {userId}})-[:INTERESTED]->(e:Event {id: {eventId}})
@@ -64,21 +40,7 @@ export class EventService {
                 return results;
         });
     }
-	
-	fetchUpcomingEventsForCurrentUser() {
-		var query = `	MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar) 	
-						MATCH (c)-[:HOSTING]->(e: Event)													
-						WHERE e.date >= timestamp()/1000													
-						SET e.host = c.name
-						SET e.calendarId = c.id 																
-						RETURN e 																			
-						ORDER BY e.date																	
-					`;
-		var params = {userId: this.authData.getFirebaseId()};
-		return this.neo.runQuery(query, params).then((results: Event[]) => {
-			return results.map(this.parseEventData);
-		});	
-	}
+
 
 	fetchAllUpcomingEvents() {
 		var query = `	MATCH (c:Calendar)-[:HOSTING]->(e:Event)	
@@ -104,6 +66,21 @@ export class EventService {
                 return results;
         });
 	}
+
+	fetchUpcomingEventsForCurrentUser() {
+    	var query = `  MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar)   
+            MATCH (c)-[:HOSTING]->(e: Event)                          
+            WHERE e.date >= timestamp()/1000                          
+            SET e.host = c.name
+            SET e.calendarId = c.id                                 
+            RETURN e                                       
+            ORDER BY e.date                                  
+          `;
+    	var params = {userId: this.authData.getFirebaseId()};
+    	return this.neo.runQuery(query, params).then((results: Event[]) => {
+      		return results.map(this.parseEventData);
+    });  
+  }
 
 	markCurrentUserInterestedInEvent(eventId) {
 		var query =	`
