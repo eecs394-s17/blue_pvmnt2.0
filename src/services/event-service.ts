@@ -58,12 +58,13 @@ export class EventService {
 	}
 
 	userIsInterestedIn(user){
-        var query =`MATCH (u:User)-[:INTERESTED]->(e:Event)
-                                WHERE u.id = {uid}
+        var query =`MATCH (u:FBUser)-[r:INTERESTED]->(e:Event)
+                                WHERE u.firebaseId = {uid}
                                 RETURN e
                                 `
         var params = {uid: user}
         return this.neo.runQuery(query, params).then((results) => {
+				console.log(results);
                 return results;
         });
     }

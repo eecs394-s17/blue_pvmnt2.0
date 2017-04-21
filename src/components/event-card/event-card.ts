@@ -49,6 +49,7 @@ export class EventCard {
 //var user = firebase.auth().currentUser;
     var uid = this.authData.getFirebaseId();
     this.eventService.interestedUserToEvent(uid, this.event.id);
+    this.eventService.userIsInterestedIn(uid);
     console.log(uid);
     console.log(this.event.id);
     console.log('hello');
