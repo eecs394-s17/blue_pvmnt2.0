@@ -13,6 +13,7 @@ import { UpcomingPage } from '../upcoming/upcoming';
 export class TabsPage {
   // this tells the tabs component which Pages
   // should be each tab's root Page
+
 	tab1Root: any = HelloIonicPage;
  	tab2Root: any = PersonalPage;
  	tab3Root: any = ListPage;
@@ -21,5 +22,7 @@ export class TabsPage {
 
   constructor(navParams: NavParams) {
   	this.mySelectedIndex = navParams.data.tabIndex || 0;
+
   }
+
 }

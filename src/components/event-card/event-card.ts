@@ -21,11 +21,9 @@ export class EventCard {
   selectedItem: any;
 
 
-   constructor(private eventService: EventService, public navParams: NavParams, public authData: AuthData){
-  //   var t = moment.unix(this.event.date);
-  //   this.day = t.format("DD");
-  //   this.month = t.format("MM");
-  //   this.time = t.format("h:mm a");
+   constructor(private eventService: EventService, public navParams: NavParams,
+     public authData: AuthData){
+
   this.selectedItem = navParams.get('item');
    }
 
@@ -39,23 +37,9 @@ export class EventCard {
     return moment.unix(this.event.date).format("h:mm a");
   }
 
-  logEvent(event) {
-    event.stopPropagation();
-    console.log('hello');
-    
-  }
-
   interestedIn(event){
-    var uid = this.authData.getFirebaseId();
-
-    this.eventService.interestedUserToEvent(uid, this.event.id);
-    //this.eventService.userIsInterestedIn(uid);
-
-   //this.eventService.markCurrentUserInterestedInEvent(this.event.id);
-
-    console.log(uid);
-    console.log(this.event.id);
-    console.log('hello');
+    event.stopPropagation();
+    this.eventService.markCurrentUserInterestedInEvent(this.event.id);
   }
 
 }

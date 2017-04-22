@@ -53,22 +53,22 @@ export class MyApp {
     this.zone.run( () => {
     if (!user) {
       this.rootPage = LoginPage;
-      unsubscribe();
+      // unsubscribe();
     } else {
       this.rootPage = TabsPage;
-      unsubscribe();
+      // unsubscribe();
     }
     });
   });
 
   this.initializeApp();
     // set our app's pages
-    this.pages = [
-      { title: 'All Events', component: HelloIonicPage },
-      { title: 'Personal Feed', component: PersonalPage },
-      { title: 'Manage Subscriptions', component: ListPage },
-      { title: 'Upcoming Events', component: UpcomingPage }
-    ];
+    // this.pages = [
+    //   { title: 'All Events', component: HelloIonicPage },
+    //   { title: 'Personal Feed', component: PersonalPage },
+    //   { title: 'Manage Subscriptions', component: ListPage },
+    //   { title: 'Upcoming Events', component: UpcomingPage }
+    // ];
   }
 
   initializeApp() {

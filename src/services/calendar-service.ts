@@ -23,12 +23,12 @@ export class CalendarService {
 	}
 
 	subscribeCurrentUserToCalendar(calendarId) {
-    	var query = `	MATCH (c:Calendar)                     
+    	var query = `	MATCH (c:Calendar)
 			            WHERE c.id = {cId}
-			            MATCH (u:FBUser)                      
-			            WHERE u.firebaseId = {userId}                  
-			            CREATE (u)-[r:SUBSCRIBED]->(c)              
-			            RETURN u                         
+			            MATCH (u:FBUser)
+			            WHERE u.firebaseId = {userId}
+			            CREATE (u)-[r:SUBSCRIBED]->(c)
+			            RETURN u
           `;
   		var params = {cId: calendarId, userId: this.authData.getFirebaseId()};
     	return this.neo.runQuery(query, params).then((results) => {
@@ -38,18 +38,18 @@ export class CalendarService {
 
 
   	unsubscribeCurrentUserFromCalendar(calendarId) {
-    	var query = `	MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar {id: {calendarId}}) 
-            			DELETE r  
+    	var query = `	MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar {id: {calendarId}})
+            			DELETE r
           			`;
 	    var params = {calendarId: calendarId, userId: this.authData.getFirebaseId()};
 	    return this.neo.runQuery(query, params).then((results) => {
 	      return results;
-	    });  
+	    });
 	}
-
 
 	fetchAllCalendars(){
 		var query = `	MATCH (c:Calendar)
+						SET c.id = ID(c)
 						RETURN c
 					`;
 
@@ -62,7 +62,7 @@ export class CalendarService {
 		var subsQuery = `
 							MATCH (u: FBUser {firebaseId: {firebaseId}})-[:SUBSCRIBED]->(c:Calendar)
 							RETURN c
-						`;	
+						`;
 		var params = {firebaseId: this.authData.getFirebaseId()};
 		return this.neo.runQuery(subsQuery, params).then((subs: Object[]) => {
 			var unsubsQuery = `
