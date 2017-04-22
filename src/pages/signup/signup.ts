@@ -16,7 +16,7 @@ import { TabsPage } from '../tabs/tabs';
 export class SignupPage {
   public signupForm;
   loading: any;
-  rootPage: any;
+
 
 
   constructor(public nav: NavController, public authData: AuthData,
@@ -36,8 +36,8 @@ export class SignupPage {
       this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password)
       .then(() => {
         this.loading.dismiss().then( () => {
-          //this.nav.setRoot(TabsPage)
-          this.rootPage = TabsPage;
+          this.nav.setRoot(TabsPage)
+          //this.rootPage = TabsPage;
         });
       }, (error) => {
         this.loading.dismiss().then( () => {
