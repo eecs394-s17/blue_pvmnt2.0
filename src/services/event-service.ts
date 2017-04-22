@@ -15,7 +15,6 @@ export class EventService {
 		this.authData = new AuthData();
 	}
 
-<<<<<<< HEAD
 	fetchUpcomingEventsForCalendar(calendarID) {
 		var query = `	MATCH (c:Calendar) 										
 					 	WHERE c.id = {calendarId}							
@@ -24,17 +23,8 @@ export class EventService {
 						SET e.host = c.name 	
 						SET e.calendarId = c.id								
 						RETURN e 												
-=======
-	fetchUpcomingEventsForCalendar(calendar) {
-		var query = `	MATCH (c:Calendar)
-					 	WHERE c.name = {calendarName}
-						MATCH (e:Event)
-						WHERE (c)-[:HOSTING]->(e) AND e.date >= timestamp()/1000
-						SET e.host = c.name
-						SET e.calendarId = c.id
-						RETURN e
->>>>>>> d13d58a6a6faf519f535b40fae635cc7ab9da814
-					`;
+
+					`
 		var params = {calendarId: calendarID};
 		return this.neo.runQuery(query, params).then((results: Event[]) => {
 			return results.map(this.parseEventData);
