@@ -129,7 +129,7 @@ export class PersonalPage {
         if (v.name.toLowerCase().indexOf(q.toLowerCase()) > -1) {
           return true;
         }
-        else if (v.calendartype.toLowerCase().indexOf(q.toLowerCase()) > -1){
+        else if (v.host.toLowerCase().indexOf(q.toLowerCase()) > -1){
           return true;
         }
         else if (v.calendartype.toLowerCase().indexOf(q.toLowerCase()) > -1){

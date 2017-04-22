@@ -1,8 +1,5 @@
 <ion-header>
   <ion-navbar>
-<!--     <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button> -->
     <ion-title> My Subscriptions </ion-title>
   </ion-navbar>
 </ion-header>
@@ -10,7 +7,7 @@
 <ion-content>
   <ion-list>
 
-    <ion-item *ngFor="let c of calendars">
+    <ion-item *ngFor="let c of calendars" (click)="getCalendarEvents($event, c)">
       <!-- <ion-icon name="{{item.icon}}" item-left></ion-icon> -->
           <!-- <ion-label >{{item.calendartype}}</ion-label> -->
           <ion-label> {{c.name}} </ion-label>

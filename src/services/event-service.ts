@@ -36,7 +36,7 @@ export class EventService {
                     `;
         var params = {userId: this.authData.getFirebaseId(), eventId: eventId};
         return this.neo.runQuery(query, params).then((results) => {
-                return results;
+        	return results;
         });
     }
 
@@ -62,24 +62,24 @@ export class EventService {
                     `;
         var params = {userId: this.authData.getFirebaseId()}
         return this.neo.runQuery(query, params).then((results) => {
-                return results;
+        	return results;
         });
 	}
 
 	fetchUpcomingEventsForCurrentUser() {
-    	var query = `  MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar)   
-            MATCH (c)-[:HOSTING]->(e: Event)                          
-            WHERE e.date >= timestamp()/1000                          
-            SET e.host = c.name
-            SET e.calendarId = c.id                                 
-            RETURN e                                       
-            ORDER BY e.date                                  
-          `;
+    	var query = `	MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar)   
+            			MATCH (c)-[:HOSTING]->(e: Event)                          
+            			WHERE e.date >= timestamp()/1000                          
+           				SET e.host = c.name
+            			SET e.calendarId = c.id                                 
+            			RETURN e                                       
+            			ORDER BY e.date                                  
+          			`;
     	var params = {userId: this.authData.getFirebaseId()};
     	return this.neo.runQuery(query, params).then((results: Event[]) => {
       		return results.map(this.parseEventData);
-    });  
-  }
+    	});  
+  	}
 
 	markCurrentUserInterestedInEvent(eventId) {
 		var query =	`
@@ -115,7 +115,6 @@ export class EventService {
 		e.place = data.location;
 		e.calendarId = data.calendarId;
 		e.summary = data.summary;
-		//console.log(data);
 		return e;
 	}
 }
