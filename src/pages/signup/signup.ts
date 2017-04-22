@@ -35,26 +35,28 @@ export class SignupPage {
     } else {
       this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password)
       .then(() => {
-        this.loading.dismiss().then( () => {
-          this.nav.setRoot(TabsPage)
-          //this.rootPage = TabsPage;
-        });
+        // this.loading.dismiss().then( () => {
+        //   this.nav.setRoot(TabsPage)
+        //   //this.rootPage = TabsPage;
+        // });
+        // this.nav.push(TabsPage, {}, {animate: false});
+        this.nav.pop();
       }, (error) => {
-        this.loading.dismiss().then( () => {
-          let alert = this.alertCtrl.create({
-            message: error.message,
-            buttons: [
-              {
-                text: "Ok",
-                role: 'cancel'
-              }
-            ]
-          });
-          alert.present();
-        });
+        // this.loading.dismiss().then( () => {
+        //   let alert = this.alertCtrl.create({
+        //     message: error.message,
+        //     buttons: [
+        //       {
+        //         text: "Ok",
+        //         role: 'cancel'
+        //       }
+        //     ]
+        //   });
+        //   alert.present();
+        // });
       });
-      this.loading = this.loadingCtrl.create();
-      this.loading.present();
+      // this.loading = this.loadingCtrl.create();
+      // this.loading.present();
     }
   }
 }
