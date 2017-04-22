@@ -50,6 +50,7 @@ export class CalendarService {
 
 	fetchAllCalendars(){
 		var query = `	MATCH (c:Calendar)
+						SET c.id = ID(c)
 						RETURN c
 					`;
 

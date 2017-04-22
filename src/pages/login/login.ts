@@ -1,7 +1,7 @@
 import {
   NavController,
   LoadingController,
-  AlertController  } from 'ionic-angular';
+  AlertController, App  } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthData } from '../../providers/auth-data';
@@ -20,7 +20,7 @@ export class LoginPage {
   loading: any;
 
   constructor(public nav: NavController, public authData: AuthData, public formBuilder: FormBuilder,
-    public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+    public alertCtrl: AlertController, public loadingCtrl: LoadingController, private _app: App) {
 
     /**
      * Creates a ControlGroup that declares the fields available, their values and the validators that they are going

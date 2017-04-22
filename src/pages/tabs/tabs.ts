@@ -12,12 +12,16 @@ import { ListPage } from '../list/list';
 export class TabsPage {
   // this tells the tabs component which Pages
   // should be each tab's root Page
-	tab1Root: any = HelloIonicPage;
- 	tab2Root: any = PersonalPage;
- 	tab3Root: any = ListPage;
- 	mySelectedIndex: number;
+
+    tab1Root: any = HelloIonicPage;
+  	tab2Root: any = PersonalPage;
+  	tab3Root: any = ListPage;
+  	mySelectedIndex: number;
+
 
   constructor(navParams: NavParams) {
   	this.mySelectedIndex = navParams.data.tabIndex || 0;
+
   }
+
 }

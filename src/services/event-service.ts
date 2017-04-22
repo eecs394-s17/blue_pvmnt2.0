@@ -15,16 +15,16 @@ export class EventService {
 		this.authData = new AuthData();
 	}
 
-	fetchUpcomingEventsForCalendar(calendar) {
+	fetchUpcomingEventsForCalendar(calendarID) {
 		var query = `	MATCH (c:Calendar) 										
-					 	WHERE c.name = {calendarName}							
+					 	WHERE c.id = {calendarId}							
 						MATCH (e:Event)											
 						WHERE (c)-[:HOSTING]->(e) AND e.date >= timestamp()/1000	
 						SET e.host = c.name 	
 						SET e.calendarId = c.id								
 						RETURN e 												
 					`;
-		var params = {calendarName: calendar};
+		var params = {calendarId: calendarID};
 		return this.neo.runQuery(query, params).then((results: Event[]) => {
 			return results.map(this.parseEventData);
 		});	

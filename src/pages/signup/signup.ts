@@ -1,7 +1,7 @@
 import {
   NavController,
   LoadingController,
-  AlertController } from 'ionic-angular';
+  AlertController, App } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthData } from '../../providers/auth-data';
@@ -20,7 +20,7 @@ export class SignupPage {
 
   constructor(public nav: NavController, public authData: AuthData,
     public formBuilder: FormBuilder, public loadingCtrl: LoadingController,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController, private _app: App) {
 
     this.signupForm = formBuilder.group({
       email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
@@ -35,7 +35,7 @@ export class SignupPage {
       this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password)
       .then(() => {
         this.loading.dismiss().then( () => {
-          this.nav.setRoot(TabsPage);
+          this.nav.setRoot(TabsPage)
         });
       }, (error) => {
         this.loading.dismiss().then( () => {
