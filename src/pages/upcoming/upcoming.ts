@@ -1,22 +1,24 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, App } from 'ionic-angular';
-import { ItemDetailsPage } from '../item-details/item-details'
-import { AuthData } from '../../providers/auth-data';
+import { NavController, NavParams } from 'ionic-angular';
+
 import { EventService } from '../../services/event-service';
-import { LoginPage } from '../login/login';
 import { FilterDatePage } from '../filterdate/filterdate';
 
 import { Event } from '../../models/event';
 
+import { ItemDetailsPage } from '../item-details/item-details';
+import * as firebase from "firebase";
+
 @Component({
-  selector: 'page-hello-ionic',
-  templateUrl: 'hello-ionic.html',
+  selector: 'page-personal',
+  templateUrl: 'upcoming.html',
   providers: [EventService]
 })
 
-export class HelloIonicPage {
+export class UpcomingPage {
   events: Array<Event>;
   loadedevents: any;
+  subscriptions: string[];
   icons: string[];
   items: Array<{title: string, note: string, icon: string}>;
   filter_date_array: any;
@@ -24,13 +26,13 @@ export class HelloIonicPage {
   end_date: any;
   button_press_count: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService,  public authData: AuthData, private _app: App) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService) {
     this.load();
     this.button_press_count = 0;
   }
 
   myCallbackFunction = (_params) => {
-  return new Promise((resolve, reject) => {
+     return new Promise((resolve, reject) => {
      this.filter_date_array = _params;
      this.start_date = this.filter_date_array[0];
      this.end_date = this.filter_date_array[1];
@@ -62,7 +64,7 @@ export class HelloIonicPage {
     this.events = this.events.filter((v) => {
       if(start <= v.date && end >= v.date) {
         return true;
-      }
+      } 
       else{
         return false;
       }
@@ -81,27 +83,6 @@ export class HelloIonicPage {
     return buttontext;
   }
 
-  // ionViewDidEnter(){
-  //   this.initializeItems();
-  // }
-
-  load() {
-
-    // this.eventService.fetchCalendars().then((calendars) => {
-    //   // console.log(calendars);
-    // });
-
-     this.eventService.fetchAllUpcomingEvents().then((events: Event[]) => {
-         this.events = events;
-         this.loadedevents = events;
-      });
-
-    // Fetches all events that the user is currently subscribed to
-    // this.eventService.fetchEvents().then((events) => {
-    //   this.events = events;
-    //   this.loadedevents = events;
-    // });
-  }
 
   ionViewDidEnter(){
     if ((this.button_press_count % 2) == 0){
@@ -110,24 +91,34 @@ export class HelloIonicPage {
     else{
       console.log('Do Nothing');
     }
+    
+  }
+
+  load() {
+
+    this.eventService.userIsInterestedIn().then((events: Event[]) => {
+        this.events = events;
+        this.loadedevents = events;
+    });
+
   }
 
   itemTapped(event, item) {
-
     let view = this.navCtrl.getActive().component.name;
   	this.navCtrl.push(ItemDetailsPage, {
   		item: item, view: view });
-  }
+	}
 
   initializeItems(): void {
     this.events = this.loadedevents;
   }
 
   getItems(searchbar){
-
+    
     this.initializeItems();
 
     var q = searchbar.srcElement.value;
+
 
     if (!q) {
       return;
@@ -138,21 +129,16 @@ export class HelloIonicPage {
         if (v.name.toLowerCase().indexOf(q.toLowerCase()) > -1) {
           return true;
         }
-        else if (v.host.toLowerCase().indexOf(q.toLowerCase()) > -1){
+        else if (v.calendartype.toLowerCase().indexOf(q.toLowerCase()) > -1){
           return true;
         }
         else if (v.calendartype.toLowerCase().indexOf(q.toLowerCase()) > -1){
           return true;
         }
         return false;
-      }
+      } 
     });
 
-  }
-
-  logOut(event){
-    this.authData.logoutUser();
-    this._app.getRootNav().setRoot(LoginPage);
   }
 
 }
