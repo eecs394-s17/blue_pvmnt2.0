@@ -87,6 +87,7 @@ export class EventService {
   	}
 
   	// Not working right now
+
 	markCurrentUserInterestedInEvent(eventID) {
 		var query = `	MATCH (e:Event)
 					 	WHERE ID(e) = {eventId}
