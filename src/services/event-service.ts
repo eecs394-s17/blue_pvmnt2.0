@@ -15,17 +15,16 @@ export class EventService {
 		this.authData = new AuthData();
 	}
 
-	fetchUpcomingEventsForCalendar(calendarID) {
+	fetchUpcomingEventsForCalendar(calendar) {
 		var query = `	MATCH (c:Calendar)
-					 	WHERE c.id = {calendarId}
+					 	WHERE c.name = {calendarName}
 						MATCH (e:Event)
 						WHERE (c)-[:HOSTING]->(e) AND e.date >= timestamp()/1000
 						SET e.host = c.name
 						SET e.calendarId = c.id
 						RETURN e
-
-					`
-		var params = {calendarId: calendarID};
+					`;
+		var params = {calendarName: calendar};
 		return this.neo.runQuery(query, params).then((results: Event[]) => {
 			return results.map(this.parseEventData);
 		});
@@ -36,7 +35,7 @@ export class EventService {
 					 	WHERE c.name = {calendarName}
 						MATCH (u:User)
 						WHERE u.id = {userId}
-						CREATE UNIQUE (u)-[r:SUBSCRIBED]->(c)
+						CREATE (u)-[r:SUBSCRIBED]->(c)
 						RETURN u
 					`;
 		var params = {calendarName: calendar, userId: user};
@@ -44,6 +43,36 @@ export class EventService {
 			return results;
 		});
 	}
+
+	interestedUserToEvent(user, eventID) {
+		var query = `	MATCH (e:Event)
+					 	WHERE ID(e) = {eventId}
+						MATCH (u:FBUser)
+						WHERE u.firebaseId = {userId}
+						CREATE (u)-[r:INTERESTED]->(e)
+						RETURN u
+					`;
+		var params = {eventId: eventID, userId: this.authData.getFirebaseId()};
+		console.log(user);
+		console.log(eventID);
+		console.log(user);
+		return this.neo.runQuery(query, params).then((results) => {
+			return results;
+		});
+	}
+
+	userIsInterestedIn(){
+        var query =`MATCH (u:FBUser)-[r:INTERESTED]->(e:Event)
+                                WHERE u.firebaseId = {uid}
+                                RETURN e
+                                `
+        var params = {uid: this.authData.getFirebaseId()}
+
+        return this.neo.runQuery(query, params).then((results) => {
+            return results;
+        });
+    }
+
 
 	fetchAllUpcomingEvents() {
 		var query = `	
@@ -57,22 +86,20 @@ export class EventService {
 						return res
 					`;
 		var params = {firebaseId: this.authData.getFirebaseId()};
-		return this.neo.runQuery(query, params).then((results: Event[]) => {
-			console.log(results);
-			// return results.map(this.parseEventData);
-			return [];
+		return this.neo.runQuery(query, params).then((results) => {
+			let data: Object[] = results[0];
+			return data.map(this.parseEventData);
 		});
 	}
 
 	fetchInterestedEventsForCurrentUser() {
-		var query =`MATCH (u:FBUser)-[r:INTERESTED]->(e:Event)
-								WHERE u.firebaseId = {uid}
-								RETURN e`
-		var params = {uid: this.authData.getFirebaseId()}
-
-		return this.neo.runQuery(query, params).then((results) => {
-				return results;
-		});
+		var query =`	MATCH (u:FBUser {firebaseId: {userId}})-[:INTERESTED]->(e:Event)
+                        RETURN e
+                    `;
+        var params = {userId: this.authData.getFirebaseId()}
+        return this.neo.runQuery(query, params).then((results) => {
+        	return results;
+        });
 	}
 
 	fetchUpcomingEventsForCurrentUser() {
@@ -86,24 +113,20 @@ export class EventService {
           			`;
     	var params = {userId: this.authData.getFirebaseId()};
     	return this.neo.runQuery(query, params).then((results: Event[]) => {
-      		return results.map(this.parseEventData);
+      		return results.map(this.parseEventDataOld);
     	});
   	}
 
   	// Not working right now
-
-	markCurrentUserInterestedInEvent(eventID) {
-		var query = `	MATCH (e:Event)
-					 	WHERE ID(e) = {eventId}
-						MATCH (u:FBUser)
-						WHERE u.firebaseId = {userId}
-						CREATE UNIQUE (u)-[r:INTERESTED]->(e)
-						RETURN u
-					`;
-    var params = {userId: this.authData.getFirebaseId(), eventId: eventID}
-    return this.neo.runQuery(query, params).then((results) => {
-        return results;
-    });
+	markCurrentUserInterestedInEvent(eventId) {
+		var query =	`
+						CREATE (u: FBUser {firebaseId: {userId}})-[:INTERESTED]->(e: Event {ID(e): {eventId}}))
+						RETURN e
+                    `;
+        var params = {userId: this.authData.getFirebaseId(), eventId: eventId}
+        return this.neo.runQuery(query, params).then((results) => {
+                return results;
+        });
 	}
 
 	unmarkCurrentUserInterestedInEvent(eventId) {
@@ -117,7 +140,7 @@ export class EventService {
         });
 	}
 
-	parseEventData(data) {
+	parseEventDataOld(data) {
 		let e = new Event();
 		e.name = data.name;
 		e.id = data.id;
@@ -131,4 +154,28 @@ export class EventService {
 		e.summary = data.summary;
 		return e;
 	}
+
+	parseEventData(data) {
+		let e = new Event();
+
+		// Info from event
+		e.name = data.event.name;
+		e.id = data.event.id;
+		e.desc = data.event.desc;
+		e.date = data.event.date;
+		e.img = data.event.img;	
+		e.calendartype = 'Calendar Type';
+		e.place = data.event.location;
+		e.summary = data.event.summary;
+
+		// Info from calendar
+		e.calendarId = data.calendar.id;
+		e.host = data.calendar.name;
+
+		e.userIsInterested = data.isCurrentUserInterested;
+		e.interestCount = data.interestLevel;
+		
+		return e;
+	}
+
 }

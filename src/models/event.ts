@@ -11,4 +11,5 @@ export class Event {
 	host: string;
 	summary: string;
 	userIsInterested: boolean;
+	interestCount: number;
 }
