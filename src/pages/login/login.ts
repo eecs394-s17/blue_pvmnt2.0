@@ -45,26 +45,28 @@ export class LoginPage {
       console.log(this.loginForm.value);
     } else {
       this.authData.loginUser(this.loginForm.value.email, this.loginForm.value.password).then( authData => {
-        this.loading.dismiss().then( () => {
-          this.nav.setRoot(TabsPage);
-        });
+        // this.loading.dismiss().then( () => {
+        //   this.nav.setRoot(TabsPage);
+        // });
+        this.nav.push(TabsPage, {}, {animate: false});
       }, error => {
-        this.loading.dismiss().then( () => {
-          let alert = this.alertCtrl.create({
-            message: error.message,
-            buttons: [
-              {
-                text: "Ok",
-                role: 'cancel'
-              }
-            ]
-          });
-          alert.present();
-        });
+        // this.loading.dismiss().then( () => {
+        //   let alert = this.alertCtrl.create({
+        //     message: error.message,
+        //     buttons: [
+        //       {
+        //         text: "Ok",
+        //         role: 'cancel'
+        //       }
+        //     ]
+        //   });
+        //   alert.present();
+        // });
+        console.log(error);
       });
 
-      this.loading = this.loadingCtrl.create();
-      this.loading.present();
+      // this.loading = this.loadingCtrl.create();
+      // this.loading.present();
     }
   }
 
