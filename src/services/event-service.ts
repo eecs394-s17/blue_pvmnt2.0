@@ -16,13 +16,13 @@ export class EventService {
 	}
 
 	fetchUpcomingEventsForCalendar(calendarID) {
-		var query = `	MATCH (c:Calendar) 										
-					 	WHERE c.id = {calendarId}							
-						MATCH (e:Event)											
-						WHERE (c)-[:HOSTING]->(e) AND e.date >= timestamp()/1000	
-						SET e.host = c.name 	
-						SET e.calendarId = c.id								
-						RETURN e 												
+		var query = `	MATCH (c:Calendar)
+					 	WHERE c.id = {calendarId}
+						MATCH (e:Event)
+						WHERE (c)-[:HOSTING]->(e) AND e.date >= timestamp()/1000
+						SET e.host = c.name
+						SET e.calendarId = c.id
+						RETURN e
 
 					`
 		var params = {calendarId: calendarID};
@@ -45,35 +45,6 @@ export class EventService {
 		});
 	}
 
-	interestedUserToEvent(user, eventID) {
-		var query = `	MATCH (e:Event)
-					 	WHERE ID(e) = {eventId}
-						MATCH (u:FBUser)
-						WHERE u.firebaseId = {userId}
-						CREATE UNIQUE (u)-[r:INTERESTED]->(e)
-						RETURN u
-					`;
-		var params = {eventId: eventID, userId: this.authData.getFirebaseId()};
-		console.log(user);
-		console.log(eventID);
-		console.log(user);
-		return this.neo.runQuery(query, params).then((results) => {
-			return results;
-		});
-	}
-
-	userIsInterestedIn(){
-        var query =`MATCH (u:FBUser)-[r:INTERESTED]->(e:Event)
-                                WHERE u.firebaseId = {uid}
-                                RETURN e
-                                `
-        var params = {uid: this.authData.getFirebaseId()}
-
-        return this.neo.runQuery(query, params).then((results) => {
-            return results;
-        });
-    }
-
 	fetchAllUpcomingEvents() {
 		var query = `	MATCH (c:Calendar)-[:HOSTING]->(e:Event)
 						WHERE e.date >= timestamp()/1000
@@ -90,13 +61,14 @@ export class EventService {
 	}
 
 	fetchInterestedEventsForCurrentUser() {
-		var query =`	MATCH (u:FBUser {firebaseId: {userId}})-[:INTERESTED]->(e:Event)
-                        RETURN e
-                    `;
-        var params = {userId: this.authData.getFirebaseId()}
-        return this.neo.runQuery(query, params).then((results) => {
-        	return results;
-        });
+		var query =`MATCH (u:FBUser)-[r:INTERESTED]->(e:Event)
+								WHERE u.firebaseId = {uid}
+								RETURN e`
+		var params = {uid: this.authData.getFirebaseId()}
+
+		return this.neo.runQuery(query, params).then((results) => {
+				return results;
+		});
 	}
 
 	fetchUpcomingEventsForCurrentUser() {

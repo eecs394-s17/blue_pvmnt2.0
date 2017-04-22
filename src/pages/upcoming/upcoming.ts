@@ -64,7 +64,7 @@ export class UpcomingPage {
     this.events = this.events.filter((v) => {
       if(start <= v.date && end >= v.date) {
         return true;
-      } 
+      }
       else{
         return false;
       }
@@ -83,7 +83,6 @@ export class UpcomingPage {
     return buttontext;
   }
 
-
   ionViewDidEnter(){
     if ((this.button_press_count % 2) == 0){
       this.load();
@@ -91,12 +90,11 @@ export class UpcomingPage {
     else{
       console.log('Do Nothing');
     }
-    
+
   }
 
   load() {
-
-    this.eventService.userIsInterestedIn().then((events: Event[]) => {
+    this.eventService.fetchInterestedEventsForCurrentUser().then((events: Event[]) => {
         this.events = events;
         this.loadedevents = events;
     });
@@ -114,7 +112,7 @@ export class UpcomingPage {
   }
 
   getItems(searchbar){
-    
+
     this.initializeItems();
 
     var q = searchbar.srcElement.value;
@@ -136,7 +134,7 @@ export class UpcomingPage {
           return true;
         }
         return false;
-      } 
+      }
     });
 
   }
