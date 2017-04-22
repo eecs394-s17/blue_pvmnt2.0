@@ -49,7 +49,7 @@ export class EventCard {
     var uid = this.authData.getFirebaseId();
 
     this.eventService.interestedUserToEvent(uid, this.event.id);
-    this.eventService.userIsInterestedIn(uid);
+    //this.eventService.userIsInterestedIn(uid);
 
    //this.eventService.markCurrentUserInterestedInEvent(this.event.id);
 

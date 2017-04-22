@@ -4,6 +4,7 @@ import { MyApp } from './app.component';
 import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { PersonalPage } from '../pages/personal/personal';
+import { UpcomingPage } from '../pages/upcoming/upcoming';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
@@ -32,6 +33,7 @@ const myFirebaseAuthConfig = {
         ListPage,
         LoginPage,
         PersonalPage,
+        UpcomingPage,
         ResetPasswordPage,
         SignupPage,
         EventCard,
@@ -49,6 +51,7 @@ const myFirebaseAuthConfig = {
         ItemDetailsPage,
         LoginPage,
         PersonalPage,
+        UpcomingPage,
         ListPage,
         EventCard,
         ResetPasswordPage,

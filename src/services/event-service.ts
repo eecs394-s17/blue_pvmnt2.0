@@ -61,7 +61,7 @@ export class EventService {
 		});
 	}
 
-	userIsInterestedIn(user){
+	userIsInterestedIn(){
         var query =`MATCH (u:FBUser)-[r:INTERESTED]->(e:Event)
                                 WHERE u.firebaseId = {uid}
                                 RETURN e

@@ -9,6 +9,7 @@ import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { ListPage } from '../pages/list/list';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { PersonalPage } from '../pages/personal/personal';
+import { UpcomingPage } from '../pages/upcoming/upcoming';
 import { LoginPage } from '../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SignupPage } from '../pages/signup/signup';
@@ -65,7 +66,8 @@ export class MyApp {
     this.pages = [
       { title: 'All Events', component: HelloIonicPage },
       { title: 'Personal Feed', component: PersonalPage },
-      { title: 'Manage Subscriptions', component: ListPage }
+      { title: 'Manage Subscriptions', component: ListPage },
+      { title: 'Upcoming Events', component: UpcomingPage }
     ];
   }
 
