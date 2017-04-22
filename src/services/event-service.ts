@@ -30,13 +30,46 @@ export class EventService {
 		});	
 	}
 
-	userIsInterestedIn(eventId){
-        var query =`	MATCH (u:FBUser {firebaseId: {userId}})-[:INTERESTED]->(e:Event {id: {eventId}})
-                        RETURN e
-                    `;
-        var params = {userId: this.authData.getFirebaseId(), eventId: eventId};
+	subscribeUserToCalendar(user, calendar) {
+		var query = `	MATCH (c:Calendar) 										
+					 	WHERE c.name = {calendarName}							
+						MATCH (u:User)											
+						WHERE u.id = {userId}									
+						CREATE (u)-[r:SUBSCRIBED]->(c)							
+						RETURN u 												
+					`;
+		var params = {calendarName: calendar, userId: user};
+		return this.neo.runQuery(query, params).then((results) => {
+			return results;
+		});
+	}
+
+	interestedUserToEvent(user, eventID) {
+		var query = '	MATCH (e:Event) 										\
+					 	WHERE ID(e) = {eventId}							\
+						MATCH (u:FBUser)											\
+						WHERE u.firebaseId = {userId}									\
+						CREATE (u)-[r:INTERESTED]->(e)							\
+						RETURN u 												\
+					';
+		var params = {eventId: eventID, userId: this.authData.getFirebaseId()};
+		console.log(user);
+		console.log(eventID);
+		console.log(user);
+		return this.neo.runQuery(query, params).then((results) => {
+			return results;
+		});
+	}
+
+	userIsInterestedIn(user){
+        var query =`MATCH (u:FBUser)-[r:INTERESTED]->(e:Event)
+                                WHERE u.firebaseId = {uid}
+                                RETURN e
+                                `
+        var params = {uid: this.authData.getFirebaseId()}
+
         return this.neo.runQuery(query, params).then((results) => {
-        	return results;
+            return results;
         });
     }
 
@@ -81,9 +114,10 @@ export class EventService {
     	});  
   	}
 
+  	// Not working right now
 	markCurrentUserInterestedInEvent(eventId) {
 		var query =	`
-						CREATE (u: FBUser {firebaseId: {userId}})-[:INTERESTED]->(e: Event {id: {eventId}}))
+						CREATE (u: FBUser {firebaseId: {userId}})-[:INTERESTED]->(e: Event {ID(e): {eventId}}))
 						RETURN e
                     `;
         var params = {userId: this.authData.getFirebaseId(), eventId: eventId}
