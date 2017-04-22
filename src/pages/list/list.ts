@@ -4,6 +4,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { ItemDetailsPage } from '../item-details/item-details';
+import { HostEventsPage } from '../hostevents/hostevents';
 
 import { EventService } from '../../services/event-service';
 import { SubscriptionType } from '../../models/subscriptiontype';
@@ -50,6 +51,13 @@ export class ListPage {
 
     //  })
 
+  }
+
+
+  getCalendarEvents(event, item){
+    console.log(item);
+    this.navCtrl.push(HostEventsPage, {
+      item: item })
   }
 
   // subscribe(item){

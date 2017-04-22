@@ -1,36 +1,38 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { ItemDetailsPage } from '../item-details/item-details'
-import { AuthData } from '../../providers/auth-data';
+
 import { EventService } from '../../services/event-service';
-import { LoginPage } from '../login/login';
 import { FilterDatePage } from '../filterdate/filterdate';
 
 import { Event } from '../../models/event';
+import { Calendar } from '../../models/calendar';
+
+import { ItemDetailsPage } from '../item-details/item-details';
+import * as firebase from "firebase";
 
 @Component({
-  selector: 'page-hello-ionic',
-  templateUrl: 'hello-ionic.html',
+  selector: 'page-hostevents',
+  templateUrl: 'hostevents.html',
   providers: [EventService]
 })
 
-export class HelloIonicPage {
+export class HostEventsPage {
   events: Array<Event>;
+  selectedCalendar: Calendar;
   loadedevents: any;
-  icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
   filter_date_array: any;
   start_date: any;
   end_date: any;
   button_press_count: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService,  public authData: AuthData) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService) {
+    this.selectedCalendar = navParams.get('item');
     this.load();
     this.button_press_count = 0;
   }
 
   myCallbackFunction = (_params) => {
-  return new Promise((resolve, reject) => {
+     return new Promise((resolve, reject) => {
      this.filter_date_array = _params;
      this.start_date = this.filter_date_array[0];
      this.end_date = this.filter_date_array[1];
@@ -81,27 +83,6 @@ export class HelloIonicPage {
     return buttontext;
   }
 
-  // ionViewDidEnter(){
-  //   this.initializeItems();
-  // }
-
-  load() {
-
-    // this.eventService.fetchCalendars().then((calendars) => {
-    //   // console.log(calendars);
-    // });
-
-     this.eventService.fetchAllUpcomingEvents().then((events: Event[]) => {
-         this.events = events;
-         this.loadedevents = events;
-      });
-    
-    // Fetches all events that the user is currently subscribed to
-    // this.eventService.fetchEvents().then((events) => {
-    //   this.events = events;
-    //   this.loadedevents = events;
-    // });
-  }
 
   ionViewDidEnter(){
     if ((this.button_press_count % 2) == 0){
@@ -109,14 +90,22 @@ export class HelloIonicPage {
     }
     else{
       console.log('Do Nothing');
-    } 
+    }
+  }
+
+  load() {
+
+    console.log('selectedItem ' + this.selectedCalendar.id);
+    this.eventService.fetchUpcomingEventsForCalendar(this.selectedCalendar.name).then((events: Event[]) => {
+        this.events = events;
+        this.loadedevents = events;
+    });
   }
 
   itemTapped(event, item) {
-
     let view = this.navCtrl.getActive().component.name;
-  	this.navCtrl.push(ItemDetailsPage, {
-  		item: item, view: view });
+    this.navCtrl.push(ItemDetailsPage, {
+      item: item, view: view });
   }
 
   initializeItems(): void {
@@ -124,10 +113,11 @@ export class HelloIonicPage {
   }
 
   getItems(searchbar){
- 
+    
     this.initializeItems();
 
     var q = searchbar.srcElement.value;
+
 
     if (!q) {
       return;
@@ -148,11 +138,6 @@ export class HelloIonicPage {
       } 
     });
 
-  }
-
-  logOut(event){
-    this.authData.logoutUser();
-    this.navCtrl.setRoot(LoginPage);
   }
 
 }
