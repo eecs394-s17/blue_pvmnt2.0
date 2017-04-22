@@ -11,7 +11,7 @@ import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
 import { FilterDatePage } from '../pages/filterdate/filterdate';
-import { HostEventsPage } from '../pages/hostevents/hostevents';
+import { HostEventsPage } from '../pages/hostevents/hostevents.ts';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
