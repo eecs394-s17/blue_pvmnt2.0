@@ -35,7 +35,7 @@ export class EventService {
 					 	WHERE c.name = {calendarName}
 						MATCH (u:User)
 						WHERE u.id = {userId}
-						CREATE (u)-[r:SUBSCRIBED]->(c)
+						CREATE UNIQUE (u)-[r:SUBSCRIBED]->(c)
 						RETURN u
 					`;
 		var params = {calendarName: calendar, userId: user};
@@ -49,7 +49,7 @@ export class EventService {
 					 	WHERE ID(e) = {eventId}
 						MATCH (u:FBUser)
 						WHERE u.firebaseId = {userId}
-						CREATE (u)-[r:INTERESTED]->(e)
+						CREATE UNIQUE (u)-[r:INTERESTED]->(e)
 						RETURN u
 					`;
 		var params = {eventId: eventID, userId: this.authData.getFirebaseId()};
@@ -72,7 +72,6 @@ export class EventService {
             return results;
         });
     }
-
 
 	fetchAllUpcomingEvents() {
 		var query = `	MATCH (c:Calendar)-[:HOSTING]->(e:Event)
@@ -115,15 +114,18 @@ export class EventService {
   	}
 
   	// Not working right now
-	markCurrentUserInterestedInEvent(eventId) {
-		var query =	`
-						CREATE (u: FBUser {firebaseId: {userId}})-[:INTERESTED]->(e: Event {ID(e): {eventId}}))
-						RETURN e
-                    `;
-        var params = {userId: this.authData.getFirebaseId(), eventId: eventId}
-        return this.neo.runQuery(query, params).then((results) => {
-                return results;
-        });
+	markCurrentUserInterestedInEvent(eventID) {
+		var query = `	MATCH (e:Event)
+					 	WHERE ID(e) = {eventId}
+						MATCH (u:FBUser)
+						WHERE u.firebaseId = {userId}
+						CREATE UNIQUE (u)-[r:INTERESTED]->(e)
+						RETURN u
+					`;
+    var params = {userId: this.authData.getFirebaseId(), eventId: eventID}
+    return this.neo.runQuery(query, params).then((results) => {
+        return results;
+    });
 	}
 
 	unmarkCurrentUserInterestedInEvent(eventId) {
