@@ -41,6 +41,10 @@ export class ListPage {
       this.calendars = calendars;
     });
 
+
+    this.calendarService.fetchCurrentUserCalendars().then((cals: Object) => {
+      console.log(cals);
+    });
     // this.userService.fetchCalendars(uid).then((calendars) => {
     //   console.log(calendars);
     //   this.items = calendars

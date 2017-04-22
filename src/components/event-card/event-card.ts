@@ -42,14 +42,15 @@ export class EventCard {
   logEvent(event) {
     event.stopPropagation();
     console.log('hello');
-    
+
   }
 
   interestedIn(event){
+    event.stopPropagation();
     var uid = this.authData.getFirebaseId();
 
     this.eventService.interestedUserToEvent(uid, this.event.id);
-    this.eventService.userIsInterestedIn(uid);
+    //this.eventService.userIsInterestedIn(uid);
 
    //this.eventService.markCurrentUserInterestedInEvent(this.event.id);
 
