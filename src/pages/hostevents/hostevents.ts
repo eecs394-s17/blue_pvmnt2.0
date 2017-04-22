@@ -95,7 +95,7 @@ export class HostEventsPage {
 
   load() {
 
-    console.log('selectedItem ' + this.selectedCalendar.id);
+    console.log('host events selectedItem ' + this.selectedCalendar.id);
     this.eventService.fetchUpcomingEventsForCalendar(this.selectedCalendar.id).then((events: Event[]) => {
         this.events = events;
         this.loadedevents = events;

@@ -15,18 +15,21 @@ export class EventService {
 		this.authData = new AuthData();
 	}
 
-	fetchUpcomingEventsForCalendar(calendar) {
-		var query = `	MATCH (c:Calendar)
-					 	WHERE c.name = {calendarName}
-						MATCH (e:Event)
-						WHERE (c)-[:HOSTING]->(e) AND e.date >= timestamp()/1000
-						SET e.host = c.name
-						SET e.calendarId = c.id
-						RETURN e
+	fetchUpcomingEventsForCalendar(calendarId) {
+		var query = `	
+						MATCH (c:Calendar {id: {calendarId}})-[:HOSTING]->(e:Event)
+					 	WHERE e.date >= timestamp()/1000
+						OPTIONAL MATCH (u: FBUser)-[ti:INTERESTED]->(e)
+						OPTIONAL MATCH (fu: FBUser {firebaseId: {firebaseId}})-[ui:INTERESTED]->(e)
+						with count(ti) as ti, e, c, count(ui) > 0 as ui order by e.date
+						with collect({event:e, calendar: c, totalInterestLevel:ti, isUserInterested:ui}) as res
+						return res
 					`;
-		var params = {calendarName: calendar};
-		return this.neo.runQuery(query, params).then((results: Event[]) => {
-			return results.map(this.parseEventData);
+		var params = {calendarId: calendarId, firebaseId: this.authData.getFirebaseId()};
+		return this.neo.runQuery(query, params).then((results) => {
+			console.log(results[0]);
+			let data: Object[] = results[0];
+			return data.map(this.parseEventData);
 		});
 	}
 
