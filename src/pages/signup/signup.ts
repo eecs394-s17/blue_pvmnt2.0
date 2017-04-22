@@ -43,16 +43,16 @@ export class SignupPage {
         this.nav.pop();
       }, (error) => {
         // this.loading.dismiss().then( () => {
-        //   let alert = this.alertCtrl.create({
-        //     message: error.message,
-        //     buttons: [
-        //       {
-        //         text: "Ok",
-        //         role: 'cancel'
-        //       }
-        //     ]
-        //   });
-        //   alert.present();
+          let alert = this.alertCtrl.create({
+            message: error.message,
+            buttons: [
+              {
+                text: "Ok",
+                role: 'cancel'
+              }
+            ]
+          });
+          alert.present();
         // });
       });
       // this.loading = this.loadingCtrl.create();
