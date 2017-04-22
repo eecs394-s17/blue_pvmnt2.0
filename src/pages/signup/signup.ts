@@ -18,6 +18,7 @@ export class SignupPage {
   loading: any;
 
 
+
   constructor(public nav: NavController, public authData: AuthData,
     public formBuilder: FormBuilder, public loadingCtrl: LoadingController,
     public alertCtrl: AlertController, private _app: App) {
@@ -36,6 +37,7 @@ export class SignupPage {
       .then(() => {
         this.loading.dismiss().then( () => {
           this.nav.setRoot(TabsPage)
+          //this.rootPage = TabsPage;
         });
       }, (error) => {
         this.loading.dismiss().then( () => {

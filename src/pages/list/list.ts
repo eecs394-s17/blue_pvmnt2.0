@@ -20,9 +20,7 @@ import * as firebase from "firebase";
 })
 
 export class ListPage {
-  items: Array<SubscriptionType>;//all the calendars
-  subscribed: Array<SubscriptionType>;
-  calendars: Array<Calendar>;
+  calendars: Object;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public cd: ChangeDetectorRef, private eventService: EventService, private calendarService: CalendarService) {
     this.load();
@@ -34,29 +32,10 @@ export class ListPage {
   
   load() {
 
-    var user = firebase.auth().currentUser;
-    var uid = user.uid;
-
-    this.calendarService.fetchAllCalendars().then((calendars: Calendar[]) => {
-      this.calendars = calendars;
-    });
-
-
     this.calendarService.fetchCurrentUserCalendars().then((cals: Object) => {
-      console.log(cals);
+      this.calendars = cals;
     });
-    // this.userService.fetchCalendars(uid).then((calendars) => {
-    //   console.log(calendars);
-    //   this.items = calendars
-    //  })
-
-    //  this.userService.getUserSubscriptions(uid).then((subscriptions)=>{
-    //    this.subscribed = subscriptions
-
-    //  })
-
   }
-
 
   getCalendarEvents(event, item){
     console.log(item);
@@ -64,21 +43,23 @@ export class ListPage {
       item: item })
   }
 
-  // subscribe(item){
+  subscribe(cal){
 
-  //   var user = firebase.auth().currentUser;
-  //   var uid = user.uid;
-  //   if(item.icon=='checkmark'){
-  //     console.log("unsubscribe "+ item.calendartype);
-  //     this.userService.removeUserSubscriptions(uid,item.calendartype);
-  //     item.icon='close-circle';
-  //   }
-  //   else{
-  //     console.log("subscribe "+item.calendartype);
-  //     this.userService.updateUserSubscriptions(uid,item.calendartype);
-  //     item.icon='checkmark';
-  //   }
-  // }
+    if(cal.subscribed == true ){
+      this.calendarService.unsubscribeCurrentUserFromCalendar(cal.id);
+      console.log(' TRUE cal.name ' + cal.name)
+      console.log('TRUE cal.subscribed ' + cal.subscribed)
+      console.log('TRUE cal.id ' + cal.id)
+    }
+    else{
+      this.calendarService.subscribeCurrentUserToCalendar(cal.id);
+      console.log('FALSE cal.name ' + cal.name)
+      console.log('FALSE cal.subscribed ' + cal.subscribed)
+      console.log('FALSE cal.id ' + cal.id)
+    }
+  }
+
+
 
 
 }

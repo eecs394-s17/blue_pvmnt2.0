@@ -18,6 +18,7 @@ import { TabsPage } from '../tabs/tabs';
 export class LoginPage {
   public loginForm;
   loading: any;
+  rootPage: any;
 
   constructor(public nav: NavController, public authData: AuthData, public formBuilder: FormBuilder,
     public alertCtrl: AlertController, public loadingCtrl: LoadingController, private _app: App) {
@@ -62,7 +63,7 @@ export class LoginPage {
         //   });
         //   alert.present();
         // });
-        console.log(error);
+        //console.log(error);
       });
 
       // this.loading = this.loadingCtrl.create();
