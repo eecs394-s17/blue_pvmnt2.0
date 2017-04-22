@@ -66,7 +66,7 @@ export class EventService {
                                 WHERE u.firebaseId = {uid}
                                 RETURN e
                                 `
-        var params = {uid: user}
+        var params = {uid: this.authData.getFirebaseId()}
 
         return this.neo.runQuery(query, params).then((results) => {
 				console.log(results);
