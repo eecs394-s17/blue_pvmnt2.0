@@ -16,8 +16,8 @@ export class TabsPage {
 
 	tab1Root: any = HelloIonicPage;
  	tab2Root: any = PersonalPage;
- 	tab3Root: any = ListPage;
-	tab4Root: any = UpcomingPage;
+ 	tab3Root: any = UpcomingPage;
+ 	tab4Root: any = ListPage;
  	mySelectedIndex: number;
 
   constructor(navParams: NavParams) {
