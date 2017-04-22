@@ -1,4 +1,5 @@
 export class Calendar {
 	name: string;
-	id: number; 
+	id: number;
+	subscribed: boolean;
 }
