@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, App } from 'ionic-angular';
 import { ItemDetailsPage } from '../item-details/item-details'
 import { AuthData } from '../../providers/auth-data';
 import { EventService } from '../../services/event-service';
@@ -24,7 +24,7 @@ export class HelloIonicPage {
   end_date: any;
   button_press_count: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService,  public authData: AuthData) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService,  public authData: AuthData, private _app: App) {
     this.load();
     this.button_press_count = 0;
   }
@@ -62,7 +62,7 @@ export class HelloIonicPage {
     this.events = this.events.filter((v) => {
       if(start <= v.date && end >= v.date) {
         return true;
-      } 
+      }
       else{
         return false;
       }
@@ -95,7 +95,7 @@ export class HelloIonicPage {
          this.events = events;
          this.loadedevents = events;
       });
-    
+
     // Fetches all events that the user is currently subscribed to
     // this.eventService.fetchEvents().then((events) => {
     //   this.events = events;
@@ -109,7 +109,7 @@ export class HelloIonicPage {
     }
     else{
       console.log('Do Nothing');
-    } 
+    }
   }
 
   itemTapped(event, item) {
@@ -124,7 +124,7 @@ export class HelloIonicPage {
   }
 
   getItems(searchbar){
- 
+
     this.initializeItems();
 
     var q = searchbar.srcElement.value;
@@ -145,14 +145,14 @@ export class HelloIonicPage {
           return true;
         }
         return false;
-      } 
+      }
     });
 
   }
 
   logOut(event){
     this.authData.logoutUser();
-    this.navCtrl.setRoot(LoginPage);
+    this._app.getRootNav().setRoot(LoginPage);
   }
 
 }

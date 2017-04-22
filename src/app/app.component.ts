@@ -45,7 +45,7 @@ export class MyApp {
     public menu: MenuController,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen
-  ) 
+  )
   {
     this.zone = new NgZone({});
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
@@ -53,11 +53,11 @@ export class MyApp {
     if (!user) {
       this.rootPage = LoginPage;
       unsubscribe();
-    } else { 
-      this.rootPage = TabsPage; 
+    } else {
+      this.rootPage = TabsPage;
       unsubscribe();
     }
-    });     
+    });
   });
 
   this.initializeApp();
@@ -78,11 +78,11 @@ export class MyApp {
     });
   }
 
-  openPage(page: PageInterface) {
-    // close the menu when clicking a link from the menu
-    this.menu.close();
-    // navigate to the new page if it is not the current page
-    this.nav.setRoot(page.component);
-  }
+  // openPage(page: PageInterface) {
+  //   // close the menu when clicking a link from the menu
+  //   this.menu.close();
+  //   // navigate to the new page if it is not the current page
+  //   this.nav.setRoot(page.component);
+  // }
 
 }
