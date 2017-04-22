@@ -65,7 +65,7 @@ export class CalendarService {
 						`;	
 		var params = {firebaseId: this.authData.getFirebaseId()};
 		return this.neo.runQuery(subsQuery, params).then((subs: Object[]) => {
-			var unsubsQuery = `	
+			var unsubsQuery = `
 								MATCH (u: FBUser {firebaseId: {firebaseId}})-[:SUBSCRIBED]->(c:Calendar)
 								WITH collect(c) as subs
 								MATCH (unsubs: Calendar)
@@ -81,6 +81,25 @@ export class CalendarService {
 				});
 				return allCalendars;
 			});
+		});
+
+	}
+
+	fetchCurrentUserCalendarsOld() {
+		var subsQuery = `
+							MATCH (u: FBUser {firebaseId: {firebaseId}})-[:SUBSCRIBED]->(sc:Calendar)
+							WITH collect(sc) as subs
+							MATCH (uc: Calendar)
+							WHERE NOT(uc in subs)
+							WITH subs, collect(uc) as unsubs
+							RETURN {unsubscribed: unsubs, subscribed: subs}
+						`;	
+		var params = {firebaseId: this.authData.getFirebaseId()};
+		return this.neo.runQuery(subsQuery, params).then((result: Object) => {
+			let subbedCalendars = result["subscribed"].map(c => this.parseCalendarData(c, true));
+			let unsubbedCalendars = result["unsubscribed"].map(c => this.parseCalendarData(c, false));
+			let allCalendars = subbedCalendars.concat(unsubbedCalendars);
+			return allCalendars;
 		});
 
 	}
