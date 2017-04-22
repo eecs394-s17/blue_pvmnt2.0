@@ -7,8 +7,8 @@ export class Event {
 	calendarId: number;
 	img: string;
 	tags: string[];
-	place: string;    //location
-	host: string;     // who is hosting the event
+	place: string;
+	host: string;
 	summary: string;
 	userIsInterested: boolean;
 }

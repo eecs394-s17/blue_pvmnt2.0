@@ -46,17 +46,21 @@ export class EventService {
 	}
 
 	fetchAllUpcomingEvents() {
-		var query = `	MATCH (c:Calendar)-[:HOSTING]->(e:Event)
+		var query = `	
+						MATCH (e:Event)
 						WHERE e.date >= timestamp()/1000
-						SET e.host = c.name
-						SET e.calendarId = c.id
-						RETURN e
-						ORDER BY e.date
+						MATCH (c: Calendar)-[:HOSTING]->(e)
+						OPTIONAL MATCH (u: FBUser)-[ti:INTERESTED]->(e)
+						OPTIONAL MATCH (fu: FBUser {firebaseId: {firebaseId}})-[ui:INTERESTED]->(e)
+						with count(ti) as ti, e, c, count(ui) > 0 as ui order by e.date
+						with collect({event:e, calendar: c, totalInterestLevel:ti, isUserInterested:ui}) as res
+						return res
 					`;
-		var params = {};
+		var params = {firebaseId: this.authData.getFirebaseId()};
 		return this.neo.runQuery(query, params).then((results: Event[]) => {
 			console.log(results);
-			return results.map(this.parseEventData);
+			// return results.map(this.parseEventData);
+			return [];
 		});
 	}
 
@@ -87,6 +91,7 @@ export class EventService {
   	}
 
   	// Not working right now
+
 	markCurrentUserInterestedInEvent(eventID) {
 		var query = `	MATCH (e:Event)
 					 	WHERE ID(e) = {eventId}
@@ -104,7 +109,7 @@ export class EventService {
 	unmarkCurrentUserInterestedInEvent(eventId) {
 		var query =	`
 						MATCH (u: FBUser {firebaseId: {userId}})-[r:INTERESTED]->(e: Event {id: {eventId}}))
-						DELETE r
+						DETACH DELETE r
                     `;
         var params = {userId: this.authData.getFirebaseId(), eventId: eventId}
         return this.neo.runQuery(query, params).then((results) => {
