@@ -36,10 +36,16 @@
   </ion-item>
   <ion-row no-padding>
     <ion-col no-padding>
-      <button ion-button (click)="interestedIn($event)" clear small color="danger" icon-left>
+
+      <button *ngIf="event.userIsInterested" ion-button (click)="notInterestedIn($event)" clear small color="danger" icon-left>
         <ion-icon name='flame'></ion-icon>
         Interested
       </button>
+      <button *ngIf="!event.userIsInterested" ion-button (click)="interestedIn($event)" clear small color="dark" icon-left>
+        <ion-icon name='flame'></ion-icon>
+        Interested
+      </button>
+
     </ion-col>
 
   </ion-row>
