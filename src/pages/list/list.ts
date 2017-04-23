@@ -10,19 +10,23 @@ import { EventService } from '../../services/event-service';
 import { SubscriptionType } from '../../models/subscriptiontype';
 import { CalendarService } from '../../services/calendar-service';
 import { Calendar } from '../../models/calendar';
+import { User } from '../../models/user';
+import { UserService } from '../../services/user-service';
+
 
 import * as firebase from "firebase";
 
 @Component({
   selector: 'page-list',
   templateUrl: 'list.html',
-  providers: [EventService, CalendarService]
+  providers: [EventService, CalendarService, UserService]
 })
 
 export class ListPage {
   calendars: Object;
+  user: Object;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public cd: ChangeDetectorRef, private eventService: EventService, private calendarService: CalendarService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public cd: ChangeDetectorRef, private eventService: EventService, private calendarService: CalendarService, private userService: UserService) {
     this.load();
   }
 
@@ -35,6 +39,12 @@ export class ListPage {
     this.calendarService.fetchCurrentUserCalendars().then((cals: Object) => {
       this.calendars = cals;
     });
+
+    this.userService.fetchUserData().then((user_temp: Object) => {
+      this.user = user_temp;
+      console.log(this.user);
+    });
+
   }
 
   getCalendarEvents(event, item){

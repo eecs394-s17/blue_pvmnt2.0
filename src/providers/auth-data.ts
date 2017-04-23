@@ -32,12 +32,13 @@ export class AuthData {
    * @param  {string} email    [User's email address]
    * @param  {string} password [User's password]
    */
-  signupUser(email: string, password: string): firebase.Promise<any> {
+  signupUser(email: string, password: string, name: string, year: string): firebase.Promise<any> {
     return firebase.auth().createUserWithEmailAndPassword(email, password).then((newUser) => {
       firebase.database().ref('/user/').child(newUser.uid).set({
         email: email,
         subscriptions: ["northwestern"],
-        
+        name: name, 
+        year: year
       });
       return this.createUser(newUser.uid);
     });
@@ -72,7 +73,11 @@ export class AuthData {
   }
 
   getFirebaseId() {
-
+    console.log(firebase.auth().currentUser.uid);
     return firebase.auth().currentUser.uid;
   }
+
+
+
+
 }

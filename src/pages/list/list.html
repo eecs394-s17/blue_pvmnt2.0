@@ -5,6 +5,17 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-item>
+      <ion-avatar item-center>
+        <img src="assets/img/avatar-ts-woody.png">
+      </ion-avatar>
+  </ion-item>
+
+  <ion-label *ngIf="user"> Name: {{ user.name }} </ion-label>
+  <ion-label *ngIf="user"> Email: {{ user.email }} </ion-label>
+  <ion-label *ngIf="user"> Graduation Year: {{ user.year }} </ion-label>
+     
   <ion-list>
 
     <ion-item *ngFor="let c of calendars" (click)="getCalendarEvents($event, c)">

@@ -1,3 +1,23 @@
 page-list {
 
+  ion-avatar {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+  }
+
+  ion-avatar img {
+      max-width: 8rem;
+      max-height: 8rem;
+      border-radius: 5rem;
+      border: 2px solid color($colors, light);
+  }
+
+  .item-avatar  {     
+      width:100% !important;  
+      height : 100% !important;  
+      max-width: 200px !important;  //any size
+      max-height: 200px !important; //any size 
+}
+
 }
