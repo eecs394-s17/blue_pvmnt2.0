@@ -16,7 +16,7 @@ export class EventService {
 	}
 
 	fetchUpcomingEventsForCalendar(calendarId) {
-		var query = `	
+		var query = `
 						MATCH (c:Calendar {id: {calendarId}})-[:HOSTING]->(e:Event)
 					 	WHERE e.date >= timestamp()/1000
 						OPTIONAL MATCH (u: FBUser)-[ti:INTERESTED]->(e)
@@ -72,8 +72,10 @@ export class EventService {
 					`;
 		var params = {firebaseId: this.authData.getFirebaseId()};
 		return this.neo.runQuery(query, params).then((results) => {
+			console.log(results[0]);
 			let data: Object[] = results[0];
 			return data.map(this.parseEventData);
+			// return this.parseEvents(results);
 		});
 	}
 
@@ -102,7 +104,6 @@ export class EventService {
     	});
   	}
 
-  	// Not working right now
 
 	markCurrentUserInterestedInEvent(eventId) {
 		var query = `	MATCH (e:Event)
@@ -162,10 +163,12 @@ export class EventService {
 		e.calendarId = data.calendar.id;
 		e.host = data.calendar.name;
 
-		e.userIsInterested = data.isCurrentUserInterested;
-		e.interestCount = data.interestLevel;
-
+		e.userIsInterested = data.isUserInterested;
+		e.interestCount = data.totalInterestLevel;
+		console.log(e.interestCount);
+		if (e.userIsInterested){
+			console.log(e);
+		}
 		return e;
 	}
-
 }
