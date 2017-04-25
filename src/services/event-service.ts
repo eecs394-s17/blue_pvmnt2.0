@@ -27,7 +27,6 @@ export class EventService {
 					`;
 		var params = {calendarId: calendarId, firebaseId: this.authData.getFirebaseId()};
 		return this.neo.runQuery(query, params).then((results) => {
-			console.log(results[0]);
 			let data: Object[] = results[0];
 			return data.map(this.parseEventData);
 		});
@@ -165,10 +164,6 @@ export class EventService {
 
 		e.userIsInterested = data.isUserInterested;
 		e.interestCount = data.totalInterestLevel;
-		console.log(e.interestCount);
-		if (e.userIsInterested){
-			console.log(e);
-		}
 		return e;
 	}
 }
