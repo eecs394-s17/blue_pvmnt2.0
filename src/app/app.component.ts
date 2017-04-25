@@ -9,6 +9,7 @@ import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { ListPage } from '../pages/list/list';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { PersonalPage } from '../pages/personal/personal';
+import { UpcomingPage } from '../pages/upcoming/upcoming';
 import { LoginPage } from '../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SignupPage } from '../pages/signup/signup';
@@ -45,28 +46,29 @@ export class MyApp {
     public menu: MenuController,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen
-  ) 
+  )
   {
     this.zone = new NgZone({});
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
     this.zone.run( () => {
     if (!user) {
       this.rootPage = LoginPage;
-      unsubscribe();
-    } else { 
-      this.rootPage = TabsPage; 
-      unsubscribe();
+      // unsubscribe();
+    } else {
+      this.rootPage = TabsPage;
+      // unsubscribe();
     }
-    });     
+    });
   });
 
   this.initializeApp();
     // set our app's pages
-    this.pages = [
-      { title: 'All Events', component: HelloIonicPage },
-      { title: 'Personal Feed', component: PersonalPage },
-      { title: 'Manage Subscriptions', component: ListPage }
-    ];
+    // this.pages = [
+    //   { title: 'All Events', component: HelloIonicPage },
+    //   { title: 'Personal Feed', component: PersonalPage },
+    //   { title: 'Manage Subscriptions', component: ListPage },
+    //   { title: 'Upcoming Events', component: UpcomingPage }
+    // ];
   }
 
   initializeApp() {
@@ -78,11 +80,11 @@ export class MyApp {
     });
   }
 
-  openPage(page: PageInterface) {
-    // close the menu when clicking a link from the menu
-    this.menu.close();
-    // navigate to the new page if it is not the current page
-    this.nav.setRoot(page.component);
-  }
+  // openPage(page: PageInterface) {
+  //   // close the menu when clicking a link from the menu
+  //   this.menu.close();
+  //   // navigate to the new page if it is not the current page
+  //   this.nav.setRoot(page.component);
+  // }
 
 }

@@ -3,10 +3,9 @@ import { NavController, NavParams, App } from 'ionic-angular';
 import { ItemDetailsPage } from '../item-details/item-details'
 import { AuthData } from '../../providers/auth-data';
 import { EventService } from '../../services/event-service';
-import { UserService } from '../../services/user-service';
 import { LoginPage } from '../login/login';
 import { FilterDatePage } from '../filterdate/filterdate';
-
+import { UserService } from '../../services/user-service';
 import { Event } from '../../models/event';
 
 @Component({
@@ -25,7 +24,7 @@ export class HelloIonicPage {
   end_date: any;
   button_press_count: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService, private userService: UserService, public authData: AuthData, public app: App) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService, private userService: UserService, public authData: AuthData, public _app: App) {
     this.load();
     this.button_press_count = 0;
   }
@@ -41,7 +40,6 @@ export class HelloIonicPage {
   }
 
   filterDates(event){
-    console.log(this.button_press_count);
     if ((this.button_press_count % 2) == 0){
       this.navCtrl.push(FilterDatePage, {
         callback: this.myCallbackFunction
@@ -64,7 +62,7 @@ export class HelloIonicPage {
     this.events = this.events.filter((v) => {
       if(start <= v.date && end >= v.date) {
         return true;
-      } 
+      }
       else{
         return false;
       }
@@ -93,11 +91,25 @@ export class HelloIonicPage {
     //   // console.log(calendars);
     // });
 
+     this.eventService.fetchAllUpcomingEvents().then((events: Event[]) => {
+         this.events = events;
+         this.loadedevents = events;
+      });
+
     // Fetches all events that the user is currently subscribed to
-    this.eventService.fetchEvents().then((events) => {
-      this.events = events;
-      this.loadedevents = events;
-    });
+    // this.eventService.fetchEvents().then((events) => {
+    //   this.events = events;
+    //   this.loadedevents = events;
+    // });
+  }
+
+  ionViewDidEnter(){
+    if ((this.button_press_count % 2) == 0){
+      this.load();
+    }
+    else{
+      console.log('Do Nothing');
+    }
   }
 
   itemTapped(event, item) {
@@ -111,17 +123,9 @@ export class HelloIonicPage {
     this.events = this.loadedevents;
   }
 
-  ionViewDidEnter(){
-    if ((this.button_press_count % 2) == 0){
-      this.load();
-    }
-    else{
-      console.log('Do Nothing');
-    } 
-  }
 
   getItems(searchbar){
- 
+
     this.initializeItems();
 
     var q = searchbar.srcElement.value;
@@ -135,21 +139,21 @@ export class HelloIonicPage {
         if (v.name.toLowerCase().indexOf(q.toLowerCase()) > -1) {
           return true;
         }
-        else if (v.calendartype.toLowerCase().indexOf(q.toLowerCase()) > -1){
+        else if (v.host.toLowerCase().indexOf(q.toLowerCase()) > -1){
           return true;
         }
         else if (v.calendartype.toLowerCase().indexOf(q.toLowerCase()) > -1){
           return true;
         }
         return false;
-      } 
+      }
     });
 
   }
 
   logOut(event){
     this.authData.logoutUser();
-    this.navCtrl.setRoot(LoginPage);
+    this._app.getRootNav().setRoot(LoginPage);
   }
 
 }

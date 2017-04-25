@@ -7,16 +7,15 @@ import { FilterDatePage } from '../filterdate/filterdate';
 import { Event } from '../../models/event';
 
 import { ItemDetailsPage } from '../item-details/item-details';
-
 import * as firebase from "firebase";
 
 @Component({
   selector: 'page-personal',
-  templateUrl: 'personal.html',
+  templateUrl: 'upcoming.html',
   providers: [EventService]
 })
 
-export class PersonalPage {
+export class UpcomingPage {
   events: Array<Event>;
   loadedevents: any;
   subscriptions: string[];
@@ -65,7 +64,7 @@ export class PersonalPage {
     this.events = this.events.filter((v) => {
       if(start <= v.date && end >= v.date) {
         return true;
-      } 
+      }
       else{
         return false;
       }
@@ -84,7 +83,6 @@ export class PersonalPage {
     return buttontext;
   }
 
-
   ionViewDidEnter(){
     if ((this.button_press_count % 2) == 0){
       this.load();
@@ -92,12 +90,11 @@ export class PersonalPage {
     else{
       console.log('Do Nothing');
     }
-    
+
   }
 
   load() {
-
-    this.eventService.fetchUpcomingEventsForCurrentUser().then((events: Event[]) => {
+    this.eventService.fetchInterestedEventsForCurrentUser().then((events: Event[]) => {
         this.events = events;
         this.loadedevents = events;
     });
@@ -115,7 +112,7 @@ export class PersonalPage {
   }
 
   getItems(searchbar){
-    
+
     this.initializeItems();
 
     var q = searchbar.srcElement.value;
@@ -130,14 +127,14 @@ export class PersonalPage {
         if (v.name.toLowerCase().indexOf(q.toLowerCase()) > -1) {
           return true;
         }
-        else if (v.host.toLowerCase().indexOf(q.toLowerCase()) > -1){
+        else if (v.calendartype.toLowerCase().indexOf(q.toLowerCase()) > -1){
           return true;
         }
         else if (v.calendartype.toLowerCase().indexOf(q.toLowerCase()) > -1){
           return true;
         }
         return false;
-      } 
+      }
     });
 
   }

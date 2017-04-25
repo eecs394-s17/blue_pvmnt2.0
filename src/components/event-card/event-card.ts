@@ -1,13 +1,16 @@
 import { Component, Input } from '@angular/core';
-import { NavController } from 'ionic-angular'
+import { NavController, NavParams } from 'ionic-angular'
 import { Event } from '../../models/event'
-
+import { EventService } from '../../services/event-service';
+import * as firebase from "firebase";
 import * as moment from 'moment';
+import { AuthData } from '../../providers/auth-data';
 
 
 @Component({
   selector: 'event-card',
-  templateUrl: 'event-card.html'
+  templateUrl: 'event-card.html',
+  providers: [EventService]
 })
 
 export class EventCard {
@@ -15,14 +18,14 @@ export class EventCard {
   day: string;
   month: string;
   time: string;
+  selectedItem: any;
 
 
-  // constructor(){
-  //   var t = moment.unix(this.event.date);
-  //   this.day = t.format("DD");
-  //   this.month = t.format("MM");
-  //   this.time = t.format("h:mm a");
-  // }
+   constructor(private eventService: EventService, public navParams: NavParams,
+     public authData: AuthData){
+
+  this.selectedItem = navParams.get('item');
+   }
 
   getDay() {
     return moment.unix(this.event.date).format("DD");
@@ -34,9 +37,15 @@ export class EventCard {
     return moment.unix(this.event.date).format("h:mm a");
   }
 
-  logEvent(event) {
+  interestedIn(event){
     event.stopPropagation();
-    console.log('hello');
-    
+    this.event.userIsInterested = true;
+    this.eventService.markCurrentUserInterestedInEvent(this.event.id);
   }
+  notInterestedIn(event){
+    event.stopPropagation();
+    this.event.userIsInterested = false;
+    this.eventService.unmarkCurrentUserInterestedInEvent(this.event.id);
+  }
+
 }

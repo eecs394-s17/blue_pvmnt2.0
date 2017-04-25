@@ -5,29 +5,28 @@ import { EventService } from '../../services/event-service';
 import { FilterDatePage } from '../filterdate/filterdate';
 
 import { Event } from '../../models/event';
+import { Calendar } from '../../models/calendar';
 
 import { ItemDetailsPage } from '../item-details/item-details';
-
 import * as firebase from "firebase";
 
 @Component({
-  selector: 'page-personal',
-  templateUrl: 'personal.html',
+  selector: 'page-hostevents',
+  templateUrl: 'hostevents.html',
   providers: [EventService]
 })
 
-export class PersonalPage {
+export class HostEventsPage {
   events: Array<Event>;
+  selectedCalendar: Calendar;
   loadedevents: any;
-  subscriptions: string[];
-  icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
   filter_date_array: any;
   start_date: any;
   end_date: any;
   button_press_count: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService) {
+    this.selectedCalendar = navParams.get('item');
     this.load();
     this.button_press_count = 0;
   }
@@ -92,23 +91,22 @@ export class PersonalPage {
     else{
       console.log('Do Nothing');
     }
-    
   }
 
   load() {
 
-    this.eventService.fetchUpcomingEventsForCurrentUser().then((events: Event[]) => {
+    console.log('host events selectedItem ' + this.selectedCalendar.id);
+    this.eventService.fetchUpcomingEventsForCalendar(this.selectedCalendar.id).then((events: Event[]) => {
         this.events = events;
         this.loadedevents = events;
     });
-
   }
 
   itemTapped(event, item) {
     let view = this.navCtrl.getActive().component.name;
-  	this.navCtrl.push(ItemDetailsPage, {
-  		item: item, view: view });
-	}
+    this.navCtrl.push(ItemDetailsPage, {
+      item: item, view: view });
+  }
 
   initializeItems(): void {
     this.events = this.loadedevents;

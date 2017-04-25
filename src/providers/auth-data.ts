@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase';
-
+import { NeoService } from '../services/neo-service';
 
 @Injectable()
 export class AuthData {
+  neo: NeoService;
   public fireAuth: any;
   public userProfile: any;
+
   constructor() {
     this.fireAuth = firebase.auth();
     this.userProfile = firebase.database().ref('/user/');
+    this.neo = new NeoService();
   }
 
   /**
@@ -29,12 +32,25 @@ export class AuthData {
    * @param  {string} email    [User's email address]
    * @param  {string} password [User's password]
    */
-  signupUser(email: string, password: string): firebase.Promise<any> {
+  signupUser(email: string, password: string, name: string, year: string): firebase.Promise<any> {
     return firebase.auth().createUserWithEmailAndPassword(email, password).then((newUser) => {
       firebase.database().ref('/user/').child(newUser.uid).set({
         email: email,
-        subscriptions: ["northwestern"]
+        subscriptions: ["northwestern"],
+        name: name, 
+        year: year
       });
+      return this.createUser(newUser.uid);
+    });
+  }
+
+  createUser(userId) {
+    var query = `  CREATE (u: FBUser {firebaseId: {userId}}) 
+                   RETURN u
+                `;
+    var params = {userId: userId};
+    return this.neo.runQuery(query, params).then((results) => {
+      return results;
     });
   }
 
@@ -55,5 +71,13 @@ export class AuthData {
   logoutUser(): firebase.Promise<any> {
     return firebase.auth().signOut();
   }
+
+  getFirebaseId() {
+    console.log(firebase.auth().currentUser.uid);
+    return firebase.auth().currentUser.uid;
+  }
+
+
+
 
 }

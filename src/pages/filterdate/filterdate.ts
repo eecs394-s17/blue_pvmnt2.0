@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { UserService } from '../../services/user-service';
 import { Event } from '../../models/event'
 import { AlertController } from 'ionic-angular';
 import * as moment from 'moment';
@@ -9,7 +8,6 @@ import * as firebase from "firebase";
 @Component({
   selector: 'page-filterdate',
   templateUrl: 'filterdate.html',
-  providers: [UserService]
 })
 
 export class FilterDatePage {
@@ -19,7 +17,7 @@ export class FilterDatePage {
   date_array: any;
 
 
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams, private userService: UserService) {
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams) {
     var start = new Date().toISOString();
     var end = new Date().toISOString();
     this.load(start, end);

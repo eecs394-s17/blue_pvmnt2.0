@@ -1,7 +1,7 @@
-import { 
-  NavController, 
-  LoadingController, 
-  AlertController } from 'ionic-angular';
+import {
+  NavController,
+  LoadingController,
+  AlertController, App  } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthData } from '../../providers/auth-data';
@@ -18,9 +18,10 @@ import { TabsPage } from '../tabs/tabs';
 export class LoginPage {
   public loginForm;
   loading: any;
+  rootPage: any;
 
   constructor(public nav: NavController, public authData: AuthData, public formBuilder: FormBuilder,
-    public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+    public alertCtrl: AlertController, public loadingCtrl: LoadingController, private _app: App) {
 
     /**
      * Creates a ControlGroup that declares the fields available, their values and the validators that they are going
@@ -45,11 +46,17 @@ export class LoginPage {
       console.log(this.loginForm.value);
     } else {
       this.authData.loginUser(this.loginForm.value.email, this.loginForm.value.password).then( authData => {
-        this.loading.dismiss().then( () => {
-          this.nav.setRoot(TabsPage);
-        });
+
+        // this.loading.dismiss().then( () => {
+        //   this.nav.setRoot(TabsPage);
+        // });
+        // this.loading.dismiss().then( () => {
+        //   this.nav.setRoot(TabsPage);
+        // });
+        this.nav.push(TabsPage, {}, {animate: false});
+        // this.nav.pop();
       }, error => {
-        this.loading.dismiss().then( () => {
+        // this.loading.dismiss().then( () => {
           let alert = this.alertCtrl.create({
             message: error.message,
             buttons: [
@@ -59,12 +66,14 @@ export class LoginPage {
               }
             ]
           });
+
+        // });
           alert.present();
-        });
+        //console.log(error);
       });
 
-      this.loading = this.loadingCtrl.create();
-      this.loading.present();
+      // this.loading = this.loadingCtrl.create();
+      // this.loading.present();
     }
   }
 

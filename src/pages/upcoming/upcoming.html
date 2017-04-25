@@ -1,10 +1,15 @@
 <ion-header no-border>
   <ion-navbar>
-    <ion-title> Personal Feed </ion-title>
+<!--     <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button> -->
+    <ion-title> Upcoming Events </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content no-padding no-margin style="background-color: #E8E8E8;">
+
+  <!-- <button ion-button block color="dark" (click)="doAlert()">Incoming Events!</button> -->
 
 <div class="search">
   <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>    
@@ -17,9 +22,14 @@
 </div>
 <div class="clearfix"></div>
 
+
 <ion-list>
 <!--add logic such that only if certain property is met then display !-->
-<event-card *ngFor="let e of events" [event]="e" (click)="itemTapped($event, e)"> </event-card>
+<event-card *ngFor="let e of events" [event]="e" (click)="itemTapped($event, e)">
+</event-card>
+  <!-- <p>
+    <button ion-button color="primary" menuToggle>Toggle Menu</button>
+  </p> -->
 </ion-list>
 
 </ion-content>

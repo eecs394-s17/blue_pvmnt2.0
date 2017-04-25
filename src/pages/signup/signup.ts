@@ -1,7 +1,7 @@
-import { 
-  NavController, 
-  LoadingController, 
-  AlertController } from 'ionic-angular';
+import {
+  NavController,
+  LoadingController,
+  AlertController, App } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthData } from '../../providers/auth-data';
@@ -18,33 +18,36 @@ export class SignupPage {
   loading: any;
 
 
-  constructor(public nav: NavController, public authData: AuthData, 
-    public formBuilder: FormBuilder, public loadingCtrl: LoadingController, 
-    public alertCtrl: AlertController) {
+
+  constructor(public nav: NavController, public authData: AuthData,
+    public formBuilder: FormBuilder, public loadingCtrl: LoadingController,
+    public alertCtrl: AlertController, private _app: App) {
 
     this.signupForm = formBuilder.group({
       email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
-      password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
+      password: ['', Validators.compose([Validators.minLength(6), Validators.required])],
+      name: [''],
+      year: ['']
     })
   }
 
-  /**
-   * If the form is valid it will call the AuthData service to sign the user up password displaying a loading
-   *  component while the user waits.
-   *
-   * If the form is invalid it will just log the form value, feel free to handle that as you like.
-   */
   signupUser(){
     if (!this.signupForm.valid){
       console.log(this.signupForm.value);
     } else {
-      this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password)
+      this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password, this.signupForm.value.name, this.signupForm.value.year)
       .then(() => {
         this.loading.dismiss().then( () => {
           this.nav.setRoot(TabsPage);
         });
+        // this.loading.dismiss().then( () => {
+        //   this.nav.setRoot(TabsPage)
+        //   //this.rootPage = TabsPage;
+        // });
+        // this.nav.push(TabsPage, {}, {animate: false});
+        this.nav.pop();
       }, (error) => {
-        this.loading.dismiss().then( () => {
+        // this.loading.dismiss().then( () => {
           let alert = this.alertCtrl.create({
             message: error.message,
             buttons: [
@@ -55,10 +58,10 @@ export class SignupPage {
             ]
           });
           alert.present();
-        });
+        // });
       });
-      this.loading = this.loadingCtrl.create();
-      this.loading.present();
+      // this.loading = this.loadingCtrl.create();
+      // this.loading.present();
     }
   }
 }

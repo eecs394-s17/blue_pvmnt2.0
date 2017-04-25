@@ -1,31 +1,21 @@
-page-hello-ionic {
-
-.item-datetime ion-label {
-  -webkit-flex: initial;
-  -ms-flex: initial;
-  flex: initial;
-  max-width: 100px;
-  pointer-events: none;
-}
-
-.search{
-    width:58.5%;
-    float: left;
-}
-
-.datetime {
-    width:38.5%;
-    float: left;
-    margin-top: -1%; 
-}
-
-.clearfix{
-    clear:both
-}
-
-
+page-personal {
   .label {
     margin: 0px;
+  }
+
+  .search{
+    width:58.5%;
+    float: left;
+  }
+
+  .datetime {
+    width:38.5%;
+    float: left;
+    margin-top: -1%;  
+    }
+
+  .clearfix{
+    clear:both
   }
 
   .group{
@@ -36,8 +26,8 @@ page-hello-ionic {
 
   .tag{
     font-size: 10px;
-    color: #C0C0C0;
-
+    color: #C0C0C0; 
+    
   }
 
   .day{
@@ -60,13 +50,13 @@ page-hello-ionic {
   }
 
   .cardheading {
-
+    
     height: 10% !important;
     min-height: 0px !important;
     padding-top: 10px;
     padding-bottom: 5px;
   }
-
+    
 
   .fade {
   position: relative;
@@ -112,4 +102,6 @@ page-hello-ionic {
     max-height: 3.6em;
     line-height: 1.8em;
   }
+
+
 }

@@ -4,12 +4,14 @@ import { MyApp } from './app.component';
 import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { PersonalPage } from '../pages/personal/personal';
+import { UpcomingPage } from '../pages/upcoming/upcoming';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
-import { FilterDatePage } from '../pages/filterdate/filterdate'
+import { FilterDatePage } from '../pages/filterdate/filterdate';
+import { HostEventsPage } from '../pages/hostevents/hostevents.ts';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -32,11 +34,13 @@ const myFirebaseAuthConfig = {
         ListPage,
         LoginPage,
         PersonalPage,
+        UpcomingPage,
         ResetPasswordPage,
         SignupPage,
         EventCard,
         TabsPage,
-        FilterDatePage
+        FilterDatePage,
+        HostEventsPage
     ],
     imports: [
         IonicModule.forRoot(MyApp)
@@ -49,12 +53,14 @@ const myFirebaseAuthConfig = {
         ItemDetailsPage,
         LoginPage,
         PersonalPage,
+        UpcomingPage,
         ListPage,
         EventCard,
         ResetPasswordPage,
         SignupPage,
         TabsPage,
-        FilterDatePage
+        FilterDatePage,
+        HostEventsPage
     ],
     providers: [
         StatusBar,
