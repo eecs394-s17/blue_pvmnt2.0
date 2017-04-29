@@ -85,7 +85,7 @@ page-hello-ionic {
 
   .description{
     min-height: 0px;
-    height: 70px;
+    height: 100px;
     padding-left: 21px;
   }
 
@@ -111,5 +111,15 @@ page-hello-ionic {
     overflow: hidden;
     max-height: 3.6em;
     line-height: 1.8em;
+  }
+
+  .thumb{
+
+    
+    
+    width:100px !important;
+    height:100px !important;
+    object-fit: cover;
+    overflow: hidden;
   }
 }

@@ -81,6 +81,7 @@ export class HelloIonicPage {
     return buttontext;
   }
 
+
   // ionViewDidEnter(){
   //   this.initializeItems();
   // }
@@ -94,7 +95,12 @@ export class HelloIonicPage {
      this.eventService.fetchAllUpcomingEvents().then((events: Event[]) => {
          this.events = events;
          this.loadedevents = events;
+         console.log(this.events.length);
+         
+         //console.log(this.events.length)
       });
+
+     
 
     // Fetches all events that the user is currently subscribed to
     // this.eventService.fetchEvents().then((events) => {
@@ -103,9 +109,14 @@ export class HelloIonicPage {
     // });
   }
 
+  areNoEvents(){
+    return this.events.length == 0;
+  }
+
   ionViewDidEnter(){
     if ((this.button_press_count % 2) == 0){
       this.load();
+       //this.areNoEvents();
     }
     else{
       console.log('Do Nothing');
