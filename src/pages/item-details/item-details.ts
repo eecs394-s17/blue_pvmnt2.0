@@ -18,12 +18,22 @@ export class ItemDetailsPage {
   month: string;
   time: string;
   priorView: string;
+  isSubscribed: Boolean;
 
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams, private calendarService: CalendarService) {
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController,
+    public navParams: NavParams, private calendarService: CalendarService) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
     this.priorView = navParams.get('view');
-    this.displaybuttonname();
+    // this.displaybuttonname();
+    // console.log(this.selectedItem.calendarId);
+    // if(this.calendarService.isUserSubscribed(this.selectedItem.calendarId)){
+    //   console.log('asdf');
+    // }
+    this.calendarService.isUserSubscribed(this.selectedItem.calendarId).then((bool: Boolean) => {
+      this.isSubscribed = bool;
+    });
+
   }
 
   getDay() {
@@ -38,6 +48,7 @@ export class ItemDetailsPage {
 
 
   addtoCalendar(event) {
+    this.isSubscribed = true;
     var user = firebase.auth().currentUser;
     var uid = user.uid;
     if((this.selectedItem.host).toLowerCase() == 'northwestern' && this.priorView == 'PersonalPage'){
@@ -61,14 +72,18 @@ export class ItemDetailsPage {
 
   }
 
-  displaybuttonname(){
-    var buttontext = '';
-    if (this.priorView == 'PersonalPage'){
-      buttontext = 'Unsubscribe from Similar Events';
-    }
-    else {
-      buttontext = 'Subscribe to Similar Events'
-    }
-    return buttontext;
-  }
+  // displaybuttonname(){
+  //   var buttontext = '';
+  //   var isSubscribed;
+  //   this.calendarService.isUserSubscribed(this.selectedItem.calendarId).then((bool: Boolean) => {
+  //     isSubscribed = bool;
+  //   });
+  //   if (isSubscribed){
+  //     buttontext = 'Unsubscribe from Similar Events';
+  //   }
+  //   else {
+  //     buttontext = 'Subscribe to Similar Events'
+  //   }
+  //   return buttontext;
+  // }
 }
