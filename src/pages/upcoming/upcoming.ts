@@ -104,6 +104,7 @@ export class UpcomingPage {
 
 
     this.eventService.fetchUpcomingEventsAndReccomendationsForCurrentUser().then((events: Event[]) => {
+        console.log(events);
         this.events = events;
         this.loadedevents = events;
     });

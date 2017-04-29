@@ -46,6 +46,10 @@
         Interested
       </button>
 
+      <ion-label item-right *ngIf="event.reccomended" ion-button (click)="notInterestedIn($event)" clear small color="energized" icon-left>
+        Recommended!
+      </ion-label>
+
     </ion-col>
 
   </ion-row>

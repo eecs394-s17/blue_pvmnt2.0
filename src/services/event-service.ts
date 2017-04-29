@@ -24,7 +24,7 @@ export class EventService {
 						OPTIONAL MATCH (otherInterestsCalendars: Calendar)-[:HOSTING]->(otherInterests)
 						OPTIONAL MATCH (:FBUser)-[totalInterest:INTERESTED]->(otherInterests)
 						WHERE ID(myInterests) <> ID(otherInterests) AND otherInterests.date >= timestamp()/1000
-						WITH COUNT(totalInterest) as totalInterest, otherInterests, otherInterestsCalendars ORDER BY totalInterest LIMIT 10
+						WITH COUNT(totalInterest) as totalInterest, otherInterests, otherInterestsCalendars ORDER BY totalInterest LIMIT 5
 						WITH totalInterest, otherInterests, otherInterestsCalendars ORDER BY otherInterests.date
 						WITH {event: otherInterests, calendar: otherInterestsCalendars, totalInterestLevel: totalInterest, isUserInterested: false} as res
 						RETURN collect(res)
