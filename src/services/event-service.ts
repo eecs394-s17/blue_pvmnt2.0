@@ -37,7 +37,7 @@ export class EventService {
 					 	WHERE c.name = {calendarName}
 						MATCH (u:User)
 						WHERE u.id = {userId}
-						CREATE (u)-[r:SUBSCRIBED]->(c)
+						CREATE UNIQUE (u)-[r:SUBSCRIBED]->(c)
 						RETURN u
 					`;
 		var params = {calendarName: calendar, userId: user};
@@ -109,7 +109,7 @@ export class EventService {
 					 	WHERE ID(e) = {eventId}
 						MATCH (u:FBUser)
 						WHERE u.firebaseId = {userId}
-						CREATE (u)-[r:INTERESTED]->(e)
+						CREATE UNIQUE (u)-[r:INTERESTED]->(e)
 						RETURN u
 					`;
 		var params = {eventId: eventId, userId: this.authData.getFirebaseId()};
