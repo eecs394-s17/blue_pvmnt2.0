@@ -56,7 +56,8 @@ export class EventService {
         return this.neo.runQuery(query, params).then((results) => {
             return results;
         });
-    }
+  }
+
 
 	fetchAllUpcomingEvents() {
 		var query = `
@@ -87,6 +88,7 @@ export class EventService {
         	return results;
         });
 	}
+
 
 	fetchUpcomingEventsForCurrentUser() {
     	var query = `	MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar)

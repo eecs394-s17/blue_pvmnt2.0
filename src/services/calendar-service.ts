@@ -22,6 +22,25 @@ export class CalendarService {
 		this.authData = new AuthData();
 	}
 
+	isUserSubscribed(calendar){
+		var query =`MATCH (u:FBUser)-[r:SUBSCRIBED]->(c:Calendar)
+														WHERE u.firebaseId = {uid} AND id(c) = {cid}
+														RETURN r
+														`
+		var params = {uid: this.authData.getFirebaseId(), cid: calendar}
+
+		return this.neo.runQuery(query, params).then((results) => {
+			console.log(results);
+			if (Object.keys(results).length == 0){
+				return false;
+			}
+			else{
+				return true;
+			}
+
+		});
+	}
+
 	subscribeCurrentUserToCalendar(calendarId) {
     	var query = `	MATCH (c:Calendar)
 			            WHERE c.id = {cId}
@@ -93,7 +112,7 @@ export class CalendarService {
 							WHERE NOT(uc in subs)
 							WITH subs, collect(uc) as unsubs
 							RETURN {unsubscribed: unsubs, subscribed: subs}
-						`;	
+						`;
 		var params = {firebaseId: this.authData.getFirebaseId()};
 		return this.neo.runQuery(subsQuery, params).then((result: Object) => {
 			let subbedCalendars = result["subscribed"].map(c => this.parseCalendarData(c, true));

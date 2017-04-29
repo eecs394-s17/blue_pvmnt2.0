@@ -47,9 +47,9 @@
 </ion-card>
 
 <div class="buttondiv">
-
-<button ion-button [disabled]="buttonDisabled" [color]="isDanger ? 'danger' : 'primary'" [outline]="isOutline" (click)="addtoCalendar($event)">
-  {{ displaybuttonname() }}
+<button *ngIf="!isSubscribed" ion-button [disabled]="buttonDisabled" [color]="isDanger ? 'danger' : 'primary'" [outline]="isOutline" (click)="addtoCalendar($event)">
+  <!-- {{ displaybuttonname() }} -->
+  Subscribe to events from {{selectedItem.host}}
   <!-- Subscribe to Similar Events -->
 </button>
 
