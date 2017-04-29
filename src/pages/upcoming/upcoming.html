@@ -12,7 +12,7 @@
   <!-- <button ion-button block color="dark" (click)="doAlert()">Incoming Events!</button> -->
 
 <div class="search">
-  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>    
+  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
 </div>
 <div class="datetime">
   <button ion-button item-right icon-left (click)="filterDates($event)">
@@ -21,7 +21,7 @@
   </button>
 </div>
 <div class="clearfix"></div>
-
+<img *ngIf="noEvents==true" src="http://www.bharulecom.co.za/images/no_events~1.jpg" class="no_events">
 
 <ion-list>
 <!--add logic such that only if certain property is met then display !-->
