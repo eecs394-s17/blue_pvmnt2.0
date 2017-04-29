@@ -85,7 +85,7 @@ page-hello-ionic {
 
   .description{
     min-height: 0px;
-    height: 100px;
+    height: 90px;
     padding-left: 21px;
   }
 
@@ -96,7 +96,6 @@ page-hello-ionic {
   }
 
   .card{
-
     width: 100%;
     margin-left: 0px;
     margin-right: 0px;
@@ -114,11 +113,8 @@ page-hello-ionic {
   }
 
   .thumb{
-
-    
-    
-    width:100px !important;
-    height:100px !important;
+    width:90px !important;
+    height:90px !important;
     object-fit: cover;
     overflow: hidden;
   }

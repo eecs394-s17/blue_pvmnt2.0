@@ -95,8 +95,7 @@ export class HelloIonicPage {
      this.eventService.fetchAllUpcomingEvents().then((events: Event[]) => {
          this.events = events;
          this.loadedevents = events;
-         console.log(this.events.length);
-         
+
          //console.log(this.events.length)
       });
 
@@ -116,7 +115,6 @@ export class HelloIonicPage {
   ionViewDidEnter(){
     if ((this.button_press_count % 2) == 0){
       this.load();
-       //this.areNoEvents();
     }
     else{
       console.log('Do Nothing');
