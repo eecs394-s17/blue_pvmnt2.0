@@ -94,14 +94,19 @@ export class UpcomingPage {
   }
 
   load() {
-    this.eventService.fetchInterestedEventsForCurrentUser().then((events: Event[]) => {
-        for (let e of events){
-          e.userIsInterested = true;
-        }
+    // this.eventService.fetchInterestedEventsForCurrentUser().then((events: Event[]) => {
+    //     for (let e of events){
+    //       e.userIsInterested = true;
+    //     }
+    //     this.events = events;
+    //     this.loadedevents = events;
+    // });
+
+
+    this.eventService.fetchUpcomingEventsAndReccomendationsForCurrentUser().then((events: Event[]) => {
         this.events = events;
         this.loadedevents = events;
     });
-
   }
 
   itemTapped(event, item) {
