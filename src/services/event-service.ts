@@ -19,15 +19,13 @@ export class EventService {
 		var recQuery = `
 						MATCH (me: FBUser {firebaseId: {firebaseId}})
 						MATCH (me)-[:INTERESTED]->(myInterests:Event)
-						OPTIONAL MATCH (other: FBUser)-[:INTERESTED]->(myInterests)
-						OPTIONAL MATCH (other)-[:INTERESTED]->(otherInterests:Event)
-						OPTIONAL MATCH (otherInterestsCalendars: Calendar)-[:HOSTING]->(otherInterests)
-						OPTIONAL MATCH (:FBUser)-[totalInterest:INTERESTED]->(otherInterests)
+						WITH me, myInterests
+						OPTIONAL MATCH (myInterests)<-[:INTERESTED]-(other: FBUser)-[:INTERESTED]->(otherInterests:Event)<-[:HOSTING]-(otherInterestsCalendars: Calendar)
 						WHERE ID(myInterests) <> ID(otherInterests) AND otherInterests.date >= timestamp()/1000
-						WITH COUNT(totalInterest) as totalInterest, otherInterests, otherInterestsCalendars ORDER BY totalInterest LIMIT 5
+						OPTIONAL MATCH (:FBUser)-[totalInterest:INTERESTED]->(otherInterests)
+						WITH COUNT(totalInterest) as totalInterest, otherInterests, otherInterestsCalendars ORDER BY totalInterest LIMIT 3
 						WITH totalInterest, otherInterests, otherInterestsCalendars ORDER BY otherInterests.date
-						WITH {event: otherInterests, calendar: otherInterestsCalendars, totalInterestLevel: totalInterest, isUserInterested: false} as res
-						RETURN collect(res)
+						RETURN collect({event: otherInterests, calendar: otherInterestsCalendars, totalInterestLevel: totalInterest, isUserInterested: false})
 					`;
 		var params = {firebaseId: this.authData.getFirebaseId()};
 		return this.neo.runQuery(recQuery, params).then((recResults) => {
