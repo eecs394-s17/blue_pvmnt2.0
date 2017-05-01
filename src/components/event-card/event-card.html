@@ -22,12 +22,12 @@
     </ion-row>
     <ion-row align-items-start>
       <ion-col col-auto>
-        <button *ngIf="event.userIsInterested" ion-button (click)="notInterestedIn($event)" clear small color="danger" icon-left>
+        <button *ngIf="event.userIsInterested" no-padding ion-button (click)="notInterestedIn($event)" clear small color="danger" icon-left>
           <ion-icon name='flame'></ion-icon>
           Interested &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; Buzz Level: {{event.interestCount}}
         </button>
         
-        <button *ngIf="!event.userIsInterested" ion-button (click)="interestedIn($event)" clear small color="dark" icon-left>
+        <button *ngIf="!event.userIsInterested" no-padding ion-button (click)="interestedIn($event)" clear small color="dark" icon-left>
           <ion-icon name='flame'></ion-icon>
           Interested &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; Buzz Level: {{event.interestCount}}
         </button>
