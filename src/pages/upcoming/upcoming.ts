@@ -25,6 +25,7 @@ export class UpcomingPage {
   start_date: any;
   end_date: any;
   button_press_count: any;
+  noEvents: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService) {
     this.load();
@@ -100,6 +101,18 @@ export class UpcomingPage {
         }
         this.events = events;
         this.loadedevents = events;
+
+        if (this.events==null){
+          this.noEvents=true;
+        }
+        else {
+          if(this.events.length==0){
+            this.noEvents=true;
+          }
+          else{
+            this.noEvents=false;
+          }
+        }
     });
 
   }

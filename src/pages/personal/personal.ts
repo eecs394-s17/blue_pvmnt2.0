@@ -26,6 +26,7 @@ export class PersonalPage {
   start_date: any;
   end_date: any;
   button_press_count: any;
+  noEvents: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService) {
     this.load();
@@ -65,7 +66,7 @@ export class PersonalPage {
     this.events = this.events.filter((v) => {
       if(start <= v.date && end >= v.date) {
         return true;
-      } 
+      }
       else{
         return false;
       }
@@ -89,18 +90,57 @@ export class PersonalPage {
     if ((this.button_press_count % 2) == 0){
       this.load();
     }
-    else{
-      console.log('Do Nothing');
+
+    // else{
+    //   console.log('Do Nothing');
+    // }
+
+    if (this.events==null){
+      this.noEvents=true;
     }
-    
+    else {
+      if(this.events.length==0){
+        this.noEvents=true;
+      }
+      else{
+        this.noEvents=false;
+      }
+    }
+    console.log('events:'+this.events);
+    console.log('loadedevents:'+this.loadedevents);
+    console.log('noEvents:'+this.noEvents);
+
   }
 
   load() {
-
+    console.log('start load PersonalPage');
     this.eventService.fetchUpcomingEventsForCurrentUser().then((events: Event[]) => {
         this.events = events;
         this.loadedevents = events;
+        if (this.events==null){
+          this.noEvents=true;
+        }
+        else {
+          if(this.events.length==0){
+            this.noEvents=true;
+          }
+          else{
+            this.noEvents=false;
+          }
+        }
     });
+    // this.noEvents=true;
+    // if (this.events==null){
+    //   this.noEvents=true;
+    // }
+    // else {
+    //   if(this.events.length==0){
+    //     this.noEvents=true;
+    //   }
+    //   else{
+    //     this.noEvents=false;
+    //   }
+    // }
 
   }
 
@@ -115,7 +155,7 @@ export class PersonalPage {
   }
 
   getItems(searchbar){
-    
+
     this.initializeItems();
 
     var q = searchbar.srcElement.value;
@@ -137,7 +177,7 @@ export class PersonalPage {
           return true;
         }
         return false;
-      } 
+      }
     });
 
   }
