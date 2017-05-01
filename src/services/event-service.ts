@@ -70,7 +70,8 @@ export class EventService {
 
 	fetchUpcomingEventsForCalendar(calendarId) {
 		var query = `
-						MATCH (c:Calendar {id: {calendarId}})-[:HOSTING]->(e:Event)
+						MATCH (c:Calendar)-[:HOSTING]->(e:Event)
+						WHERE ID(c) = {calendarId}
 					 	WHERE e.date >= timestamp()/1000
 						OPTIONAL MATCH (u: FBUser)-[ti:INTERESTED]->(e)
 						OPTIONAL MATCH (fu: FBUser {firebaseId: {firebaseId}})-[ui:INTERESTED]->(e)
@@ -84,32 +85,6 @@ export class EventService {
 			return data.map(this.parseEventData);
 		});
 	}
-
-	subscribeUserToCalendar(user, calendar) {
-		var query = `	MATCH (c:Calendar)
-					 	WHERE c.name = {calendarName}
-						MATCH (u:User)
-						WHERE u.id = {userId}
-						CREATE UNIQUE (u)-[r:SUBSCRIBED]->(c)
-						RETURN u
-					`;
-		var params = {calendarName: calendar, userId: user};
-		return this.neo.runQuery(query, params).then((results) => {
-			return results;
-		});
-	}
-
-	userIsInterestedIn(){
-        var query =`MATCH (u:FBUser)-[r:INTERESTED]->(e:Event)
-                                WHERE u.firebaseId = {uid}
-                                RETURN e
-                                `
-        var params = {uid: this.authData.getFirebaseId()}
-
-        return this.neo.runQuery(query, params).then((results) => {
-            return results;
-        });
-  }
 
 
 	fetchAllUpcomingEvents() {
@@ -133,10 +108,10 @@ export class EventService {
 	}
 
 	fetchInterestedEventsForCurrentUser() {
-		var query =`	MATCH (u:FBUser {firebaseId: {userId}})-[:INTERESTED]->(e:Event)
+		var query =`	MATCH (u:FBUser {firebaseId: {firebaseId}})-[:INTERESTED]->(e:Event)
                         RETURN e
                     `;
-        var params = {userId: this.authData.getFirebaseId()}
+        var params = {firebaseId: this.authData.getFirebaseId()}
         return this.neo.runQuery(query, params).then((results) => {
         	return results;
         });
@@ -144,8 +119,7 @@ export class EventService {
 
 
 	fetchUpcomingEventsForCurrentUser() {
-    	var query = `	MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar)
-            			MATCH (c)-[:HOSTING]->(e: Event)
+    	var query = `	MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar)-[:HOSTING]->(e:Event)
             			WHERE e.date >= timestamp()/1000
             			OPTIONAL MATCH (u:FBUser)-[ti:INTERESTED]->(e)
 						OPTIONAL MATCH (fu:FBUser {firebaseId: {userId}})-[ui:INTERESTED]->(e)
@@ -187,21 +161,6 @@ export class EventService {
         return this.neo.runQuery(query, params).then((results) => {
                 return results;
         });
-	}
-
-	parseEventDataOld(data) {
-		let e = new Event();
-		e.name = data.name;
-		e.id = data.id;
-		e.desc = data.desc;
-		e.date = data.date;
-		e.img = data.img;
-		e.host = data.host;
-		e.calendartype = 'Calendar Type';
-		e.place = data.location;
-		e.calendarId = data.calendarId;
-		e.summary = data.summary;
-		return e;
 	}
 
 	parseEventData(data) {
