@@ -71,8 +71,7 @@ export class EventService {
 	fetchUpcomingEventsForCalendar(calendarId) {
 		var query = `
 						MATCH (c:Calendar)-[:HOSTING]->(e:Event)
-						WHERE ID(c) = {calendarId}
-					 	WHERE e.date >= timestamp()/1000
+						WHERE ID(c) = {calendarId} AND e.date >= timestamp()/1000
 						OPTIONAL MATCH (u: FBUser)-[ti:INTERESTED]->(e)
 						OPTIONAL MATCH (fu: FBUser {firebaseId: {firebaseId}})-[ui:INTERESTED]->(e)
 						with count(ti) as ti, e, c, count(ui) > 0 as ui order by e.date
