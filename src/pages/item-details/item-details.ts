@@ -40,7 +40,7 @@ export class ItemDetailsPage {
     return moment.unix(this.selectedItem.date).format("DD");
   }
   getMonth() {
-    return moment.unix(this.selectedItem.date).format("MMMM");
+    return moment.unix(this.selectedItem.date).format("MMM");
   }
   getTime(){
     return moment.unix(this.selectedItem.date).format("h:mm a");

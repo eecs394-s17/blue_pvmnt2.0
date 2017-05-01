@@ -17,10 +17,12 @@
       <ion-item>
         <ion-thumbnail item-left class="calendar">
           <h1 class="day">{{getDay()}}</h1>
-          <h1 class = "month">{{getMonth()}}</h1>
+          <h1 class = "month" text-uppercase>{{getMonth()}}</h1>
         </ion-thumbnail>
-        <h2 *ngIf="selectedItem"> {{selectedItem.name}}</h2>
-        <p *ngIf="selectedItem"> {{selectedItem.host}}</p>
+        <div headings>
+          <h2 *ngIf="selectedItem"> {{selectedItem.name}}</h2>
+          <p *ngIf="selectedItem"> {{selectedItem.host}}</p>
+        </div> 
       </ion-item>
 
       <ion-item>
@@ -47,9 +49,11 @@
 </ion-card>
 
 <div class="buttondiv">
-<button *ngIf="!isSubscribed" ion-button [disabled]="buttonDisabled" [color]="isDanger ? 'danger' : 'primary'" [outline]="isOutline" (click)="addtoCalendar($event)">
+<button style="display: block; width: 96.5%;" *ngIf="!isSubscribed" ion-button [disabled]="buttonDisabled" [color]="isDanger ? 'danger' : 'primary'" [outline]="isOutline" (click)="addtoCalendar($event)">
+  <div class="buttontext">
   <!-- {{ displaybuttonname() }} -->
-  Subscribe to {{selectedItem.host}}
+    Subscribe to {{selectedItem.host}}
+  </div>
   <!-- Subscribe to Similar Events -->
 </button>
 
