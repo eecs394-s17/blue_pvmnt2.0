@@ -35,7 +35,7 @@ export class EventService {
 			let reccomendedEvents = recData.map(this.parseEventData);
 
 			var intQuery = `
-						MATCH (me: FBUser {firebaseId: "NgUok9Os9POoYYrtT83BP5fwof03"})
+						MATCH (me: FBUser {firebaseId: {firebaseId}})
 						MATCH (me)-[:INTERESTED]->(e:Event)
 						MATCH (c: Calendar)-[:HOSTING]->(e)
 						OPTIONAL MATCH (:FBUser)-[totalInterest:INTERESTED]->(e)
