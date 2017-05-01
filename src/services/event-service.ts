@@ -20,7 +20,7 @@ export class EventService {
 						MATCH (me: FBUser {firebaseId: {firebaseId}})
 						MATCH (me)-[:INTERESTED]->(myInterests:Event)
 						WITH me, myInterests
-						OPTIONAL MATCH (myInterests)<-[:INTERESTED]-(other: FBUser)-[:INTERESTED]->(otherInterests:Event)<-[:HOSTING]-(otherInterestsCalendars: Calendar)
+						MATCH (myInterests)<-[:INTERESTED]-(other: FBUser)-[:INTERESTED]->(otherInterests:Event)<-[:HOSTING]-(otherInterestsCalendars: Calendar)
 						WHERE ID(myInterests) <> ID(otherInterests) AND otherInterests.date >= timestamp()/1000
 						OPTIONAL MATCH (:FBUser)-[totalInterest:INTERESTED]->(otherInterests)
 						WITH COUNT(totalInterest) as totalInterest, otherInterests, otherInterestsCalendars ORDER BY totalInterest LIMIT 3
