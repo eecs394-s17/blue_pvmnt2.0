@@ -41,11 +41,14 @@ export class EventCard {
     event.stopPropagation();
     this.event.userIsInterested = true;
     this.eventService.markCurrentUserInterestedInEvent(this.event.id);
+    this.event.interestCount += 1;
   }
+
   notInterestedIn(event){
     event.stopPropagation();
     this.event.userIsInterested = false;
     this.eventService.unmarkCurrentUserInterestedInEvent(this.event.id);
+    this.event.interestCount -= 1;
   }
 
 }
