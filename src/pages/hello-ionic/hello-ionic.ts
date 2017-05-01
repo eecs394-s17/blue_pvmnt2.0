@@ -151,9 +151,4 @@ export class HelloIonicPage {
 
   }
 
-  logOut(event){
-    this.authData.logoutUser();
-    this._app.getRootNav().setRoot(LoginPage);
-  }
-
 }

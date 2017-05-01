@@ -6,7 +6,7 @@
 
 <ion-content>
 
-  <ion-item>
+<!--   <ion-item>
       <ion-avatar item-center>
         <img src="assets/img/avatar-ts-woody.png">
       </ion-avatar>
@@ -15,7 +15,7 @@
   <ion-label *ngIf="user"> Name: {{ user.name }} </ion-label>
   <ion-label *ngIf="user"> Email: {{ user.email }} </ion-label>
   <ion-label *ngIf="user"> Graduation Year: {{ user.year }} </ion-label>
-     
+      -->
   <ion-list>
 
     <ion-item *ngFor="let c of calendars" (click)="getCalendarEvents($event, c)">
@@ -26,5 +26,13 @@
 
   </ion-list>
 
+
+  <div class="buttondiv">
+ 
+    <button ion-button icon-only (click)="logOut($event)">
+        <ion-icon name="log-out"> Logout </ion-icon>
+    </button>
+
+  </div>
 
 </ion-content>
