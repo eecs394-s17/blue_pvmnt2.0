@@ -4,11 +4,30 @@
     font-size: 1.3rem;
     font-weight: 500;
     text-transform: uppercase;
-    padding-right: 15px;
+    padding-right: 19px;
     padding-top: 9px;
     margin: 0, 0;
     height: 100%;
     vertical-align: center;
     align-items: center;
     color: #488aff;
+  }
+
+  .thumb{
+    width:90px !important;
+    height:90px !important;
+    object-fit: cover;
+    overflow: hidden;
+  }
+
+  .contentdes{
+    font-size: 13px;
+    overflow: hidden;
+    color: black;
+  }
+
+  .description{
+    min-height: 0px;
+    height: 90px !important;
+    padding-left: 21px;
   }
