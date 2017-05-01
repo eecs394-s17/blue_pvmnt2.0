@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, App } from 'ionic-angular';
 
 import { ItemDetailsPage } from '../item-details/item-details';
 import { HostEventsPage } from '../hostevents/hostevents';
@@ -12,7 +12,8 @@ import { CalendarService } from '../../services/calendar-service';
 import { Calendar } from '../../models/calendar';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user-service';
-
+import { AuthData } from '../../providers/auth-data';
+import { LoginPage } from '../login/login';
 
 import * as firebase from "firebase";
 
@@ -26,7 +27,7 @@ export class ListPage {
   calendars: Object;
   user: Object;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public cd: ChangeDetectorRef, private eventService: EventService, private calendarService: CalendarService, private userService: UserService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public cd: ChangeDetectorRef, private eventService: EventService, private calendarService: CalendarService, private userService: UserService, public authData: AuthData, public _app: App) {
     this.load();
   }
 
@@ -68,6 +69,12 @@ export class ListPage {
       console.log('FALSE cal.id ' + cal.id)
     }
   }
+
+  logOut(event){
+    this.authData.logoutUser();
+    this._app.getRootNav().setRoot(LoginPage);
+  }
+
 
 
 

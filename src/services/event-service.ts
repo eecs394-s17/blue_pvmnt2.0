@@ -15,6 +15,59 @@ export class EventService {
 		this.authData = new AuthData();
 	}
 
+	fetchUpcomingEventsAndReccomendationsForCurrentUser() {
+		var recQuery = `
+						MATCH (me: FBUser {firebaseId: {firebaseId}})
+						MATCH (me)-[:INTERESTED]->(myInterests:Event)
+						WITH me, myInterests
+						MATCH (myInterests)<-[:INTERESTED]-(other: FBUser)-[:INTERESTED]->(otherInterests:Event)<-[:HOSTING]-(otherInterestsCalendars: Calendar)
+						WHERE ID(myInterests) <> ID(otherInterests) AND otherInterests.date >= timestamp()/1000
+						OPTIONAL MATCH (:FBUser)-[totalInterest:INTERESTED]->(otherInterests)
+						WITH COUNT(totalInterest) as totalInterest, otherInterests, otherInterestsCalendars ORDER BY totalInterest LIMIT 3
+						WITH totalInterest, otherInterests, otherInterestsCalendars ORDER BY otherInterests.date
+						RETURN collect({event: otherInterests, calendar: otherInterestsCalendars, totalInterestLevel: totalInterest, isUserInterested: false})
+					`;
+		var params = {firebaseId: this.authData.getFirebaseId()};
+		return this.neo.runQuery(recQuery, params).then((recResults) => {
+			let recData: Object[] = recResults[0];
+			let reccomendedEvents = recData.map(this.parseEventData);
+
+			var intQuery = `
+						MATCH (me: FBUser {firebaseId: {firebaseId}})
+						MATCH (me)-[:INTERESTED]->(e:Event)
+						MATCH (c: Calendar)-[:HOSTING]->(e)
+						OPTIONAL MATCH (:FBUser)-[totalInterest:INTERESTED]->(e)
+						WITH COUNT(totalInterest) as totalInterest, e as event, c as calendar ORDER BY event.date
+						WITH {event: event, calendar: calendar, totalInterestLevel: totalInterest, isUserInterested: true} as res
+						RETURN collect(res)
+					`;
+
+			return this.neo.runQuery(intQuery, params).then((intResults) => {
+				let intData: Object[] = intResults[0];
+				let interestedEvents = intData.map(this.parseEventData);
+
+				return this.combineInterestAndReccomendations(interestedEvents, reccomendedEvents);
+			});
+		});
+	}
+
+	combineInterestAndReccomendations(interestedEvents, reccomendedEvents) {
+		interestedEvents.forEach((e) => {
+			e.reccomended = false;
+		});
+
+		reccomendedEvents.forEach((e) => {
+			e.reccomended = true;
+		});
+
+		let combined = interestedEvents.concat(reccomendedEvents);
+		combined.sort((lhs, rhs) => {
+			return lhs.date - rhs.date;
+		});
+
+		return combined;
+	}
+
 	fetchUpcomingEventsForCalendar(calendarId) {
 		var query = `
 						MATCH (c:Calendar {id: {calendarId}})-[:HOSTING]->(e:Event)

@@ -12,4 +12,5 @@ export class Event {
 	summary: string;
 	userIsInterested: boolean;
 	interestCount: number;
+	reccomended: boolean;
 }

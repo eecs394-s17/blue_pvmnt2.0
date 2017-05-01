@@ -37,9 +37,9 @@ export class SignupPage {
     } else {
       this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password, this.signupForm.value.name, this.signupForm.value.year)
       .then(() => {
-        this.loading.dismiss().then( () => {
-          this.nav.setRoot(TabsPage);
-        });
+        // this.loading.dismiss().then( () => {
+        //   this.nav.setRoot(TabsPage);
+        // });
         // this.loading.dismiss().then( () => {
         //   this.nav.setRoot(TabsPage)
         //   //this.rootPage = TabsPage;
