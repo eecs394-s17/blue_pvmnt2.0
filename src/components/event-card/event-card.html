@@ -9,17 +9,23 @@
         </ion-thumbnail>
       </ion-col>
       <ion-col>
-        <ion-row>
-          <p text-wrap>{{event.name}}</p>
-        </ion-row>
-        <ion-row>
-          <p text-wrap>{{event.host}}</p>
-        </ion-row>
-        <ion-row align-items-start>
-          <p text-wrap>{{event.summary}}</p>
-        </ion-row>
+        <div class="headings">
+          <ion-row>
+            <ion-card-title no-padding text-wrap no-margin>{{event.name}}</ion-card-title>
+          </ion-row>
+          <div class="group_upper">
+            <ion-row>
+              <p class="group">{{event.host}}</p>
+            </ion-row>
+          </div>
+        </div>
       </ion-col>
     </ion-row>
+    <div class="description_new">
+      <ion-row align-items-start>
+          <p text-wrap>{{event.summary}}</p>
+      </ion-row>
+    </div>
     <ion-row align-items-start>
       <ion-col col-auto>
         <button *ngIf="event.userIsInterested" no-padding ion-button (click)="notInterestedIn($event)" clear small color="danger" icon-left>
@@ -33,7 +39,11 @@
         </button>
       </ion-col>
       <ion-col align-items-end>
-        <ion-label class="recText" *ngIf="event.reccomended" icon-left>Recommended!</ion-label>
+        <div class="recommended">
+          
+            <ion-label class="recText" *ngIf="event.reccomended" icon-left> Recommended!</ion-label>
+        
+        </div>
       </ion-col>
     </ion-row>
   </ion-card-content>
