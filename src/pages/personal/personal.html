@@ -16,7 +16,9 @@
   </button>
 </div>
 <div class="clearfix"></div>
-<img *ngIf="noEvents==true" src="http://www.bharulecom.co.za/images/no_events~1.jpg" class="no_events">
+<div *ngIf="noEvents==true" style="padding-top: 25%; text-align: center">
+  <h1>No Subscribed Events</h1>
+</div>
 <ion-list>
 <!--add logic such that only if certain property is met then display !-->
 <event-card *ngFor="let e of events" [event]="e" (click)="itemTapped($event, e)"> </event-card>
