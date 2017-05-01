@@ -1,59 +1,50 @@
 <ion-card class="card">
-  <ion-item no-padding>
-    <ion-card-content no-padding>
-      <ion-item>
+  <img src={{event.img}}/>
+  <ion-card-content>
+    <ion-row align-items-start>
+      <ion-col col-auto>
         <ion-thumbnail no-margin item-left class="calendar">
           <h1 class="day">{{getDay()}}</h1>
           <h1 class = "month" text-uppercase>{{getMonth()}}</h1>
-          <!--<h4 class="time">{{getTime()}}</h4>-->
         </ion-thumbnail>
+      </ion-col>
+      <ion-col>
+        <div class="headings">
+          <ion-row>
+            <ion-card-title no-padding text-wrap no-margin>{{event.name}}</ion-card-title>
+          </ion-row>
+          <div class="group_upper">
+            <ion-row>
+              <p class="group">{{event.host}}</p>
+            </ion-row>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <div class="description_new">
+      <ion-row align-items-start>
+          <p text-wrap>{{event.summary}}</p>
+      </ion-row>
+    </div>
+    <ion-row align-items-start>
+      <ion-col col-auto>
+        <button *ngIf="event.userIsInterested" no-padding ion-button (click)="notInterestedIn($event)" clear small color="danger" icon-left>
+          <ion-icon name='flame'></ion-icon>
+          Interested &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; Buzz Level: {{event.interestCount}}
+        </button>
+        
+        <button *ngIf="!event.userIsInterested" no-padding ion-button (click)="interestedIn($event)" clear small color="dark" icon-left>
+          <ion-icon name='flame'></ion-icon>
+          Interested &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; Buzz Level: {{event.interestCount}}
+        </button>
+      </ion-col>
+      <ion-col align-items-end>
+        <div class="recommended">
+          
+            <ion-label class="recText" *ngIf="event.reccomended" icon-left> Recommended!</ion-label>
+        
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
 
-        <!-- <ion-card-content> -->
-        <ion-thumbnail no-margin class="cardheading">
-          <ion-card-title no-padding text-wrap no-margin>
-            {{ event.name }}
-          </ion-card-title>
-          <p class="group">{{event.host}}</p>
-<!--           <small class="tag">{{event.calendartype}} </small> -->
-        </ion-thumbnail>
-      </ion-item>
-      <ion-item text-wrap class="description">
-        <!-- <ion-thumbnail item-left> -->
-
-        <p class="contentdes fade">
-          {{event.summary}}
-        </p>
-        <!-- </ion-thumbnail> -->
-
-        <ion-thumbnail item-right>
-          <img class="thumb" src={{event.img}} />
-        </ion-thumbnail>
-
-      </ion-item>
-    </ion-card-content>
-
-
-  </ion-item>
-  <ion-row no-padding>
-    <ion-col no-padding>
-
-      <button *ngIf="event.userIsInterested" ion-button (click)="notInterestedIn($event)" clear small color="danger" icon-left>
-        <ion-icon name='flame'></ion-icon>
-        Interested &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; Buzz Level: {{event.interestCount}}
-      </button>
-      <button *ngIf="!event.userIsInterested" ion-button (click)="interestedIn($event)" clear small color="dark" icon-left>
-        <ion-icon name='flame'></ion-icon>
-        Interested &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; Buzz Level: {{event.interestCount}}
-      </button>
-      
-
-      <ion-label class="recText" *ngIf="event.reccomended" icon-left>
-        Recommended!
-      </ion-label>
-
-    </ion-col>
-
-  </ion-row>
-
-
-</ion-card>
