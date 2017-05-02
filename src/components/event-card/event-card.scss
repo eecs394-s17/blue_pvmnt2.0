@@ -4,14 +4,24 @@
     font-size: 1.3rem;
     font-weight: 500;
     text-transform: uppercase;
-    padding-right: 19px;
-    padding-top: 9px;
-    margin: 0, 0;
+    padding-top: 6.0%;
+    /*padding-right: 19px;*/
+    /*padding-top: 9px;*/
     height: 100%;
-    vertical-align: center;
-    align-items: center;
     color: #488aff;
   }
+
+.banner{
+    
+    height: 150px !important;
+    width:100% !important;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.cardPad{
+  padding: 6px 8px 6px 8px !important;
+}
 
   .thumb{
     width:90px !important;
@@ -30,4 +40,21 @@
     min-height: 0px;
     height: 90px !important;
     padding-left: 21px;
+  }
+
+  .description_new{
+    padding-top: 1%;
+    padding-left: 2.5%;
+  }
+
+  .recommended{
+    padding-left: 0.0%;
+  }
+
+  .headings{
+    padding-top: 2.0%;
+  }
+
+  .group_upper{
+    padding-top: 2%;
   }
