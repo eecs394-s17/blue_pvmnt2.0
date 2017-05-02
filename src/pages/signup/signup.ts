@@ -33,7 +33,7 @@ export class SignupPage {
 
   signupUser(){
     if (!this.signupForm.valid){
-      console.log(this.signupForm.value);
+      //console.log(this.signupForm.value);
     } else {
       this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password, this.signupForm.value.name, this.signupForm.value.year)
       .then(() => {

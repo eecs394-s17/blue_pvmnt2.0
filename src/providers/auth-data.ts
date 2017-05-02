@@ -73,7 +73,7 @@ export class AuthData {
   }
 
   getFirebaseId() {
-    console.log(firebase.auth().currentUser.uid);
+    //console.log(firebase.auth().currentUser.uid);
     return firebase.auth().currentUser.uid;
   }
 

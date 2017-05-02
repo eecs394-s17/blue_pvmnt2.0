@@ -89,7 +89,7 @@ export class UpcomingPage {
       this.load();
     }
     else{
-      console.log('Do Nothing');
+      //console.log('Do Nothing');
     }
 
   }
@@ -105,7 +105,7 @@ export class UpcomingPage {
 
 
     this.eventService.fetchUpcomingEventsAndReccomendationsForCurrentUser().then((events: Event[]) => {
-        console.log(events);
+        
         this.events = events;
         this.loadedevents = events;
 

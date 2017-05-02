@@ -61,7 +61,7 @@ export class ItemDetailsPage {
       return;
     }
 
-    console.log(uid);
+    //console.log(uid);
     if (this.priorView == 'PersonalPage'){
        this.calendarService.unsubscribeCurrentUserFromCalendar(this.selectedItem.calendarId);
        event.buttonDisabled = true;

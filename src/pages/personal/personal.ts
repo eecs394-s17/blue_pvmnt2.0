@@ -91,10 +91,6 @@ export class PersonalPage {
       this.load();
     }
 
-    // else{
-    //   console.log('Do Nothing');
-    // }
-
     if (this.events==null){
       this.noEvents=true;
     }
@@ -106,14 +102,14 @@ export class PersonalPage {
         this.noEvents=false;
       }
     }
-    console.log('events:'+this.events);
-    console.log('loadedevents:'+this.loadedevents);
-    console.log('noEvents:'+this.noEvents);
+    // console.log('events:'+this.events);
+    // console.log('loadedevents:'+this.loadedevents);
+    // console.log('noEvents:'+this.noEvents);
 
   }
 
   load() {
-    console.log('start load PersonalPage');
+    // console.log('start load PersonalPage');
     this.eventService.fetchUpcomingEventsForCurrentUser().then((events: Event[]) => {
         this.events = events;
         this.loadedevents = events;
