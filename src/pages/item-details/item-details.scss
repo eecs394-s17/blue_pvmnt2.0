@@ -8,12 +8,16 @@ page-item-details {
 
 
   .background-img-card{
-    height:40%;
+    /*height:40%;*/
   }
 
   img {
     width: 100%;
     height: 100%;
+  }
+
+  .headings{
+    padding-top: 1%;
   }
 
   .calendar{
@@ -67,7 +71,12 @@ page-item-details {
 
   .buttondiv {
     text-align:center;
-    margin:auto;
+    padding-left: 2.5%;
+  }
+
+  .buttondiv .buttontext{
+    font-size: 3.6vw;
+    font-weight: bold;
   }
 
 }
