@@ -11,6 +11,18 @@
     color: #488aff;
   }
 
+.banner{
+    
+    height: 150px !important;
+    width:100% !important;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.cardPad{
+  padding: 6px 8px 6px 8px !important;
+}
+
   .thumb{
     width:90px !important;
     height:90px !important;
