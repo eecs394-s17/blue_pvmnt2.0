@@ -67,7 +67,7 @@ export class UpcomingPage {
         return true;
       }
       else{
-        return false;
+        return true;
       }
     });
 

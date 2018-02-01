@@ -21,7 +21,7 @@ export class EventService {
 						MATCH (me)-[:INTERESTED]->(myInterests:Event)
 						WITH me, myInterests
 						MATCH (myInterests)<-[:INTERESTED]-(other: FBUser)-[:INTERESTED]->(otherInterests:Event)<-[:HOSTING]-(otherInterestsCalendars: Calendar)
-						WHERE ID(myInterests) <> ID(otherInterests) AND otherInterests.date >= timestamp()/1000
+						WHERE ID(myInterests) <> ID(otherInterests) 
 						OPTIONAL MATCH (:FBUser)-[totalInterest:INTERESTED]->(otherInterests)
 						WITH COUNT(totalInterest) as totalInterest, otherInterests, otherInterestsCalendars ORDER BY totalInterest LIMIT 3
 						WITH totalInterest, otherInterests, otherInterestsCalendars ORDER BY otherInterests.date
@@ -71,7 +71,7 @@ export class EventService {
 	fetchUpcomingEventsForCalendar(calendarId) {
 		var query = `
 						MATCH (c:Calendar)-[:HOSTING]->(e:Event)
-						WHERE ID(c) = {calendarId} AND e.date >= timestamp()/1000
+						WHERE ID(c) = {calendarId} 
 						OPTIONAL MATCH (u: FBUser)-[ti:INTERESTED]->(e)
 						OPTIONAL MATCH (fu: FBUser {firebaseId: {firebaseId}})-[ui:INTERESTED]->(e)
 						with count(ti) as ti, e, c, count(ui) > 0 as ui order by e.date
@@ -89,7 +89,6 @@ export class EventService {
 	fetchAllUpcomingEvents() {
 		var query = `
 						MATCH (e:Event)
-						WHERE e.date >= timestamp()/1000
 						MATCH (c: Calendar)-[:HOSTING]->(e)
 						OPTIONAL MATCH (u: FBUser)-[ti:INTERESTED]->(e)
 						OPTIONAL MATCH (fu: FBUser {firebaseId: {firebaseId}})-[ui:INTERESTED]->(e)

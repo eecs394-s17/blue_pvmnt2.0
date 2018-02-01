@@ -1,6 +1,6 @@
 {
   "name": "sampleApp",
-  "app_id": "3977bb4f",
-  "v2": true,
-  "typescript": true
+  "app_id": "7f734284",
+  "integrations": {},
+  "type": "ionic-angular"
 }
