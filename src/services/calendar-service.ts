@@ -23,7 +23,7 @@ export class CalendarService {
 	}
 
 	isUserSubscribed(calendarId){
-		var query =`	
+		var query =`
 						MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar)
 						WHERE ID(c) = {calendarId}
 						RETURN r
@@ -42,7 +42,7 @@ export class CalendarService {
 	}
 
 	subscribeCurrentUserToCalendar(calendarId) {
-    	var query = `	
+    	var query = `
     					MATCH (c:Calendar)
 			            WHERE ID(c) = {calendarId}
 			            MATCH (u:FBUser)
@@ -58,7 +58,7 @@ export class CalendarService {
 
 
   	unsubscribeCurrentUserFromCalendar(calendarId) {
-    	var query = `	
+    	var query = `
 						MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar)
 						WHERE ID(c) = {calendarId}
             			DELETE r
@@ -70,12 +70,13 @@ export class CalendarService {
 	}
 
 	fetchAllCalendars(){
-		var query = `	
+		var query = `
 						MATCH (c:Calendar)
 						RETURN c
 					`;
 
 		return this.neo.runQuery(query, {}).then((results: Calendar[]) => {
+			console.log(results);
 			return results.map(this.parseCalendarData);
 		}) ;
 	}
@@ -95,11 +96,21 @@ export class CalendarService {
 								RETURN unsubs
 							`;
 			return this.neo.runQuery(unsubsQuery, params).then((unsubs: Object[]) => {
+				console.log(unsubs)
 				let subbedCalendars = subs.map(c => this.parseCalendarData(c, true));
 				let unsubbedCalendars = unsubs.map(c => this.parseCalendarData(c, false));
 				let allCalendars = subbedCalendars.concat(unsubbedCalendars);
 				allCalendars.sort((a, b) => {
 					return a.name.localeCompare(b.name);
+				});
+				allCalendars = allCalendars.filter((c) => {
+					if((c.id==880) || (c.id==882)) {
+						//console.log(v.img.slice(8,16))
+						return false;
+					}
+					else{
+						return true;
+					}
 				});
 				return allCalendars;
 			});

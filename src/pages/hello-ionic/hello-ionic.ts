@@ -94,12 +94,21 @@ export class HelloIonicPage {
 
      this.eventService.fetchAllUpcomingEvents().then((events: Event[]) => {
          this.events = events;
+         this.events = this.events.filter((v) => {
+           if(v.img.slice(8,16)=="scontent") {
+             //console.log(v.img.slice(8,16))
+             return false;
+           }
+           else{
+             return true;
+           }
+         });
          this.loadedevents = events;
 
-         //console.log(this.events.length)
+         //console.log(this.events)
       });
 
-     
+
 
     // Fetches all events that the user is currently subscribed to
     // this.eventService.fetchEvents().then((events) => {

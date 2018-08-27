@@ -1,6 +1,9 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Pvmnt 2.0</ion-title>
+    <ion-title>
+      <!-- <img src="assets/img/Logo.png" style="height: 40px; width:auto; display: block; margin: auto"> -->
+      Filter by Date
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -21,11 +24,11 @@
 		  <ion-label stacked>End Date</ion-label>
 		  <ion-datetime displayFormat="MM/DD/YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="enddate"></ion-datetime>
 		</ion-item>
-	</div> 
+	</div>
 
 	<div class="savedates">
 		<button ion-button (click)="exitPage($event)">
-		  <p> Filter by Date </p>
+		  <p>Apply Filter</p>
 		</button>
 	</div>
 

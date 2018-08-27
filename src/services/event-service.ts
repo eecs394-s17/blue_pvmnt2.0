@@ -21,7 +21,7 @@ export class EventService {
 						MATCH (me)-[:INTERESTED]->(myInterests:Event)
 						WITH me, myInterests
 						MATCH (myInterests)<-[:INTERESTED]-(other: FBUser)-[:INTERESTED]->(otherInterests:Event)<-[:HOSTING]-(otherInterestsCalendars: Calendar)
-						WHERE ID(myInterests) <> ID(otherInterests) 
+						WHERE ID(myInterests) <> ID(otherInterests)
 						OPTIONAL MATCH (:FBUser)-[totalInterest:INTERESTED]->(otherInterests)
 						WITH COUNT(totalInterest) as totalInterest, otherInterests, otherInterestsCalendars ORDER BY totalInterest LIMIT 3
 						WITH totalInterest, otherInterests, otherInterestsCalendars ORDER BY otherInterests.date
@@ -46,7 +46,19 @@ export class EventService {
 				let intData: Object[] = intResults[0];
 				let interestedEvents = intData.map(this.parseEventData);
 
-				return this.combineInterestAndReccomendations(interestedEvents, reccomendedEvents);
+				let ret = this.combineInterestAndReccomendations(interestedEvents, reccomendedEvents);
+
+				ret = ret.filter((v) => {
+					if((v.img.slice(8,16)=="scontent") || (v.name=="Trail School")) {
+						//console.log(v.img.slice(8,16))
+						return false;
+					}
+					else{
+						return true;
+					}
+				});
+				console.log(ret);
+				return ret;
 			});
 		});
 	}
@@ -71,7 +83,7 @@ export class EventService {
 	fetchUpcomingEventsForCalendar(calendarId) {
 		var query = `
 						MATCH (c:Calendar)-[:HOSTING]->(e:Event)
-						WHERE ID(c) = {calendarId} 
+						WHERE ID(c) = {calendarId}
 						OPTIONAL MATCH (u: FBUser)-[ti:INTERESTED]->(e)
 						OPTIONAL MATCH (fu: FBUser {firebaseId: {firebaseId}})-[ui:INTERESTED]->(e)
 						with count(ti) as ti, e, c, count(ui) > 0 as ui order by e.date
@@ -81,7 +93,18 @@ export class EventService {
 		var params = {calendarId: calendarId, firebaseId: this.authData.getFirebaseId()};
 		return this.neo.runQuery(query, params).then((results) => {
 			let data: Object[] = results[0];
-			return data.map(this.parseEventData);
+			let ret = data.map(this.parseEventData);
+			//console.log(ret);
+			ret = ret.filter((v) => {
+				if((v.img.slice(8,16)=="scontent") || (v.name=="Trail School")) {
+					//console.log(v.img.slice(8,16))
+					return false;
+				}
+				else{
+					return true;
+				}
+			});
+			return ret;
 		});
 	}
 
@@ -100,7 +123,18 @@ export class EventService {
 		return this.neo.runQuery(query, params).then((results) => {
 			//console.log(results[0]);
 			let data: Object[] = results[0];
-			return data.map(this.parseEventData);
+			let ret = data.map(this.parseEventData);
+			//console.log(ret);
+			ret = ret.filter((v) => {
+				if((v.img.slice(8,16)=="scontent") || (v.name=="Trail School")) {
+					//console.log(v.img.slice(8,16))
+					return false;
+				}
+				else{
+					return true;
+				}
+			});
+			return ret;
 			// return this.parseEvents(results);
 		});
 	}
@@ -118,7 +152,6 @@ export class EventService {
 
 	fetchUpcomingEventsForCurrentUser() {
     	var query = `	MATCH (u:FBUser {firebaseId: {userId}})-[r:SUBSCRIBED]->(c:Calendar)-[:HOSTING]->(e:Event)
-            			WHERE e.date >= timestamp()/1000
             			OPTIONAL MATCH (u:FBUser)-[ti:INTERESTED]->(e)
 						OPTIONAL MATCH (fu:FBUser {firebaseId: {userId}})-[ui:INTERESTED]->(e)
 						with count(ti) as ti, e, c, count(ui) > 0 as ui order by e.date
@@ -130,7 +163,18 @@ export class EventService {
     	var params = {userId: this.authData.getFirebaseId()};
     	return this.neo.runQuery(query, params).then((results) => {
     		let data: Object[] = results[0];
-      		return data.map(this.parseEventData);
+				let ret = data.map(this.parseEventData);
+				//console.log(ret);
+				ret = ret.filter((v) => {
+					if((v.img.slice(8,16)=="scontent") || (v.name=="Trail School")) {
+						//console.log(v.img.slice(8,16))
+						return false;
+					}
+					else{
+						return true;
+					}
+				});
+				return ret;
     	});
   	}
 

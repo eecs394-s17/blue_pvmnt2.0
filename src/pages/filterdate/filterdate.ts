@@ -18,8 +18,8 @@ export class FilterDatePage {
 
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams) {
-    var start = new Date().toISOString();
-    var end = new Date().toISOString();
+    var start = new Date('September 5, 2017 03:24:00').toISOString();
+    var end = new Date('September 5, 2017 03:24:00').toISOString();
     this.load(start, end);
   }
 
@@ -30,11 +30,11 @@ export class FilterDatePage {
 
 
   getTomorrowDates(event){
-    var start_date = new Date();
+    var start_date = new Date('September 5, 2017 03:24:00');
     start_date.setDate(start_date.getDate());
     var str_start = start_date.toISOString();
 
-    var end_date = new Date();
+    var end_date = new Date('September 5, 2017 03:24:00');
     end_date.setDate(end_date.getDate() + 1)
     var str_end = end_date.toISOString();
 
@@ -42,11 +42,11 @@ export class FilterDatePage {
   }
 
   getWeekDates(event){
-    var start_date = new Date();
-    start_date.setDate(start_date.getDate())    
+    var start_date = new Date('September 5, 2017 03:24:00');
+    start_date.setDate(start_date.getDate())
     var str_start = start_date.toISOString();
 
-    var end_date = new Date();
+    var end_date = new Date('September 5, 2017 03:24:00');
     end_date.setDate(end_date.getDate() + 7)
     var str_end = end_date.toISOString()
 
@@ -54,7 +54,7 @@ export class FilterDatePage {
   }
 
   exitPage(event){
-    this.date_array = [Math.round(new Date(this.startdate).getTime()/1000), Math.round(new Date(this.enddate).getTime()/1000)];    
+    this.date_array = [Math.round(new Date(this.startdate).getTime()/1000), Math.round(new Date(this.enddate).getTime()/1000)];
     this.callback(this.date_array).then(()=>{
        this.navCtrl.pop();
     });
